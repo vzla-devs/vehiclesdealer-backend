@@ -1,7 +1,10 @@
 // express
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
+app.use(bodyParser.json()) // para parsear json
+app.use(bodyParser.urlencoded({ extended: true })) // para parsear application/x-www-form-urlencoded
 
 // mongoose
 var mongoose = require('mongoose')

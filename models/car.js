@@ -88,6 +88,11 @@ var CarSchema = new Schema({
         type: Number,
         min: 0,
         required: true
+    },
+    // descripción
+    description: {
+        type: String,
+        required: true
     }
 })
 
