@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // modelo para los coches
-var CarSchema = new Schema({
+let CarSchema = new Schema({
     // marca
     make: {
         type: String,
@@ -37,63 +37,75 @@ var CarSchema = new Schema({
             'volvo'
         ],
         lowercase: true,
-        required: true
+        required: [true, 'Marca requerida']
     },
     // modelo
     model: {
         type: String,
         lowercase: true,
-        required: true
+        required: [true, 'Modelo requerido']
     },
     // año
     year: {
         type: Number,
-        min: 1900,
-        required: true
+        min: [1990, 'El año debe ser mayor a 1990'],
+        required: [true, 'Año de matriculación requerido']
     },
     // kilometros
     kilometers: {
         type: Number,
-        min: 0,
-        required: true
+        min: [0, 'El kilometraje no puede ser negativo'],
+        required: [true, 'Kilometraje requerido']
     },
     // tipo de combustible
     fuel_type: {
         type: String,
         enum: [
-            'gasoline',
+            'gasolina',
             'diesel',
             'gasoil'
         ],
         lowercase: true,
-        required: true
+        required: [true, 'Tipo de combustible requerido']
     },
     // potencia
     horsepower: {
         type: Number,
-        required: true
+        required: [true, 'Potencia requerida']
     },
     // transmisión
     transmission: {
         type: String,
         enum: [
-            'automatic',
+            'automático',
             'manual'
         ],
         lowercase: true,
-        required: true
+        required: [true, 'Transmisión requerida']
     },
     // precio
     price: {
         type: Number,
-        min: 0,
-        required: true
+        min: [0, 'El precio no puede ser negativo'],
+        required: [true, 'Precio requerido']
     },
-    // descripción
-    description: {
-        type: String,
-        required: true
-    }
+    // equipamiento
+    equipment: [
+        {
+            type: String,
+            lowercase: true
+        }
+    ],
+    // fotos del coche
+    pictures: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Picture'
+        }
+    ]
+},
+{
+    timestamps: true
 })
 
-module.exports = mongoose.model('Car', CarSchema )
+module.exports = mongoose.model('Car', CarSchema)

@@ -1,11 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const Car = require('../models/car')
+//middleware para manejar formularios multipart
+const multer = require('multer')
+const upload = multer({ dest: 'uploads' })
 
 // obtener coches
 router.get('/', (req, res) => {
     
-    Car.find({}).exec((err, cars) => {
+    Car.find({}, {
+        make: 1,
+        model: 1, 
+        year: 1, 
+        fuel_type: 1, 
+        horsepower: 1, 
+        kilometers: 1, 
+        transmission: 1, 
+        price: 1
+    }).exec((err, cars) => {
 
         if (err) return console.error(err)
 
@@ -15,20 +27,25 @@ router.get('/', (req, res) => {
 })
 
 // obtener coche en específico
-router.get('/:carId', (req, res) => {
-    res.send('pediste un coche específico')
+router.get('/:id', (req, res) => {
+    
+    Car.find({_id: req.params.id}).exec((err, car) => {
+        if (err) return console.error(err)
+
+        res.send(car)
+    })
 })
 
 // crear coche
-router.post('/', (req, res) => {
-
-    res.json(req.body)
+router.post('/', upload.array('pictures'), (req, res) => {
 
     const body = req.body
 
-    console.log(body.model)
+    console.log(req.files)
+
+    res.send(req.files)
     
-    var car = new Car({
+    /*let car = new Car({
         make: body.make,
         model: body.model,
         year: parseInt(body.year),
@@ -36,13 +53,15 @@ router.post('/', (req, res) => {
         fuel_type: body.fuel_type,
         horsepower: parseInt(body.horsepower),
         transmission: body.transmission,
-        price: parseInt(body.price),
-        description: body.description
+        price: parseInt(body.price)
     })
 
-    car.save((err) => {
-        console.log(err)
-    })
+    car.save((err, newCar) => {
+        
+        if (err) return res.json(err)
+
+        res.json(newCar)
+    })*/
 })
 
 // actualizar coche

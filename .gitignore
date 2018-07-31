@@ -1,1 +1,4 @@
-node_modules
+node_modules/
+#ignora todos los archivos que sube, menos .gitkeep
+uploads/*
+!uploads/.gitkeep
