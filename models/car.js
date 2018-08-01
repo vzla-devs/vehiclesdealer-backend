@@ -99,8 +99,7 @@ let CarSchema = new Schema({
     // fotos del coche
     pictures: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'Picture'
+            type: String
         }
     ]
 },

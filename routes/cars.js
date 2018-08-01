@@ -1,9 +1,29 @@
+const fs = require('fs')
+const path = require('path')
 const express = require('express')
 const router = express.Router()
 const Car = require('../models/car')
 //middleware para manejar formularios multipart
 const multer = require('multer')
-const upload = multer({ dest: 'uploads' })
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function(req, file, cb) {
+        let filename = Date.now()
+        switch (file.mimetype) {
+            case 'image/png':
+            filename = filename + ".png"
+            break;
+            case 'image/jpeg':
+            filename = filename + ".jpeg"
+            break;
+        }
+        cb(null, filename);
+    }
+  })
+   
+const upload = multer({ storage: storage })
 
 // obtener coches
 router.get('/', (req, res) => {
@@ -16,7 +36,8 @@ router.get('/', (req, res) => {
         horsepower: 1, 
         kilometers: 1, 
         transmission: 1, 
-        price: 1
+        price: 1,
+        pictures: 1
     }).exec((err, cars) => {
 
         if (err) return console.error(err)
@@ -29,7 +50,8 @@ router.get('/', (req, res) => {
 // obtener coche en específico
 router.get('/:id', (req, res) => {
     
-    Car.find({_id: req.params.id}).exec((err, car) => {
+    Car.find({_id: req.params.id})
+    .exec((err, car) => {
         if (err) return console.error(err)
 
         res.send(car)
@@ -37,31 +59,34 @@ router.get('/:id', (req, res) => {
 })
 
 // crear coche
-router.post('/', upload.array('pictures'), (req, res) => {
+router.post('/', upload.array('pictures'), async (req, res) => {
 
-    const body = req.body
-
-    console.log(req.files)
-
-    res.send(req.files)
+    const fields = req.body
+    const pictures = req.files.map((pic) => `static/${pic.filename}`)
     
-    /*let car = new Car({
-        make: body.make,
-        model: body.model,
-        year: parseInt(body.year),
-        kilometers: parseInt(body.kilometers),
-        fuel_type: body.fuel_type,
-        horsepower: parseInt(body.horsepower),
-        transmission: body.transmission,
-        price: parseInt(body.price)
+    // crea el coche
+    let car = new Car({
+        make: fields.make,
+        model: fields.model,
+        year: parseInt(fields.year),
+        kilometers: parseInt(fields.kilometers),
+        fuel_type: fields.fuel_type,
+        horsepower: parseInt(fields.horsepower),
+        transmission: fields.transmission,
+        price: parseInt(fields.price),
+        pictures: pictures
     })
 
-    car.save((err, newCar) => {
-        
-        if (err) return res.json(err)
+    let newCar
 
-        res.json(newCar)
-    })*/
+    // guarda el coche en la db
+    try {
+        newCar = await car.save()
+    } catch (err) {
+        console.log(err)
+    }
+
+    res.send(newCar)
 })
 
 // actualizar coche

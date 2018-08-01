@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 const cors = require('cors')
+app.use('/static', express.static('uploads'));
 
 app.use(cors()) // para manejar solicitudes Cross-origin
 //app.use(bodyParser.json()) // para parsear json
