@@ -17,6 +17,7 @@ let CarSchema = new Schema({
             'fiat',
             'ford',
             'honda',
+            'hyundai',
             'jeep',
             'kia',
             'lexus',
