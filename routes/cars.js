@@ -90,8 +90,16 @@ router.post('/', upload.array('pictures'), async (req, res) => {
 })
 
 // actualizar coche
-router.put('/:carId', (req, res) => {
+router.put('/:id', (req, res) => {
     res.send('pediste editar un coche')
+})
+
+router.delete('/:id', (req, res) => {
+
+    // mejorar la implementacion del borrado
+    Car.deleteOne({ _id: req.params.id }, (err, res) => {
+        if(err) return console.log(err)
+    })
 })
 
 module.exports = router
