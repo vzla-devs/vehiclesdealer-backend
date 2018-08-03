@@ -22,7 +22,7 @@ const cars = require('./routes/cars')
 app.use('/api/coches', cars)
 
 // conexión con mongoDB
-db.on('error', console.error.bind(console, 'Error de conexión:'));
+db.on('error', console.error.bind(console, 'Error de conexión:'))
 db.once('open', () => {
 
 })
