@@ -7,8 +7,8 @@ const cors = require('cors')
 app.use('/api/static', express.static('uploads'))
 
 app.use(cors()) // para manejar solicitudes Cross-origin
-//app.use(bodyParser.json()) // para parsear json
-//app.use(bodyParser.urlencoded({ extended: true })) // para parsear application/x-www-form-urlencoded
+app.use(bodyParser.json()) // para parsear json
+app.use(bodyParser.urlencoded({ extended: true })) // para parsear application/x-www-form-urlencoded
 
 // mongoose
 var mongoose = require('mongoose')
