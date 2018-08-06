@@ -47,6 +47,18 @@ router.get('/', (req, res) => {
     //req.query contiene la query que se arma con los filtros para la búsqueda de los coches
 })
 
+// obtener las marcas disponibles de los coches
+router.get('/makes', async (req, res) => {
+    Car.find({}, {
+        make: 1
+    }).exec((err, make) => {
+
+        if (err) return console.error(err)
+
+        res.send(cars)
+    })
+})
+
 // obtener coche en específico
 router.get('/:id', (req, res) => {
     
