@@ -50,10 +50,19 @@ router.get('/', (req, res) => {
 // obtener las marcas disponibles de los coches
 router.get('/makes', async (req, res) => {
     Car.find({}, {
+        _id: 0,
         make: 1
     }).exec((err, makes) => {
 
         if (err) return console.error(err)
+
+        // ordena los nombres de las marcas disponibles
+        makes = makes.sort((a, b) => {
+            if (a > b) return 1;
+        })
+
+        // quita las marcas repetidas utilizando Set
+        makes = [ ...new Set(makes) ]
 
         res.send(makes)
     })
