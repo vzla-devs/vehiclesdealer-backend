@@ -51,11 +51,11 @@ router.get('/', (req, res) => {
 router.get('/makes', async (req, res) => {
     Car.find({}, {
         make: 1
-    }).exec((err, make) => {
+    }).exec((err, makes) => {
 
         if (err) return console.error(err)
 
-        res.send(cars)
+        res.send(makes)
     })
 })
 
