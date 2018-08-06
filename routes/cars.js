@@ -93,6 +93,29 @@ router.get('/tipos_combustible', (req, res) => {
     })
 })
 
+// obtener los años disponibles de los coches
+router.get('/anos', (req, res) => {
+    Car.find({}, {
+        _id: 0,
+        year: 1
+    }).exec((err, cars) => {
+
+        if (err) return console.error(err)
+
+        let years = cars.map((car) => car.year)
+
+        // ordena los nombres de las marcas disponibles
+        years = years.sort((a, b) => {
+            if (a > b) return 1;
+        })
+
+        // quita las marcas repetidas utilizando Set
+        years = [ ...new Set(years) ]
+
+        res.send(fuel_types)
+    })
+})
+
 // obtener coche en específico
 router.get('/:id', (req, res) => {
     
