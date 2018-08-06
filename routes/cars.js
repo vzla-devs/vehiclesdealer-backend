@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
 })
 
 // obtener las marcas disponibles de los coches
-router.get('/makes', async (req, res) => {
+router.get('/marcas', async (req, res) => {
     Car.find({}, {
         _id: 0,
         make: 1
