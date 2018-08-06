@@ -52,9 +52,11 @@ router.get('/makes', async (req, res) => {
     Car.find({}, {
         _id: 0,
         make: 1
-    }).exec((err, makes) => {
+    }).exec((err, cars) => {
 
         if (err) return console.error(err)
+
+        let makes = cars.map((car) => car.make)
 
         // ordena los nombres de las marcas disponibles
         makes = makes.sort((a, b) => {
