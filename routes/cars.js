@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
 })
 
 // obtener las marcas disponibles de los coches
-router.get('/marcas', async (req, res) => {
+router.get('/marcas', (req, res) => {
     Car.find({}, {
         _id: 0,
         make: 1
@@ -67,6 +67,29 @@ router.get('/marcas', async (req, res) => {
         makes = [ ...new Set(makes) ]
 
         res.send(makes)
+    })
+})
+
+// obtener los tipos de combustibles disponibles de los coches
+router.get('/tipos_combustible', (req, res) => {
+    Car.find({}, {
+        _id: 0,
+        fuel_type: 1
+    }).exec((err, cars) => {
+
+        if (err) return console.error(err)
+
+        let fuel_types = cars.map((car) => car.fuel_type)
+
+        // ordena los nombres de las marcas disponibles
+        fuel_types = fuel_types.sort((a, b) => {
+            if (a > b) return 1;
+        })
+
+        // quita las marcas repetidas utilizando Set
+        fuel_types = [ ...new Set(fuel_types) ]
+
+        res.send(fuel_types)
     })
 })
 
