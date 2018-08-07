@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
         }
         cb(null, filename);
     }
-  })
+})
    
 const upload = multer({ storage: storage })
 
@@ -94,7 +94,10 @@ router.get('/filtros', (req, res) => {
     Car.find({}, {
         _id: 0,
         make: 1,
-        fuel_type: 1
+        fuel_type: 1,
+        year: 1,
+        price: 1,
+        kilometers: 1
     }).exec((err, cars) => {
 
         if (err) return res.status(500).send(err)
@@ -102,6 +105,12 @@ router.get('/filtros', (req, res) => {
         let makes = cars.map((car) => car.make)
 
         let fuel_types = cars.map((car) => car.fuel_type)
+
+        let years = cars.map((car) => car.year)
+
+        let prices = cars.map((car) => car.price)
+
+        let kilometers = cars.map((car) => car.kilometers)
 
         // ordena las marcas disponibles
         makes = makes.sort((a, b) => {
@@ -113,15 +122,42 @@ router.get('/filtros', (req, res) => {
             if (a > b) return 1;
         })
 
+        // ordena los años de los coches disponibles
+        years = years.sort((a, b) => {
+            if (a > b) return 1;
+        })
+
+        // ordena los precios de los coches disponibles
+        prices = prices.sort((a, b) => {
+            if (a > b) return 1;
+        })
+
+        // ordena los kilómetros disponibles
+        kilometers = kilometers.sort((a, b) => {
+            if (a > b) return 1;
+        })
+
         // quita las marcas repetidas
         makes = [ ...new Set(makes) ]
 
         // quita los tipos de combustible repetidos
         fuel_types = [ ...new Set(fuel_types) ]
 
+        // quita los años repetidos
+        years = [ ...new Set(years) ]
+
+        // quita los precios repetidos
+        prices = [ ...new Set(prices) ]
+
+        // quita los kilómetros repetidos
+        kilometers = [ ...new Set(kilometers) ]
+
         res.status(200).send({
             makes,
-            fuel_types
+            fuel_types,
+            years,
+            prices,
+            kilometers
         })
     })
 })
