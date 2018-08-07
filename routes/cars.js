@@ -27,6 +27,62 @@ const upload = multer({ storage: storage })
 
 // obtener coches
 router.get('/', (req, res) => {
+
+    let filters = {}
+
+    // si filtra por marca
+    if (req.query.make != undefined) {
+        filters.make = req.query.make
+    }
+
+    // si filtra por tipo de combustible
+    if (req.query.fuel_type != undefined) {
+        filters.fuel_type = req.query.fuel_type
+    }
+
+    // si filtra por tipo de transmisión
+    if (req.query.transmission != undefined) {
+        filters.transmission = req.query.transmission
+    }
+
+    // si filtra por precio
+    if (req.query.price != undefined) {
+        // si es un rango
+        if (Array.isArray(req.query.price)) {
+            filters.minPrice = req.query.price[0]
+            filters.maxPrice = req.query.price[1]
+        } else {
+            // si es solamente un valor
+            filters.minPrice = filters.maxPrice = req.query.price
+        }
+    }
+
+    // si filtra por año
+    if (req.query.year != undefined) {
+        // si es un rango
+        if (Array.isArray(req.query.year)) {
+            filters.minYear = req.query.year[0]
+            filters.maxYear = req.query.year[1]
+        } else {
+            // si es solamente un valor
+            filters.minYear = filters.maxYear = req.query.year
+        }
+    }
+
+    // si filtra por kilometraje
+    if (req.query.kilometers != undefined) {
+        // si es un rango
+        if (Array.isArray(req.query.kilometers)) {
+            filters.minKilometers = req.query.kilometers[0]
+            filters.maxKilometers = req.query.kilometers[1]
+        } else {
+            // si es solamente un valor
+            filters.minKilometers = filters.maxKilometers = req.query.kilometers
+        }
+    }
+
+    //req.query contiene la query que se arma con los filtros para la búsqueda de los coches
+    console.log(filters)
     
     Car.find({}, {
         make: 1,
@@ -40,12 +96,10 @@ router.get('/', (req, res) => {
         pictures: 1
     }).exec((err, cars) => {
 
-        if (err) return console.error(err)
+        if (err) return res.status(500).send(err)
 
-        res.send(cars)
+        res.status(200).send(cars)
     })
-    //req.query contiene la query que se arma con los filtros para la búsqueda de los coches
-    console.log(req.query)
 })
 
 router.get('/filtros', (req, res) => {
@@ -55,7 +109,7 @@ router.get('/filtros', (req, res) => {
         fuel_type: 1
     }).exec((err, cars) => {
 
-        if (err) return console.error(err)
+        if (err) return res.status(500).send(err)
 
         let makes = cars.map((car) => car.make)
 
@@ -72,12 +126,12 @@ router.get('/filtros', (req, res) => {
         })
 
         // quita las marcas repetidas
-        fuel_types = [ ...new Set(fuel_types) ]
+        makes = [ ...new Set(makes) ]
 
         // quita los tipos de combustible repetidos
         fuel_types = [ ...new Set(fuel_types) ]
 
-        res.send({
+        res.status(200).send({
             makes,
             fuel_types
         })
@@ -89,9 +143,9 @@ router.get('/:id', (req, res) => {
     
     Car.find({_id: req.params.id})
     .exec((err, car) => {
-        if (err) return console.error(err)
+        if (err) return res.status(500).send(err)
 
-        res.send(car)
+        res.status(200).send(car)
     })
 })
 
@@ -120,22 +174,24 @@ router.post('/', upload.array('pictures'), async (req, res) => {
     try {
         newCar = await car.save()
     } catch (err) {
-        console.log(err)
+        res.status(500).send(err)
     }
 
-    res.send(newCar)
+    res.status(201).send(newCar)
 })
 
 // actualizar coche
 router.put('/:id', (req, res) => {
-    res.send('pediste editar un coche')
+    res.status(200).send('pediste editar un coche')
 })
 
 router.delete('/:id', (req, res) => {
 
     // mejorar la implementacion del borrado
-    Car.deleteOne({ _id: req.params.id }, (err, res) => {
-        if(err) return console.log(err)
+    Car.deleteOne({ _id: req.params.id }, (err, response) => {
+        if(err) return res.status(500).send(err)
+
+        res.status(200).send(response)
     })
 })
 
