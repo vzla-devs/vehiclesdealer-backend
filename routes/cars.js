@@ -46,45 +46,33 @@ router.get('/', (req, res) => {
     }
 
     // si filtra por precio
-    if (req.query.price != undefined) {
-        // si es un rango
-        if (Array.isArray(req.query.price)) {
-            filters.minPrice = req.query.price[0]
-            filters.maxPrice = req.query.price[1]
-        } else {
-            // si es solamente un valor
-            filters.minPrice = filters.maxPrice = req.query.price
-        }
-    }
+    if (req.query.minPrice != undefined || req.query.maxPrice != undefined) {
+        
+        let priceRange = {}
 
-    // si filtra por año
-    if (req.query.year != undefined) {
-        // si es un rango
-        if (Array.isArray(req.query.year)) {
-            filters.minYear = req.query.year[0]
-            filters.maxYear = req.query.year[1]
-        } else {
-            // si es solamente un valor
-            filters.minYear = filters.maxYear = req.query.year
-        }
+        if (req.query.minPrice != undefined) priceRange.$lte = parseInt(req.query.maxPrice, 10)
+
+        if (req.query.maxPrice != undefined) priceRange.$gte = parseInt(req.query.minPrice, 10)
+
+        filters.price = priceRange
     }
 
     // si filtra por kilometraje
-    if (req.query.kilometers != undefined) {
-        // si es un rango
-        if (Array.isArray(req.query.kilometers)) {
-            filters.minKilometers = req.query.kilometers[0]
-            filters.maxKilometers = req.query.kilometers[1]
-        } else {
-            // si es solamente un valor
-            filters.minKilometers = filters.maxKilometers = req.query.kilometers
-        }
+    if (req.query.minKilometers != undefined || req.query.maxKilometers != undefined) {
+        
+        let kilometersRange = {}
+
+        if (req.query.minKilometers != undefined) kilometersRange.$lte = parseInt(req.query.maxKilometers, 10)
+
+        if (req.query.maxKilometers != undefined) kilometersRange.$gte = parseInt(req.query.minKilometers, 10)
+
+        filters.kilometers = kilometersRange
     }
 
     //req.query contiene la query que se arma con los filtros para la búsqueda de los coches
     console.log(filters)
     
-    Car.find({}, {
+    Car.find(filters, {
         make: 1,
         model: 1, 
         year: 1, 
