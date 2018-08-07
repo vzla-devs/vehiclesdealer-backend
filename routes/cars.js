@@ -45,74 +45,42 @@ router.get('/', (req, res) => {
         res.send(cars)
     })
     //req.query contiene la query que se arma con los filtros para la búsqueda de los coches
+    console.log(req.query)
 })
 
-// obtener las marcas disponibles de los coches
-router.get('/marcas', (req, res) => {
+router.get('/filtros', (req, res) => {
     Car.find({}, {
         _id: 0,
-        make: 1
+        make: 1,
+        fuel_type: 1
     }).exec((err, cars) => {
 
         if (err) return console.error(err)
 
         let makes = cars.map((car) => car.make)
 
-        // ordena los nombres de las marcas disponibles
+        let fuel_types = cars.map((car) => car.fuel_type)
+
+        // ordena las marcas disponibles
         makes = makes.sort((a, b) => {
             if (a > b) return 1;
         })
 
-        // quita las marcas repetidas utilizando Set
-        makes = [ ...new Set(makes) ]
-
-        res.send(makes)
-    })
-})
-
-// obtener los tipos de combustibles disponibles de los coches
-router.get('/tipos_combustible', (req, res) => {
-    Car.find({}, {
-        _id: 0,
-        fuel_type: 1
-    }).exec((err, cars) => {
-
-        if (err) return console.error(err)
-
-        let fuel_types = cars.map((car) => car.fuel_type)
-
-        // ordena los nombres de las marcas disponibles
+        // ordena los tipos de combustible disponibles
         fuel_types = fuel_types.sort((a, b) => {
             if (a > b) return 1;
         })
 
-        // quita las marcas repetidas utilizando Set
+        // quita las marcas repetidas
         fuel_types = [ ...new Set(fuel_types) ]
 
-        res.send(fuel_types)
-    })
-})
+        // quita los tipos de combustible repetidos
+        fuel_types = [ ...new Set(fuel_types) ]
 
-// obtener los años disponibles de los coches
-router.get('/anos', (req, res) => {
-    Car.find({}, {
-        _id: 0,
-        year: 1
-    }).exec((err, cars) => {
-
-        if (err) return console.error(err)
-
-        let years = cars.map((car) => car.year)
-
-        // ordena los nombres de las marcas disponibles
-        years = years.sort((a, b) => {
-            if (a > b) return 1;
+        res.send({
+            makes,
+            fuel_types
         })
-
-        // quita las marcas repetidas utilizando Set
-        years = [ ...new Set(years) ]
-
-        res.send(fuel_types)
     })
 })
 
