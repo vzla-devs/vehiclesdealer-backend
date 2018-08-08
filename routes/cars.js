@@ -215,7 +215,7 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
             // eliminando fotos previas del coche
             car.pictures.forEach(pic => {
                 fs.unlink(`uploads/${pic}`, err => {
-                    if (err) throw err
+                    if (err) console.error(err)
 
                     console.log('archivo eliminado')
                 })
