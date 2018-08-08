@@ -164,7 +164,6 @@ router.get('/filtros', (req, res) => {
 
 // obtener coche en específico
 router.get('/:id', (req, res) => {
-    
     Car.find({_id: req.params.id})
     .exec((err, car) => {
         if (err) return res.status(500).send(err)
@@ -175,9 +174,8 @@ router.get('/:id', (req, res) => {
 
 // crear coche
 router.post('/', upload.array('pictures'), async (req, res) => {
-
     const fields = req.body
-    const pictures = req.files.map((pic) => `static/${pic.filename}`)
+    const pictures = req.files.map((pic) => `${pic.filename}`)
     
     // crea el coche
     let car = new Car({
@@ -205,8 +203,38 @@ router.post('/', upload.array('pictures'), async (req, res) => {
 })
 
 // actualizar coche
-router.put('/:id', (req, res) => {
-    res.status(200).send('pediste editar un coche')
+router.put('/:id', upload.array('pictures'), (req, res) => {
+
+    Car.findOne({_id: req.params.id})
+    .exec(async (err, car) => {
+        if (err) return res.status(500).send(err)
+
+        if(req.files != undefined) {
+            let pictures = req.files.map(pic => `${pic.filename}`)
+
+            // eliminando fotos previas del coche
+            car.pictures.forEach(pic => {
+                fs.unlink(`uploads/${pic}`, err => {
+                    if (err) throw err
+
+                    console.log('archivo eliminado')
+                })
+            })
+
+            car.pictures = pictures
+
+            let updatedCar
+
+            // guarda el coche en la db
+            try {
+                updatedCar = await car.save()
+            } catch (err) {
+                res.status(500).send(err)
+            }
+
+            res.status(200).send(updatedCar)
+        }
+    })
 })
 
 router.delete('/:id', (req, res) => {

@@ -97,6 +97,9 @@ let CarSchema = new Schema({
             lowercase: true
         }
     ],
+    featured_picture: {
+        type: String
+    },
     // fotos del coche
     pictures: [
         {
