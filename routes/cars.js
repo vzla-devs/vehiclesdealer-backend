@@ -222,7 +222,7 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
         if (car == null) return res.status(404).send('El coche no existe')
         
         // si se van a actualizar las fotos
-        if (req.files != undefined) {
+        if (req.files.length > 0) {
             let pictures = req.files.map(pic => `${pic.filename}`)
 
             // eliminando fotos previas del coche
