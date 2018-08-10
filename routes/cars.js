@@ -184,11 +184,12 @@ router.get('/:id', (req, res) => {
 router.post('/', upload.array('pictures'), async (req, res) => {
     const fields = req.body
     const pictures = req.files.map((pic) => `${pic.filename}`)
-    
+
     // crea el coche
     let car = new Car({
         make: fields.make,
         model: fields.model,
+        color: fields.color,
         year: parseInt(fields.year),
         kilometers: parseInt(fields.kilometers),
         fuel_type: fields.fuel_type,
@@ -238,6 +239,9 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
 
         // si se va a actualizar el precio
         if (fields.price != undefined) car.price = parseInt(fields.price, 10)
+
+        // si se va a actualizar el color
+        if (fields.color != undefined) car.color = fields.color
 
         // guarda el coche en la db
         try {

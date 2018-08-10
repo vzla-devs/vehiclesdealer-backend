@@ -46,6 +46,27 @@ let CarSchema = new Schema({
         lowercase: true,
         required: [true, 'Modelo requerido']
     },
+    // color
+    color: {
+        type: String,
+        enum: [
+            'blanco',
+            'negro',
+            'naranja',
+            'gris/plata',
+            'azul',
+            'rojo',
+            'amarillo',
+            'verde',
+            'beige',
+            'rosado',
+            'morado',
+            'lima',
+            'vinotinto'
+        ],
+        lowercase: true,
+        required: [true, 'Color requerido']
+    },
     // año
     year: {
         type: Number,
