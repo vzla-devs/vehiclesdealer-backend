@@ -74,7 +74,8 @@ router.get('/', (req, res) => {
     
     Car.find(filters, {
         make: 1,
-        model: 1, 
+        model: 1,
+        color: 1,
         year: 1, 
         fuel_type: 1, 
         horsepower: 1, 
