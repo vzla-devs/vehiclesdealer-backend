@@ -86,6 +86,10 @@ router.get('/', (req, res) => {
 
         if (err) return res.status(500).send(err)
 
+        cars = cars.sort((a, b) => {
+            if (a.make > b.make) return 1;
+        })
+
         res.status(200).send(cars)
     })
 })
