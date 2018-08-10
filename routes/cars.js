@@ -168,10 +168,14 @@ router.get('/filtros', (req, res) => {
 
 // obtener coche en específico
 router.get('/:id', (req, res) => {
-    Car.find({_id: req.params.id})
+    Car.findOne({_id: req.params.id})
     .exec((err, car) => {
         if (err) return res.status(500).send(err)
 
+        // si el coche no existe en la base de datos
+        if (car == null) return res.status(404).send('El coche no existe')
+        
+        // si el coche sí existe en la base de datos
         res.status(200).send(car)
     })
 })
@@ -194,26 +198,31 @@ router.post('/', upload.array('pictures'), async (req, res) => {
         pictures: pictures
     })
 
-    let newCar
-
     // guarda el coche en la db
     try {
-        newCar = await car.save()
+        let newCar = await car.save()
+        res.status(201).send(newCar)
+    
+    // si ocurre un error al intentar guardar el coche en la base de datos
     } catch (err) {
         res.status(500).send(err)
     }
-
-    res.status(201).send(newCar)
 })
 
 // actualizar coche
 router.put('/:id', upload.array('pictures'), (req, res) => {
 
+    let fields = req.body
+
     Car.findOne({_id: req.params.id})
     .exec(async (err, car) => {
         if (err) return res.status(500).send(err)
 
-        if(req.files != undefined) {
+        // si el coche no existe en la base de datos
+        if (car == null) return res.status(404).send('El coche no existe')
+        
+        // si se van a actualizar las fotos
+        if (req.files != undefined) {
             let pictures = req.files.map(pic => `${pic.filename}`)
 
             // eliminando fotos previas del coche
@@ -224,19 +233,18 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
                     console.log('archivo eliminado')
                 })
             })
-
             car.pictures = pictures
+        }
 
-            let updatedCar
+        // si se va a actualizar el precio
+        if (fields.price != undefined) car.price = parseInt(fields.price, 10)
 
-            // guarda el coche en la db
-            try {
-                updatedCar = await car.save()
-            } catch (err) {
-                res.status(500).send(err)
-            }
-
+        // guarda el coche en la db
+        try {
+            let updatedCar = await car.save()
             res.status(200).send(updatedCar)
+        } catch (err) {
+            res.status(500).send(err)
         }
     })
 })
