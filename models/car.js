@@ -46,6 +46,15 @@ let CarSchema = new Schema({
         lowercase: true,
         required: [true, 'Modelo requerido']
     },
+    status: {
+        type: String,
+        enum: [
+            'activo',
+            'inactivo'
+        ],
+        default: 'activo',
+        required: [true, 'Estado del coche requerido']
+    },
     // color
     color: {
         type: String,

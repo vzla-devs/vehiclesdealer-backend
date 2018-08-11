@@ -28,7 +28,9 @@ const upload = multer({ storage: storage })
 // obtener coches
 router.get('/', (req, res) => {
 
-    let filters = {}
+    let filters = {
+        status: 'activo'
+    }
 
     // si filtra por marca
     if (req.query.make != undefined) {
@@ -82,7 +84,8 @@ router.get('/', (req, res) => {
         kilometers: 1, 
         transmission: 1, 
         price: 1,
-        pictures: 1
+        pictures: 1,
+        status: 1
     }).exec((err, cars) => {
 
         if (err) return res.status(500).send(err)
@@ -96,7 +99,12 @@ router.get('/', (req, res) => {
 })
 
 router.get('/filtros', (req, res) => {
-    Car.find({}, {
+
+    let filtros = {
+        status: 'activo'
+    }
+
+    Car.find(filtros, {
         _id: 0,
         make: 1,
         fuel_type: 1,
@@ -238,11 +246,14 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
             car.pictures = pictures
         }
 
-        // si se va a actualizar el precio
+        // si se va a actualizar el precio del coche
         if (fields.price != undefined) car.price = parseInt(fields.price, 10)
 
-        // si se va a actualizar el color
+        // si se va a actualizar el color del coche
         if (fields.color != undefined) car.color = fields.color
+
+        // si se va a actualizar el estado del coche
+        if (fields.status != undefined) car.status = fields.status
 
         // guarda el coche en la db
         try {
