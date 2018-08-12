@@ -230,29 +230,41 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
 
         // si el coche no existe en la base de datos
         if (car == null) return res.status(404).send('El coche no existe')
-        
-        // si se van a actualizar las fotos
-        if (req.files.length > 0) {
-            let pictures = req.files.map(pic => `${pic.filename}`)
 
+        // si se van a eliminar las fotos del coche
+        if (fields.picturesToDelete != undefined) {
             // eliminando fotos previas del coche
-            car.pictures.forEach(pic => {
+            fields.picturesToDelete.forEach((pic, index) => {
+
+                // elimina la foto del array de fotos del coche
+                car.pictures.splice(index, 1)
+
+                // elimina la foto del sistema de archivos del servidor
                 fs.unlink(`uploads/${pic}`, err => {
                     if (err) console.error(err)
 
                     console.log('archivo eliminado')
                 })
             })
-            car.pictures = pictures
         }
 
-        // si se va a actualizar el precio del coche
+        // si se van a subir fotos nuevas
+        if (req.files.length > 0) {
+            let newPictures = req.files.map(pic => `${pic.filename}`)
+
+            car.pictures.concat(newPictures)
+        }
+
+        // si se va a modificar la descripción del coche
+        if (fields.description != undefined) car.description = fields.description
+
+        // si se va a modificar el precio del coche
         if (fields.price != undefined) car.price = parseInt(fields.price, 10)
 
-        // si se va a actualizar el color del coche
+        // si se va a modificar el color del coche
         if (fields.color != undefined) car.color = fields.color
 
-        // si se va a actualizar el estado del coche
+        // si se va a modificar el estado del coche
         if (fields.status != undefined) car.status = fields.status
 
         // guarda el coche en la db

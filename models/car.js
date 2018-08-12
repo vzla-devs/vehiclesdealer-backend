@@ -55,6 +55,12 @@ let CarSchema = new Schema({
         default: 'activo',
         required: [true, 'Estado del coche requerido']
     },
+    // descripción
+    description: {
+        type: String,
+        lowercase: true,
+        required: [true, 'Descripción requerida']
+    },
     // color
     color: {
         type: String,
