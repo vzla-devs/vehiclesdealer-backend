@@ -253,7 +253,7 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
         if (req.files.length > 0) {
             let newPictures = req.files.map(pic => `${pic.filename}`)
 
-            car.pictures.concat(newPictures)
+            car.pictures = car.pictures.concat(newPictures)
         }
 
         // si se va a modificar la descripción del coche
