@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // para parsear application/x
 
 // mongoose
 var mongoose = require('mongoose')
-const mongoDB = 'mongodb://localhost:27017/laherradura'
+const mongoDB = 'mongodb://localhost:27017/moncars'
 mongoose.connect(mongoDB, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 const db = mongoose.connection
