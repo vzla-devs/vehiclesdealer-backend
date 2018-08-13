@@ -205,7 +205,8 @@ router.post('/', upload.array('pictures'), async (req, res) => {
         horsepower: parseInt(fields.horsepower),
         transmission: fields.transmission,
         price: parseInt(fields.price),
-        pictures: pictures
+        pictures: pictures,
+        description: fields.description
     })
 
     // guarda el coche en la db
