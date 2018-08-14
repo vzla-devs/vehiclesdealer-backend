@@ -33,6 +33,7 @@ let CarSchema = new Schema({
             'skoda',
             'smart',
             'subaru',
+            'suzuki',
             'toyota',
             'volkswagen',
             'volvo'
