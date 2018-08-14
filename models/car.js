@@ -67,6 +67,7 @@ let CarSchema = new Schema({
         type: String,
         enum: [
             'blanco',
+            'celeste',
             'negro',
             'naranja',
             'gris/plata',
