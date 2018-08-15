@@ -98,6 +98,7 @@ router.get('/', (req, res) => {
     })
 })
 
+// obtener filtros de los coches
 router.get('/filtros', (req, res) => {
 
     let filtros = {
@@ -220,10 +221,12 @@ router.post('/', upload.array('pictures'), async (req, res) => {
     }
 })
 
-// actualizar coche
-router.put('/:id', upload.array('pictures'), (req, res) => {
+// actualizar datos del coche
+router.put('/:id/data', (req, res) => {
 
     let fields = req.body
+
+    console.log(req.body.picturesToDelete)
 
     Car.findOne({_id: req.params.id})
     .exec(async (err, car) => {
@@ -242,18 +245,13 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
 
                 // elimina la foto del sistema de archivos del servidor
                 fs.unlink(`uploads/${pic}`, err => {
-                    if (err) console.error(err)
-
-                    console.log('archivo eliminado')
+                    if (err) {
+                        console.error(err)
+                    } else {
+                        console.log('archivo eliminado')
+                    }
                 })
             })
-        }
-
-        // si se van a subir fotos nuevas
-        if (req.files.length > 0) {
-            let newPictures = req.files.map(pic => `${pic.filename}`)
-
-            car.pictures = car.pictures.concat(newPictures)
         }
 
         // si se va a modificar la descripción del coche
@@ -278,8 +276,35 @@ router.put('/:id', upload.array('pictures'), (req, res) => {
     })
 })
 
-router.delete('/:id', (req, res) => {
+// actualizar fotos del coche
+router.put('/:id/pictures', upload.array('pictures'), (req, res) => {
 
+    Car.findOne({_id: req.params.id})
+    .exec(async (err, car) => {
+        if (err) return res.status(500).send(err)
+
+        // si el coche no existe en la base de datos
+        if (car == null) return res.status(404).send('El coche no existe')
+
+        // si se van a subir fotos nuevas
+        if (req.files.length > 0) {
+            let newPictures = req.files.map(pic => `${pic.filename}`)
+
+            car.pictures = car.pictures.concat(newPictures)
+        }
+
+        // guarda el coche en la db
+        try {
+            let updatedCar = await car.save()
+            res.status(200).send(updatedCar)
+        } catch (err) {
+            res.status(500).send(err)
+        }
+    })
+})
+
+// eliminar coche
+router.delete('/:id', (req, res) => {
     // mejorar la implementacion del borrado
     Car.deleteOne({ _id: req.params.id }, (err, response) => {
         if(err) return res.status(500).send(err)
