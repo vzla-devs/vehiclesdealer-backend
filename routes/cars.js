@@ -266,6 +266,9 @@ router.put('/:id/data', (req, res) => {
         // si se va a modificar el estado del coche
         if (fields.status != undefined) car.status = fields.status
 
+        // si se va a modificar el kilometraje del coche
+        if (fields.kilometers != undefined) car.kilometers = fields.kilometers
+
         // guarda el coche en la db
         try {
             let updatedCar = await car.save()
