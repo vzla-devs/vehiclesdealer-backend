@@ -7,8 +7,8 @@ const cors = require('cors')
 app.use('/api/static', express.static('uploads'))
 
 app.use(cors()) // para manejar solicitudes Cross-origin
-app.use(bodyParser.json()) // para parsear json
-app.use(bodyParser.urlencoded({ extended: true })) // para parsear application/x-www-form-urlencoded
+app.use(bodyParser.json({limit: '50mb'})) // para parsear json
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })) // para parsear application/x-www-form-urlencoded
 
 // mongoose
 var mongoose = require('mongoose')
@@ -19,7 +19,12 @@ const db = mongoose.connection
 
 // rutas
 const cars = require('./routes/cars')
+const features = require('./routes/features')
+const services = require('./routes/services')
+
 app.use('/api/coches', cars)
+app.use('/api/caracteristicas', features)
+app.use('/api/servicios', services)
 
 // conexión con mongoDB
 db.on('error', console.error.bind(console, 'Error de conexión:'))

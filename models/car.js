@@ -47,15 +47,6 @@ let CarSchema = new Schema({
         lowercase: true,
         required: [true, 'Modelo requerido']
     },
-    status: {
-        type: String,
-        enum: [
-            'activo',
-            'inactivo'
-        ],
-        default: 'activo',
-        required: [true, 'Estado del coche requerido']
-    },
     // descripción
     description: {
         type: String,
@@ -67,7 +58,9 @@ let CarSchema = new Schema({
         type: String,
         enum: [
             'blanco',
+            'bronce',
             'celeste',
+            'champagne',
             'negro',
             'naranja',
             'gris/plata',
@@ -77,6 +70,7 @@ let CarSchema = new Schema({
             'verde',
             'beige',
             'rosado',
+            'marrón',
             'morado',
             'lima',
             'vinotinto'
@@ -128,11 +122,18 @@ let CarSchema = new Schema({
         min: [0, 'El precio no puede ser negativo'],
         required: [true, 'Precio requerido']
     },
-    // equipamiento
-    equipment: [
+    // características
+    features: [
         {
-            type: String,
-            lowercase: true
+            type: Schema.Types.ObjectId,
+            ref: 'Feature'
+        }
+    ],
+    // servicios
+    services: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Service'
         }
     ],
     featured_picture: {
