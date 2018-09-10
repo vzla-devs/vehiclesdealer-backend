@@ -1,8 +1,18 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-// modelo para los coches
-let CarSchema = new Schema({
+// modelo para los vehículos
+let VehicleSchema = new Schema({
+    // tipo de vehículo
+    type: {
+        type: String,
+        enum: [
+            'car',
+            'motorcycle'
+        ],
+        lowercase: true,
+        required: [true, 'Tipo requerido']
+    },
     // marca
     make: {
         type: String,
@@ -36,7 +46,57 @@ let CarSchema = new Schema({
             'suzuki',
             'toyota',
             'volkswagen',
-            'volvo'
+            'volvo',
+            // motos
+            'Aeon',
+            'Adly',
+            'Alfer',
+            'Aprilia',
+            'Atala',
+            'Bajaj',
+            'Benelli',
+            'Beta',
+            'Bimota',
+            'BJR',
+            'Bombardier',
+            'Buell',
+            'Bultaco',
+            'Cagiva',
+            'CSR',
+            'Daelim',
+            'Derbi',
+            'DKW',
+            'Ducati',
+            'Factory Bike',
+            'Fantic',
+            'Gasgas',
+            'Gilera',
+            'Hanway',
+            'Harley Davidson',
+            'HM',
+            'HRD',
+            'Husaberg',
+            'Husqvarna',
+            'Hyosung',
+            'Indian',
+            'Italjet',
+            'Kawasaki',
+            'Keeway',
+            'KTM',
+            'Kymco',
+            'Lambretta',
+            'Laverda',
+            'Leonart',
+            'LML',
+            'Malaguti',
+            'Mecatecno',
+            'Merlin',
+            'Mobylette',
+            'Moto Guzzi',
+            'Motogac',
+            'Piaggio',
+            'Universal Motor',
+            'Yamaha'
         ],
         lowercase: true,
         required: [true, 'Marca requerida']
@@ -81,7 +141,7 @@ let CarSchema = new Schema({
     // año
     year: {
         type: Number,
-        min: [1990, 'El año debe ser mayor a 1990'],
+        min: [1980, 'El año debe ser mayor a 1980'],
         required: [true, 'Año de matriculación requerido']
     },
     // kilometros
@@ -114,7 +174,6 @@ let CarSchema = new Schema({
             'manual'
         ],
         lowercase: true,
-        required: [true, 'Transmisión requerida']
     },
     // precio
     price: {
@@ -139,7 +198,7 @@ let CarSchema = new Schema({
     featured_picture: {
         type: String
     },
-    // fotos del coche
+    // fotos del vehículo
     pictures: [
         {
             type: String
@@ -150,4 +209,4 @@ let CarSchema = new Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Car', CarSchema)
+module.exports = mongoose.model('Vehicle', VehicleSchema)

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Car = require('../models/car')
+const Vehicle = require('../models/vehicle')
 const fs = require('fs')
 const path = require('path')
 const multer = require('multer')
@@ -24,10 +24,15 @@ const storage = multer.diskStorage({
    
 const upload = multer({ storage: storage })
 
-// obtener coches
+// obtener vehículos
 router.get('/', (req, res) => {
 
     let filters = {}
+
+    // si filtra por tipo de vehículo
+    if (req.query.type !== undefined) {
+        filters.type = req.query.type
+    }
 
     // si filtra por marca
     if (req.query.make !== undefined) {
@@ -44,7 +49,7 @@ router.get('/', (req, res) => {
         filters.transmission = req.query.transmission
     }
 
-    // si filtra por añor
+    // si filtra por año
     if (req.query.minYear !== undefined || req.query.maxYear !== undefined) {
         
         let yearRange = {}
@@ -79,11 +84,9 @@ router.get('/', (req, res) => {
 
         filters.kilometers = kilometersRange
     }
-
-    //req.query contiene la query que se arma con los filtros para la búsqueda de los coches
-    console.log(filters)
     
-    Car.find(filters, {
+    Vehicle.find(filters, {
+        type: 1,
         make: 1,
         model: 1,
         color: 1,
@@ -94,41 +97,48 @@ router.get('/', (req, res) => {
         transmission: 1, 
         price: 1,
         pictures: 1
-    }).exec((err, cars) => {
+    }).exec((err, vehicles) => {
 
         if (err) return res.status(500).send(err)
 
-        cars = cars.sort((a, b) => {
+        vehicles = vehicles.sort((a, b) => {
             if (a.make > b.make) return 1;
         })
 
-        res.status(200).send(cars)
+        res.status(200).send(vehicles)
     })
 })
 
-// obtener filtros de los coches
+// obtener filtros de los vehículos
 router.get('/filtros', (req, res) => {
-
-    Car.find({}, {
+    Vehicle.find({}, {
         _id: 0,
+        type: 1,
         make: 1,
         fuel_type: 1,
         year: 1,
         price: 1,
         kilometers: 1
-    }).exec((err, cars) => {
+    }).exec((err, vehicles) => {
 
         if (err) return res.status(500).send(err)
 
-        let makes = cars.map((car) => car.make)
+        let types = vehicles.map(vehicle => vehicle.type)
 
-        let fuel_types = cars.map((car) => car.fuel_type)
+        let makes = vehicles.map(vehicle => vehicle.make)
 
-        let years = cars.map((car) => car.year)
+        let fuel_types = vehicles.map(vehicle => vehicle.fuel_type)
 
-        let prices = cars.map((car) => car.price)
+        let years = vehicles.map(vehicle => vehicle.year)
 
-        let kilometers = cars.map((car) => car.kilometers)
+        let prices = vehicles.map(vehicle => vehicle.price)
+
+        let kilometers = vehicles.map(vehicle => vehicle.kilometers)
+
+        // ordena los tipos de vehículos disponibles
+        types = types.sort((a, b) => {
+            if (a > b) return 1;
+        })
 
         // ordena las marcas disponibles
         makes = makes.sort((a, b) => {
@@ -145,7 +155,7 @@ router.get('/filtros', (req, res) => {
             if (a > b) return 1;
         })
 
-        // ordena los precios de los coches disponibles
+        // ordena los precios de los vehículos disponibles
         prices = prices.sort((a, b) => {
             if (a > b) return 1;
         })
@@ -154,6 +164,9 @@ router.get('/filtros', (req, res) => {
         kilometers = kilometers.sort((a, b) => {
             if (a > b) return 1;
         })
+
+        // quita los tipos de vehículos repetidos
+        types = [ ...new Set(types) ]
 
         // quita las marcas repetidas
         makes = [ ...new Set(makes) ]
@@ -171,6 +184,7 @@ router.get('/filtros', (req, res) => {
         kilometers = [ ...new Set(kilometers) ]
 
         res.status(200).send({
+            types,
             makes,
             fuel_types,
             years,
@@ -180,32 +194,32 @@ router.get('/filtros', (req, res) => {
     })
 })
 
-// obtener coche en específico
+// obtener un vehículo en específico
 router.get('/:id', (req, res) => {
-    Car.findOne({_id: req.params.id})
+    Vehicle.findOne({_id: req.params.id})
     .populate('features')
     .populate('services')
-    .exec((err, car) => {
+    .exec((err, vehicle) => {
         if (err) return res.status(500).send(err)
 
         // si el coche no existe en la base de datos
-        if (car == null) return res.status(404).send('El coche no existe')
+        if (vehicle == null) return res.status(404).send('El vehículo no existe')
         
         // si el coche sí existe en la base de datos
-        res.status(200).send(car)
+        res.status(200).send(vehicle)
     })
 })
 
-// crear coche
+// crear vehículo
 router.post('/', async (req, res) => {
     const fields = req.body
     console.log('campos que llegan', req.body)
-    // crea el coche
-    let car = new Car({
+    // crea el vehículo
+    let vehicle = new Vehicle({
+        type: fields.type,
         make: fields.make,
         year: parseInt(fields.year),
         fuel_type: fields.fuelType,
-        transmission: fields.transmission,
         model: fields.model,
         color: fields.color,
         kilometers: parseInt(fields.kilometers),
@@ -217,73 +231,78 @@ router.post('/', async (req, res) => {
         services: fields.services
     })
 
-    // guarda el coche en la db
+    // si es un vehículo, se especifica la transmisión
+    if (fields.type === 'car') {
+        vehicle.transmission = fields.transmission
+    }
+
+    // guarda el vehículo en la db
     try {
-        let newCar = await car.save()
-        res.status(201).send(newCar)
-    // si ocurre un error al intentar guardar el coche en la base de datos
+        let newVehicle = await vehicle.save()
+        res.status(201).send(newVehicle)
+    // si ocurre un error al intentar guardar el vehículo en la base de datos
     } catch (err) {
         console.log(err)
         res.status(500).send(err)
     }
 })
 
-// actualizar datos del coche
+// actualizar datos del vehículo
 router.put('/:id/data', (req, res) => {
 
     let fields = req.body
     console.log(req.body.picturesToDelete)
 
-    Car.findOne({_id: req.params.id})
-    .exec(async (err, car) => {
+    Vehicle.findOne({_id: req.params.id})
+    .exec(async (err, vehicle) => {
         if (err) return res.status(500).send(err)
 
         // si el coche no existe en la base de datos
-        if (car === null) return res.status(404).send('El coche no existe')
+        if (vehicle === null) return res.status(404).send('El vehículo no existe')
 
         // si se va a modificar la marca del coche
-        if (fields.make !== undefined) car.make = fields.make
+        if (fields.make !== undefined) vehicle.make = fields.make
 
         // si se va a modificar el año del coche
-        if (fields.year !== undefined) car.year = fields.year
+        if (fields.year !== undefined) vehicle.year = fields.year
 
         // si se va a modificar el tipo de combustible del coche
-        if (fields.fuelType !== undefined) car.fuel_type = fields.fuelType
+        if (fields.fuelType !== undefined) vehicle.fuel_type = fields.fuelType
 
         // si se va a modificar la transmisión del coche
-        if (fields.transmission !== undefined) car.transmission = fields.transmission
+        if (fields.transmission !== undefined) vehicle.transmission = fields.transmission
 
         // si se va a modificar el color del coche
-        if (fields.color !== undefined) car.color = fields.color
+        if (fields.color !== undefined) vehicle.color = fields.color
 
         // si se va a modificar el modelo del coche
-        if (fields.model !== undefined) car.model = fields.model
+        if (fields.model !== undefined) vehicle.model = fields.model
 
         // si se va a modificar el kilometraje del coche
-        if (fields.kilometers !== undefined) car.kilometers = fields.kilometers
+        if (fields.kilometers !== undefined) vehicle.kilometers = fields.kilometers
 
         // si se va a modificar la potencia del coche
-        if (fields.horsepower !== undefined) car.horsepower = fields.horsepower
+        if (fields.horsepower !== undefined) vehicle.horsepower = fields.horsepower
 
         // si se va a modificar el precio del coche
-        if (fields.price !== undefined) car.price = parseInt(fields.price, 10)
+        if (fields.price !== undefined) vehicle.price = parseInt(fields.price, 10)
 
         // si se van a modificar las características del coche
-        if (fields.features !== undefined) car.features = fields.features
+        if (fields.features !== undefined) vehicle.features = fields.features
 
         // se se van a modificar los servicios del coche
-        if (fields.services !== undefined) car.services = fields.services
+        if (fields.services !== undefined) vehicle.services = fields.services
 
         // si se va a modificar la descripción del coche
-        if (fields.description !== undefined) car.description = fields.description
+        if (fields.description !== undefined) vehicle.description = fields.description
 
         // si se van a eliminar fotos del coche
         if (fields.picturesToDelete !== undefined) {
             // eliminando fotos previas del coche
             fields.picturesToDelete.forEach(removedPic => {
-                let index = car.pictures.findIndex(pic => pic === removedPic)
+                let index = vehicle.pictures.findIndex(pic => pic === removedPic)
                 // elimina la foto del array de fotos del coche
-                car.pictures.splice(index, 1)
+                vehicle.pictures.splice(index, 1)
                 // elimina la foto del sistema de archivos del servidor
                 fs.unlink(`uploads/${removedPic}`, err => {
                     if (err) {
@@ -297,35 +316,35 @@ router.put('/:id/data', (req, res) => {
 
         // guarda el coche en la db
         try {
-            let updatedCar = await car.save()
-            res.status(200).send(updatedCar)
+            let updatedVehicle = await vehicle.save()
+            res.status(200).send(updatedVehicle)
         } catch (err) {
             res.status(500).send(err)
         }
     })
 })
 
-// actualizar fotos del coche
+// actualizar fotos del vehículo
 router.put('/:id/pictures', upload.array('pictures'), (req, res) => {
     console.log('imágenes nuevas', req.files)
 
-    Car.findOne({_id: req.params.id})
-    .exec(async (err, car) => {
+    Vehicle.findOne({_id: req.params.id})
+    .exec(async (err, vehicle) => {
         if (err) return res.status(500).send(err)
 
         // si el coche no existe en la base de datos
-        if (car === null) return res.status(404).send('El coche no existe')
+        if (vehicle === null) return res.status(404).send('El vehículo no existe')
 
         // si se van a subir fotos nuevas
         if (req.files.length > 0) {
             let newPictures = req.files.map(pic => `${pic.filename}`)
-            car.pictures = [...car.pictures, ...newPictures]
+            vehicle.pictures = [...vehicle.pictures, ...newPictures]
         }
 
-        // guarda el coche en la db
+        // guarda el vehículo en la db
         try {
-            let updatedCar = await car.save()
-            res.status(200).send(updatedCar)
+            let updatedVehicle = await vehicle.save()
+            res.status(200).send(updatedVehicle)
         } catch (err) {
             res.status(500).send(err)
         }
@@ -335,14 +354,14 @@ router.put('/:id/pictures', upload.array('pictures'), (req, res) => {
 // eliminar coche
 router.delete('/:id', (req, res) => {
     // mejorar la implementacion del borrado
-    Car.findOne({_id: req.params.id})
-    .exec((err, car) => {
+    Vehicle.findOne({_id: req.params.id})
+    .exec((err, vehicle) => {
         if (err) return res.status(500).send(err)
 
-        // si el coche no existe en la base de datos
-        if (car === null) return res.status(404).send('El coche no existe')
+        // si el vehículo no existe en la base de datos
+        if (vehicle === null) return res.status(404).send('El vehículo no existe')
 
-        car.pictures.forEach(pic => {
+        vehicle.pictures.forEach(pic => {
             fs.unlink(`uploads/${pic}`, (err) => {
                 if (err) console.log(err)
 
@@ -350,9 +369,9 @@ router.delete('/:id', (req, res) => {
             })
         })
 
-        Car.deleteOne({ _id: req.params.id }, (err, response) => {
+        Vehicle.deleteOne({ _id: req.params.id }, (err, response) => {
             if(err) return res.status(500).send(err)
-    
+
             res.status(200).send(response)
         })
     })

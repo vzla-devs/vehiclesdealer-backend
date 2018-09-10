@@ -18,11 +18,11 @@ mongoose.Promise = global.Promise
 const db = mongoose.connection
 
 // rutas
-const cars = require('./routes/cars')
+const vehicles = require('./routes/vehicles')
 const features = require('./routes/features')
 const services = require('./routes/services')
 
-app.use('/api/coches', cars)
+app.use('/api/vehiculos', vehicles)
 app.use('/api/caracteristicas', features)
 app.use('/api/servicios', services)
 

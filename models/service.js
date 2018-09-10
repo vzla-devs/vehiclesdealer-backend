@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-// modelo para el equipamiento
+// modelo para los servicios
 let ServiceSchema = new Schema({
     spanish: {
         type: String,
