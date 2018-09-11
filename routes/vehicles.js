@@ -248,7 +248,7 @@ router.post('/', async (req, res) => {
 })
 
 // actualizar datos del vehículo
-router.put('/:id/data', (req, res) => {
+router.put('/:id/datos', (req, res) => {
 
     let fields = req.body
     console.log(req.body.picturesToDelete)
@@ -325,7 +325,7 @@ router.put('/:id/data', (req, res) => {
 })
 
 // actualizar fotos del vehículo
-router.put('/:id/pictures', upload.array('pictures'), (req, res) => {
+router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     console.log('imágenes nuevas', req.files)
 
     Vehicle.findOne({_id: req.params.id})
