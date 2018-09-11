@@ -6,30 +6,8 @@ router.get('/', (req, res) => {
     Service.find({}).exec((err, services) => {
         if (err) return res.status(500).send(err)
 
-        service = services.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1;
-        })
-        res.status(200).send(services)
-    })
-})
-
-router.get('/coches', (req, res) => {
-    Service.find({ type: 'car' }).exec((err, services) => {
-        if (err) return res.status(500).send(err)
-
-        service = services.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1;
-        })
-        res.status(200).send(services)
-    })
-})
-
-router.get('/motos', (req, res) => {
-    Service.find({ type: 'motorcycle' }).exec((err, services) => {
-        if (err) return res.status(500).send(err)
-
-        service = services.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1;
+        services = services.sort((a, b) => {
+            if (a.spanish > b.spanish) return 1
         })
         res.status(200).send(services)
     })
@@ -40,8 +18,7 @@ router.post('/', async(req, res) => {
     // mapea todas las características para guardarlas individualmente
     let newServices = await services.map(async s => {
         let service = new Service ({
-            type: s.type,
-            spanish: s.spanish
+            spanish: s
         })
         // guarda el vehículo en la db
         try {

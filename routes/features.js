@@ -7,7 +7,29 @@ router.get('/', (req, res) => {
         if (err) return res.status(500).send(err)
 
         features = features.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1;
+            if (a.spanish > b.spanish) return 1
+        })
+        res.status(200).send(features)
+    })
+})
+
+router.get('/coches', (req, res) => {
+    Feature.find({ type: 'car' }).exec((err, features) => {
+        if (err) return res.status(500).send(err)
+
+        features = features.sort((a, b) => {
+            if (a.spanish > b.spanish) return 1
+        })
+        res.status(200).send(features)
+    })
+})
+
+router.get('/motos', (req, res) => {
+    Feature.find({ type: 'motorcycle' }).exec((err, features) => {
+        if (err) return res.status(500).send(err)
+
+        features = features.sort((a, b) => {
+            if (a.spanish > b.spanish) return 1
         })
         res.status(200).send(features)
     })
@@ -16,14 +38,15 @@ router.get('/', (req, res) => {
 router.post('/', async(req, res) => {
     const features = req.body.features
     // mapea todas las características para guardarlas individualmente
-    let newFeatures = await features.map(async element => {
+    let newFeatures = await features.map(async f => {
         let feature = new Feature ({
-            spanish: element.spanish
+            type: f.type,
+            spanish: f.spanish
         })
-        // guarda el coche en la db
+        // guarda la característica en la db
         try {
             return feature.save()
-        // si ocurre un error al intentar guardar el coche en la base de datos
+        // si ocurre un error al intentar guardar la característica en la base de datos
         } catch (err) {
             return err
         }
