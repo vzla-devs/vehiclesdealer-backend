@@ -102,7 +102,8 @@ router.get('/', (req, res) => {
         if (err) return res.status(500).send(err)
 
         vehicles = vehicles.sort((a, b) => {
-            if (a.make > b.make) return 1;
+            if (a.make > b.make) return 1
+            return 0
         })
 
         res.status(200).send(vehicles)
@@ -137,32 +138,38 @@ router.get('/filtros', (req, res) => {
 
         // ordena los tipos de vehículos disponibles
         types = types.sort((a, b) => {
-            if (a > b) return 1;
+            if (a > b) return 1
+            return 0
         })
 
         // ordena las marcas disponibles
         makes = makes.sort((a, b) => {
-            if (a > b) return 1;
+            if (a > b) return 1
+            return 0
         })
 
         // ordena los tipos de combustible disponibles
         fuel_types = fuel_types.sort((a, b) => {
-            if (a > b) return 1;
+            if (a > b) return 1
+            return 0
         })
 
         // ordena los años de los coches disponibles
         years = years.sort((a, b) => {
-            if (a > b) return 1;
+            if (a > b) return 1
+            return 0
         })
 
         // ordena los precios de los vehículos disponibles
         prices = prices.sort((a, b) => {
-            if (a > b) return 1;
+            if (a > b) return 1
+            return 0
         })
 
         // ordena los kilómetros disponibles
         kilometers = kilometers.sort((a, b) => {
-            if (a > b) return 1;
+            if (a > b) return 1
+            return 0
         })
 
         // quita los tipos de vehículos repetidos

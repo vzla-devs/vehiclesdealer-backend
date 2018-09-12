@@ -62,6 +62,7 @@ let VehicleSchema = new Schema({
             'Buell',
             'Bultaco',
             'Cagiva',
+            'Colibrí',
             'CSR',
             'Daelim',
             'Derbi',

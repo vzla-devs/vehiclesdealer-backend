@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 
         services = services.sort((a, b) => {
             if (a.spanish > b.spanish) return 1
+            return 0
         })
         res.status(200).send(services)
     })
