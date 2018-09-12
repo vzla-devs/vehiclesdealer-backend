@@ -55,7 +55,7 @@ router.post('/', async(req, res) => {
             return err
         }
     })
-    res.status(200).send('ok')
+    res.status(200).send(newFeatures)
 })
 
 module.exports = router
