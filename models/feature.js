@@ -14,7 +14,6 @@ let FeatureSchema = new Schema({
     },
     spanish: {
         type: String,
-        unique: true,
         lowercase: true,
         required: [true, 'Descripción requerida']
     }
