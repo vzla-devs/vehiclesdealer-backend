@@ -175,6 +175,7 @@ let VehicleSchema = new Schema({
             'manual'
         ],
         lowercase: true,
+        required: [true, 'Transmisión requerida']
     },
     // precio
     price: {

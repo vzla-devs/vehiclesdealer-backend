@@ -227,6 +227,7 @@ router.post('/', async (req, res) => {
         make: fields.make,
         year: parseInt(fields.year),
         fuel_type: fields.fuelType,
+        transmission: fields.transmission,
         model: fields.model,
         color: fields.color,
         kilometers: parseInt(fields.kilometers),
@@ -237,11 +238,6 @@ router.post('/', async (req, res) => {
         features: fields.features,
         services: fields.services
     })
-
-    // si es un vehículo, se especifica la transmisión
-    if (fields.type === 'car') {
-        vehicle.transmission = fields.transmission
-    }
 
     // guarda el vehículo en la db
     try {
