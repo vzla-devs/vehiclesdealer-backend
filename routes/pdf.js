@@ -25,7 +25,9 @@ router.get('/:picture', (req, res) => {
     fs.readFile(`uploads/${req.params.picture}`, (err, data) => {
         if (err) return res.status(500).send(err)
         const base64 = data.toString('base64')
-        return res.status(200).send(base64.toString())
+        return res.status(200).send({
+            base64
+        })
       })
 })
 
