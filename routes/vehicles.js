@@ -155,7 +155,7 @@ router.get('/filtros', (req, res) => {
             return 0
         })
 
-        // ordena los años de los coches disponibles
+        // ordena los años de los vehículos disponibles
         years = years.sort((a, b) => {
             if (a > b) return 1
             return 0
@@ -210,10 +210,10 @@ router.get('/:id', (req, res) => {
     .exec((err, vehicle) => {
         if (err) return res.status(500).send(err)
 
-        // si el coche no existe en la base de datos
+        // si el vehículo no existe en la base de datos
         if (vehicle == null) return res.status(404).send('El vehículo no existe')
         
-        // si el coche sí existe en la base de datos
+        // si el vehículo sí existe en la base de datos
         res.status(200).send(vehicle)
     })
 })
@@ -221,7 +221,6 @@ router.get('/:id', (req, res) => {
 // crear vehículo
 router.post('/', async (req, res) => {
     const fields = req.body
-    console.log('campos que llegan', req.body)
     // crea el vehículo
     let vehicle = new Vehicle({
         type: fields.type,
@@ -237,7 +236,8 @@ router.post('/', async (req, res) => {
         pictures: [],
         description: fields.description,
         features: fields.features,
-        services: fields.services
+        services: fields.services,
+        cylinders: fields.cylinders
     })
 
     // guarda el vehículo en la db
@@ -261,51 +261,54 @@ router.put('/:id/datos', (req, res) => {
     .exec(async (err, vehicle) => {
         if (err) return res.status(500).send(err)
 
-        // si el coche no existe en la base de datos
+        // si el vehículo no existe en la base de datos
         if (vehicle === null) return res.status(404).send('El vehículo no existe')
 
-        // si se va a modificar la marca del coche
+        // si se va a modificar la marca del vehículo
         if (fields.make !== undefined) vehicle.make = fields.make
 
-        // si se va a modificar el año del coche
+        // si se va a modificar el año del vehículo
         if (fields.year !== undefined) vehicle.year = fields.year
 
-        // si se va a modificar el tipo de combustible del coche
+        // si se va a modificar el tipo de combustible del vehículo
         if (fields.fuelType !== undefined) vehicle.fuel_type = fields.fuelType
 
-        // si se va a modificar la transmisión del coche
+        // si se va a modificar la transmisión del vehículo
         if (fields.transmission !== undefined) vehicle.transmission = fields.transmission
 
-        // si se va a modificar el color del coche
+        // si se va a modificar el color del vehículo
         if (fields.color !== undefined) vehicle.color = fields.color
 
-        // si se va a modificar el modelo del coche
+        // si se va a modificar el modelo del vehículo
         if (fields.model !== undefined) vehicle.model = fields.model
 
-        // si se va a modificar el kilometraje del coche
+        // si se va a modificar el kilometraje del vehículo
         if (fields.kilometers !== undefined) vehicle.kilometers = fields.kilometers
 
-        // si se va a modificar la potencia del coche
+        // si se va a modificar la potencia del vehículo
         if (fields.horsepower !== undefined) vehicle.horsepower = fields.horsepower
 
-        // si se va a modificar el precio del coche
+        // si se va a modificar el precio del vehículo
         if (fields.price !== undefined) vehicle.price = parseInt(fields.price, 10)
 
-        // si se van a modificar las características del coche
+        // si se van a modificar las características del vehículo
         if (fields.features !== undefined) vehicle.features = fields.features
 
-        // se se van a modificar los servicios del coche
+        // se se van a modificar los servicios del vehículo
         if (fields.services !== undefined) vehicle.services = fields.services
 
-        // si se va a modificar la descripción del coche
+        // si se va a modificar la descripción del vehículo
         if (fields.description !== undefined) vehicle.description = fields.description
 
-        // si se van a eliminar fotos del coche
+        // si se va a modificar la cilindrada del vehículo
+        if (fields.cylinders !== undefined) vehicle.cylinders = fields.cylinders
+
+        // si se van a eliminar fotos del vehículo
         if (fields.picturesToDelete !== undefined) {
-            // eliminando fotos previas del coche
+            // eliminando fotos previas del vehículo
             fields.picturesToDelete.forEach(removedPic => {
                 let index = vehicle.pictures.findIndex(pic => pic === removedPic)
-                // elimina la foto del array de fotos del coche
+                // elimina la foto del array de fotos del vehículo
                 vehicle.pictures.splice(index, 1)
                 // elimina la foto del sistema de archivos del servidor
                 fs.unlink(`uploads/${removedPic}`, err => {
@@ -318,7 +321,7 @@ router.put('/:id/datos', (req, res) => {
             })
         }
 
-        // guarda el coche en la db
+        // guarda el vehículo en la db
         try {
             let updatedVehicle = await vehicle.save()
             res.status(200).send(updatedVehicle)
@@ -330,7 +333,7 @@ router.put('/:id/datos', (req, res) => {
 
 // actualizar fotos del vehículo
 router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
-    // redimensionando las imágenes subidas del coche
+    // redimensionando las imágenes subidas del vehículo
     req.files.forEach(file => {
         sharp(`${__dirname}/uploads/${file.filename}`)
         .resize(1440, 1080)
@@ -346,7 +349,7 @@ router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     .exec(async (err, vehicle) => {
         if (err) return res.status(500).send(err)
 
-        // si el coche no existe en la base de datos
+        // si el vehículo no existe en la base de datos
         if (vehicle === null) return res.status(404).send('El vehículo no existe')
 
         // si se van a subir fotos nuevas
@@ -365,7 +368,7 @@ router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     })
 })
 
-// eliminar coche
+// eliminar vehículo
 router.delete('/:id', (req, res) => {
     // mejorar la implementacion del borrado
     Vehicle.findOne({_id: req.params.id})

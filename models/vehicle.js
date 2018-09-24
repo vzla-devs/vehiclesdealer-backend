@@ -208,7 +208,14 @@ let VehicleSchema = new Schema({
         {
             type: String
         }
-    ]
+    ],
+    // cilindrada
+    cylinders: {
+        type: Number,
+        min: [0, 'La cilindrada no puede ser negativa'],
+        default: 0,
+        required: [true, 'Cilindrada requerida']
+    }
 },
 {
     timestamps: true
