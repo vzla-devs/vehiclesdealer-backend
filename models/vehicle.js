@@ -149,6 +149,7 @@ let VehicleSchema = new Schema({
     kilometers: {
         type: Number,
         min: [0, 'El kilometraje no puede ser negativo'],
+        default: 0,
         required: [true, 'Kilometraje requerido']
     },
     // tipo de combustible
@@ -165,6 +166,8 @@ let VehicleSchema = new Schema({
     // potencia
     horsepower: {
         type: Number,
+        min: [0, 'La potencia no puede ser negativa'],
+        default: 0,
         required: [true, 'Potencia requerida']
     },
     // transmisión
