@@ -4,6 +4,7 @@ const Vehicle = require('../models/vehicle')
 const fs = require('fs')
 const path = require('path')
 const multer = require('multer')
+const sharp = require('sharp')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads')
@@ -329,7 +330,17 @@ router.put('/:id/datos', (req, res) => {
 
 // actualizar fotos del vehículo
 router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
-    console.log('imágenes nuevas', req.files)
+    // redimensionando las imágenes subidas del coche
+    req.files.forEach(file => {
+        sharp(`${__dirname}/uploads/${file.filename}`)
+        .resize(1440, 1080)
+        .toBuffer(`${__dirname}/uploads/${file.filename}`, (err, buffer) => {
+            if (err) throw err
+            fs.writeFile(`${__dirname}/uploads/${file.filename}`, buffer, err => {
+                if (err) throw err
+            })
+        })
+    })
 
     Vehicle.findOne({_id: req.params.id})
     .exec(async (err, vehicle) => {
