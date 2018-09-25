@@ -142,7 +142,7 @@ let VehicleSchema = new Schema({
     // año
     year: {
         type: Number,
-        min: [1980, 'El año debe ser mayor a 1980'],
+        min: [1968, 'El año debe ser mayor a 1980'],
         required: [true, 'Año de matriculación requerido']
     },
     // kilometros
