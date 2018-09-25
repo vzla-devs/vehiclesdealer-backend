@@ -334,7 +334,7 @@ router.put('/:id/datos', (req, res) => {
 // actualizar fotos del vehículo
 router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     // redimensionando las imágenes subidas del vehículo
-    req.files.forEach(file => {
+    /*req.files.forEach(file => {
         sharp(`${__dirname}/uploads/${file.filename}`)
         .resize(1440, 1080)
         .toBuffer(`${__dirname}/uploads/${file.filename}`, (err, buffer) => {
@@ -343,7 +343,7 @@ router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
                 if (err) throw err
             })
         })
-    })
+    })*/
 
     Vehicle.findOne({_id: req.params.id})
     .exec(async (err, vehicle) => {
