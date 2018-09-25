@@ -336,12 +336,12 @@ router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     // redimensionando las imágenes subidas del vehículo
     req.files.forEach(file => {
         console.log(file)
-        sharp(`${__dirname}/uploads/${file.filename}`)
+        sharp(`uploads/${file.filename}`)
         .withMetadata()
         .resize(1440, 1080)
-        .toBuffer(`${__dirname}/uploads/${file.filename}`, (err, data) => {
+        .toBuffer(`uploads/${file.filename}`, (err, data) => {
             if (err) throw err
-            fs.writeFile(`${__dirname}/uploads/${file.filename}`, data, 'binary', err => {
+            fs.writeFile(`uploads/${file.filename}`, data, 'binary', err => {
                 if (err) throw err
             })
         })
