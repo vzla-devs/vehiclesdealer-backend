@@ -14,7 +14,7 @@ router.put('/', async(req, res) => {
     const {
         mobilePhone,
         mainPhone,
-        email,
+        emails,
         monday,
         tuesday,
         wednesday,
@@ -26,7 +26,7 @@ router.put('/', async(req, res) => {
     let contact = new Contact ({
         mobilePhone: mobilePhone,
         mainPhone: mainPhone,
-        email: email,
+        emails: emails,
         monday: monday,
         tuesday: tuesday,
         wednesday: wednesday,
