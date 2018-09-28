@@ -13,7 +13,10 @@ let ContactSchema = new Schema({
         min: 9,
         required: [true, 'Número de teléfono requerido']
     },
-    emails: [String],
+    emails: {
+        type: [String],
+        lowercase: true
+    },
     monday: {
         type: String,
         required: [true, 'Horario de lunes requerido']
