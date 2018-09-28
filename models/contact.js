@@ -5,21 +5,20 @@ const Schema = mongoose.Schema
 let ContactSchema = new Schema({
     mobilePhone: {
         type: Number,
-        min: 6,
-        max: 6,
+        min: 9,
         required: [true, 'Número móvil requerido']
     },
     mainPhone: {
         type: Number,
-        min: 6,
-        max: 6,
+        min: 9,
         required: [true, 'Número de teléfono requerido']
     },
-    email: {
-        type: String,
-        lowercase: true,
-        required: [true, 'Correo electrónico requerido']
-    },
+    emails: [
+        {
+            type: String,
+            lowercase: true,
+        }
+    ],
     monday: {
         type: String,
         required: [true, 'Horario de lunes requerido']

@@ -11,9 +11,7 @@ router.get('/', (req, res) => {
 })
 
 router.put('/', (req, res) => {
-    const {
-        text
-    } = req.body
+    const { text } = req.body
 
     About.findOne({})
     .exec(async(err, about) => {
