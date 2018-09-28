@@ -335,7 +335,6 @@ router.put('/:id/datos', (req, res) => {
 router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     // redimensionando las imágenes subidas del vehículo
     req.files.forEach(file => {
-        console.log(file)
         sharp(`uploads/${file.filename}`)
         .withMetadata()
         .resize(1440, 1080)

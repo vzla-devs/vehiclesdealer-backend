@@ -21,12 +21,14 @@ const db = mongoose.connection
 const vehicles = require('./routes/vehicles')
 const features = require('./routes/features')
 const services = require('./routes/services')
+const about = require('./routes/about')
 const contact = require('./routes/contact')
 const pdf = require('./routes/pdf')
 
 app.use('/api/vehiculos', vehicles)
 app.use('/api/caracteristicas', features)
 app.use('/api/servicios', services)
+app.use('/api/historia', about)
 app.use('/api/contacto', contact)
 app.use('/api/pdf', pdf)
 
