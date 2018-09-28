@@ -59,25 +59,6 @@ router.put('/', async(req, res) => {
            res.status(500).send(err)
         }
     })
-
-    let contact = new Contact ({
-        mobilePhone: mobilePhone,
-        mainPhone: mainPhone,
-        emails: emails,
-        monday: monday,
-        tuesday: tuesday,
-        wednesday: wednesday,
-        thursday: thursday,
-        friday: friday,
-        saturday: saturday
-    })
-
-    try {
-        await contact.save()
-        res.status(200).send('OK')
-    } catch (err) {
-       res.status(500).send(err)
-    }
 })
 
 module.exports = router
