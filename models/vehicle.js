@@ -31,6 +31,7 @@ let VehicleSchema = new Schema({
             'jeep',
             'kia',
             'lexus',
+            'maserati',
             'mazda',
             'mercedes-benz',
             'mini',
