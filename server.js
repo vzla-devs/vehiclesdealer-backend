@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })) // para parsea
 
 // mongoose
 var mongoose = require('mongoose')
-const mongoDB = 'mongodb://localhost:27017/moncars'
+const mongoDB = 'mongodb://localhost:27017/avg'
 mongoose.connect(mongoDB, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 const db = mongoose.connection
