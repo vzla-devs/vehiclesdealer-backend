@@ -337,7 +337,7 @@ router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     req.files.forEach(file => {
         sharp(`uploads/${file.filename}`)
         .withMetadata()
-        .resize(1440, 1080)
+        .resize(1920, 1080)
         .toBuffer(`uploads/${file.filename}`, (err, data) => {
             if (err) throw err
             fs.writeFile(`uploads/${file.filename}`, data, 'binary', err => {
