@@ -163,9 +163,11 @@ let VehicleSchema = new Schema({
     fuel_type: {
         type: String,
         enum: [
-            'gasolina',
             'diesel',
-            'gasoil'
+            'gas',
+            'gasolina',
+            'gasoil',
+            'híbrido'
         ],
         lowercase: true,
         required: [true, 'Tipo de combustible requerido']
