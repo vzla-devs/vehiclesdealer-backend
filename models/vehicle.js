@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-// modelo para los vehículos
 let VehicleSchema = new Schema({
-    // tipo de vehículo
     type: {
         type: String,
         enum: [
@@ -13,7 +11,6 @@ let VehicleSchema = new Schema({
         lowercase: true,
         required: [true, 'Tipo requerido']
     },
-    // marca
     make: {
         type: String,
         enum: [
@@ -107,59 +104,32 @@ let VehicleSchema = new Schema({
         lowercase: true,
         required: [true, 'Marca requerida']
     },
-    // modelo
     model: {
         type: String,
         lowercase: true,
         required: [true, 'Modelo requerido']
     },
-    // descripción
     description: {
         type: String,
         lowercase: true,
         required: [true, 'Descripción requerida']
     },
-    // color
     color: {
         type: String,
-        enum: [
-            'blanco',
-            'blanco perla',
-            'bronce',
-            'celeste',
-            'champagne',
-            'negro',
-            'naranja',
-            'gris/plata',
-            'gris humo',
-            'azul',
-            'rojo',
-            'amarillo',
-            'verde',
-            'beige',
-            'rosado',
-            'marrón',
-            'morado',
-            'lima',
-            'vinotinto'
-        ],
         lowercase: true,
         required: [true, 'Color requerido']
     },
-    // año
     year: {
         type: Number,
         min: [1968, 'El año debe ser mayor a 1980'],
         required: [true, 'Año de matriculación requerido']
     },
-    // kilometros
     kilometers: {
         type: Number,
         min: [0, 'El kilometraje no puede ser negativo'],
         default: 0,
         required: [true, 'Kilometraje requerido']
     },
-    // tipo de combustible
     fuel_type: {
         type: String,
         enum: [
@@ -172,14 +142,12 @@ let VehicleSchema = new Schema({
         lowercase: true,
         required: [true, 'Tipo de combustible requerido']
     },
-    // potencia
     horsepower: {
         type: Number,
         min: [0, 'La potencia no puede ser negativa'],
         default: 0,
         required: [true, 'Potencia requerida']
     },
-    // transmisión
     transmission: {
         type: String,
         enum: [
@@ -189,20 +157,17 @@ let VehicleSchema = new Schema({
         lowercase: true,
         required: [true, 'Transmisión requerida']
     },
-    // precio
     price: {
         type: Number,
         min: [0, 'El precio no puede ser negativo'],
         required: [true, 'Precio requerido']
     },
-    // características
     features: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Feature'
         }
     ],
-    // servicios
     services: [
         {
             type: Schema.Types.ObjectId,
@@ -212,13 +177,11 @@ let VehicleSchema = new Schema({
     featured_picture: {
         type: String
     },
-    // fotos del vehículo
     pictures: [
         {
             type: String
         }
     ],
-    // cilindrada
     cylinders: {
         type: Number,
         min: [0, 'La cilindrada no puede ser negativa'],
