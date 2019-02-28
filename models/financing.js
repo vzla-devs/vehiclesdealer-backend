@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 let FinancingSchema = new Schema({
     amount: {
         type: Number,
-        required: [true, 'Número móvil requerido']
+        required: [true, 'Monto requerido']
     }
 })
 
