@@ -97,7 +97,8 @@ router.get('/', (req, res) => {
         kilometers: 1, 
         transmission: 1, 
         price: 1,
-        pictures: 1
+        pictures: 1,
+        featured: 1
     }).exec((err, vehicles) => {
 
         if (err) return res.status(500).send(err)
