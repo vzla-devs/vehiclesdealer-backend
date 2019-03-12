@@ -98,6 +98,10 @@ let VehicleSchema = new Schema({
         type: Number,
         min: [0, 'La cilindrada no puede ser negativa'],
         default: 0
+    },
+    featured: {
+        type: String,
+        default: ''
     }
 },
 {

@@ -237,7 +237,8 @@ router.post('/', async (req, res) => {
         description: fields.description,
         features: fields.features,
         services: fields.services,
-        cylinders: fields.cylinders
+        cylinders: fields.cylinders,
+        featured: fields.featured
     })
 
     // guarda el vehículo en la db
@@ -302,6 +303,8 @@ router.put('/:id/datos', (req, res) => {
 
         // si se va a modificar la cilindrada del vehículo
         if (fields.cylinders !== undefined) vehicle.cylinders = fields.cylinders
+
+        if (fields.featured !== undefined) vehicle.featured = fields.featured
 
         // si se van a eliminar fotos del vehículo
         if (fields.picturesToDelete !== undefined) {
