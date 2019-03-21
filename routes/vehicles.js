@@ -239,7 +239,8 @@ router.post('/', async (req, res) => {
         features: fields.features,
         services: fields.services,
         cylinders: fields.cylinders,
-        featured: fields.featured
+        featured: fields.featured,
+        emissions: fields.emissions
     })
 
     // guarda el vehículo en la db
@@ -263,49 +264,22 @@ router.put('/:id/datos', (req, res) => {
     .exec(async (err, vehicle) => {
         if (err) return res.status(500).send(err)
 
-        // si el vehículo no existe en la base de datos
         if (vehicle === null) return res.status(404).send('El vehículo no existe')
-
-        // si se va a modificar la marca del vehículo
         if (fields.make !== undefined) vehicle.make = fields.make
-
-        // si se va a modificar el año del vehículo
         if (fields.year !== undefined) vehicle.year = fields.year
-
-        // si se va a modificar el tipo de combustible del vehículo
         if (fields.fuelType !== undefined) vehicle.fuel_type = fields.fuelType
-
-        // si se va a modificar la transmisión del vehículo
         if (fields.transmission !== undefined) vehicle.transmission = fields.transmission
-
-        // si se va a modificar el color del vehículo
         if (fields.color !== undefined) vehicle.color = fields.color
-
-        // si se va a modificar el modelo del vehículo
         if (fields.model !== undefined) vehicle.model = fields.model
-
-        // si se va a modificar el kilometraje del vehículo
         if (fields.kilometers !== undefined) vehicle.kilometers = fields.kilometers
-
-        // si se va a modificar la potencia del vehículo
         if (fields.horsepower !== undefined) vehicle.horsepower = fields.horsepower
-
-        // si se va a modificar el precio del vehículo
         if (fields.price !== undefined) vehicle.price = parseInt(fields.price, 10)
-
-        // si se van a modificar las características del vehículo
         if (fields.features !== undefined) vehicle.features = fields.features
-
-        // se se van a modificar los servicios del vehículo
         if (fields.services !== undefined) vehicle.services = fields.services
-
-        // si se va a modificar la descripción del vehículo
         if (fields.description !== undefined) vehicle.description = fields.description
-
-        // si se va a modificar la cilindrada del vehículo
         if (fields.cylinders !== undefined) vehicle.cylinders = fields.cylinders
-
         if (fields.featured !== undefined) vehicle.featured = fields.featured
+        if (fields.emissions !== undefined) vehicle.emissions = fields.emissions
 
         // si se van a eliminar fotos del vehículo
         if (fields.picturesToDelete !== undefined) {

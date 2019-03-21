@@ -99,7 +99,12 @@ let VehicleSchema = new Schema({
     featured: {
         type: String,
         default: ''
-    }
+    },
+    emissions: {
+        type: Number,
+        min: [0, 'Las emisiones no pueden ser negativas'],
+        required: [true, 'Emisiones requeridas']
+    },
 },
 {
     timestamps: true
