@@ -9,12 +9,10 @@ let FeatureSchema = new Schema({
             'car',
             'motorcycle'
         ],
-        lowercase: true,
         required: [true, 'Tipo requerido']
     },
     spanish: {
         type: String,
-        lowercase: true,
         required: [true, 'Descripción requerida']
     }
 })

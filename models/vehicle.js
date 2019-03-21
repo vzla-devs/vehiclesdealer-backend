@@ -13,17 +13,14 @@ let VehicleSchema = new Schema({
     },
     make: {
         type: String,
-        lowercase: true,
         required: [true, 'Marca requerida']
     },
     model: {
         type: String,
-        lowercase: true,
         required: [true, 'Modelo requerido']
     },
     description: {
         type: String,
-        lowercase: true,
         required: [true, 'Descripción requerida']
     },
     color: {
