@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
         cb(null, filename)
     }
 })
+const upload = multer({ storage: storage })
 
 router.get('/', (req, res) => {
     About.findOne({}).exec((err, about) => {
