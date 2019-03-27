@@ -6,7 +6,8 @@ let AboutSchema = new Schema({
     text: {
         type: String,
         required: [true, 'Texto requerido']
-    }
+    },
+    picture: { type: String }
 })
 
 module.exports = mongoose.model('About', AboutSchema)
