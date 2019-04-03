@@ -7,7 +7,7 @@ const multer = require('multer')
 const sharp = require('sharp')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads')
+      cb(null, 'assets')
     },
     filename: function(req, file, cb) {
         let filename = 'home_image'
@@ -58,7 +58,7 @@ router.put('/', (req, res) => {
 })
 
 router.put('/imagen', upload.single('picture'), (req, res) => {
-    req.file.sharp(`uploads/${file.filename}`)
+    req.file.sharp(`assets/${file.filename}`)
         .withMetadata()
         .resize(1920, 1080)
         .toBuffer(`assets/${file.filename}`, (err, data) => {
