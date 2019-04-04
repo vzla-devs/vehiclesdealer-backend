@@ -249,7 +249,6 @@ router.post('/', async (req, res) => {
         res.status(201).send(newVehicle)
     // si ocurre un error al intentar guardar el vehículo en la base de datos
     } catch (err) {
-        console.log(err)
         res.status(500).send(err)
     }
 })
