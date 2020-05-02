@@ -1,35 +1,36 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+
+const app = express()
 
 function createWebApplication () {
-  const app = express()
-  addStaticRouteToApp(app, 'uploads')
-  addStaticRouteToApp(app, 'assets')
-  addCrossOriginResourceSharingToApp(app)
-  addJSONParserToApp(app)
-  addURLEncodedParserToApp(app)
-  addRoutesToApp(app)
+  addStaticRouteToApp('uploads')
+  addStaticRouteToApp('assets')
+  addCrossOriginResourceSharingToApp()
+  addJSONParserToApp()
+  addURLEncodedParserToApp()
+  addRoutesToApp()
   return app
 }
 
-function addStaticRouteToApp (app, staticRoute) {
+function addStaticRouteToApp (staticRoute) {
   app.use('api/static', express.static(`public/${staticRoute}`))
 }
 
-function addCrossOriginResourceSharingToApp (app) {
+function addCrossOriginResourceSharingToApp () {
   app.use(cors())
 }
 
-function addJSONParserToApp(app) {
+function addJSONParserToApp() {
   app.use(bodyParser.json({ limit: '50mb' }))
 }
 
-function addURLEncodedParserToApp(app) {
+function addURLEncodedParserToApp() {
   app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 }
 
-function addRoutesToApp (app) {
+function addRoutesToApp () {
   const vehicles = require('../routes/vehicles')
   const features = require('../routes/features')
   const services = require('../routes/services')
