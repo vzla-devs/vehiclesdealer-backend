@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Vehicle = require('../models/vehicle')
 const fs = require('fs')
-const path = require('path')
 const multer = require('multer')
 const sharp = require('sharp')
 const storage = multer.diskStorage({
