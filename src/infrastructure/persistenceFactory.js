@@ -16,16 +16,28 @@ function getDatabaseConnection () {
 }
 
 function createMediaStorageUploader (foldername, filename) {
-  const storage = multer.diskStorage({
+  const storage = getMediaStorage()
+  return getMediaUploader(storage)
+}
+
+function getMediaStorage () {
+  return multer.diskStorage({
     destination: function (req, file, callback) {
       callback(null, foldername)
     },
     filename: function (req, file, callback) {
       let finalFilename = filename
-      finalFilename += file.mimetype === 'image/png' ? '.png' : 'jpeg'
+      finalFilename += getFileFormatExtension(file)
       callback(null, finalFilename)
     }
   })
+}
+
+function getFileFormatExtension (file) {
+  return file.mimetype === 'image/png' ? '.png' : 'jpeg'
+}
+
+function getMediaUploader (storage) {
   return multer({ storage })
 }
 
