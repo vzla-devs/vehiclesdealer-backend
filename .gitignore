@@ -1,4 +1,5 @@
 node_modules/
-#ignora todos los archivos que sube, menos .gitkeep
-uploads/*
-!uploads/.gitkeep
+public/assets/*
+public/uploads/*
+!public/assets/.gitkeep
+!public/uploads/.gitkeep

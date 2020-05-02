@@ -3,8 +3,8 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = 8000
 const cors = require('cors')
-app.use('/api/static', express.static('uploads'))
-app.use('/api/static', express.static('assets'))
+app.use('/api/static', express.static('public/uploads'))
+app.use('/api/static', express.static('public/assets'))
 app.use(cors()) // para manejar solicitudes Cross-origin
 app.use(bodyParser.json({ limit: '50mb' })) // para parsear json
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })) // para parsear application/x-www-form-urlencoded
@@ -15,13 +15,13 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = global.Promise
 const db = mongoose.connection
 
-const vehicles = require('./routes/vehicles')
-const features = require('./routes/features')
-const services = require('./routes/services')
-const about = require('./routes/about')
-const contact = require('./routes/contact')
-const financing = require('./routes/financing')
-const pdf = require('./routes/pdf')
+const vehicles = require('./src/routes/vehicles')
+const features = require('./src/routes/features')
+const services = require('./src/routes/services')
+const about = require('./src/routes/about')
+const contact = require('./src/routes/contact')
+const financing = require('./src/routes/financing')
+const pdf = require('./src/routes/pdf')
 
 app.use('/api/vehiculos', vehicles)
 app.use('/api/caracteristicas', features)
