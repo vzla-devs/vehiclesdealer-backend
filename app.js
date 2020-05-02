@@ -10,8 +10,8 @@ app.use(bodyParser.json({limit: '50mb'})) // para parsear json
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })) // para parsear application/x-www-form-urlencoded
 
 var mongoose = require('mongoose')
-const mongoDB = 'mongodb://localhost:27017/avg'
-mongoose.connect(mongoDB, { useNewUrlParser: true })
+const mongoDB = 'mongodb://localhost:32768/vehiclesdealer'
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = global.Promise
 const db = mongoose.connection
 
