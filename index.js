@@ -1,13 +1,6 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
+import { getWebApplication } from './src/infrastructure/applicationFactory'
+const app = getWebApplication()
 const port = 8000
-const cors = require('cors')
-app.use('/api/static', express.static('public/uploads'))
-app.use('/api/static', express.static('public/assets'))
-app.use(cors()) // para manejar solicitudes Cross-origin
-app.use(bodyParser.json({ limit: '50mb' })) // para parsear json
-app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })) // para parsear application/x-www-form-urlencoded
 
 var mongoose = require('mongoose')
 const mongoDB = 'mongodb://localhost:32768/vehiclesdealer'
