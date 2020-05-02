@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Feature = require('../models/feature')
+const Feature = require('../domain/models/feature')
 
 router.get('/', (req, res) => {
     Feature.find({}).exec((err, features) => {

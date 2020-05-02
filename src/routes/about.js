@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const About = require('../models/about')
+const About = require('../domain/models/about')
 const fs = require('fs')
 const path = require('path')
 const multer = require('multer')

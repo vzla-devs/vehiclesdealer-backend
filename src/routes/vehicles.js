@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Vehicle = require('../models/vehicle')
+const Vehicle = require('../domain/models/vehicle')
 const fs = require('fs')
 const multer = require('multer')
 const sharp = require('sharp')
