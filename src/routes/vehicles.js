@@ -4,94 +4,82 @@ const Vehicle = require('../domain/models/vehicle')
 const fs = require('fs')
 const sharp = require('sharp')
 import { createMediaStorageUploader } from '../infrastructure/persistenceFactory'
-const upload = createMediaStorageUploader('uploads', Date.now())
+import { getVehiclesQuery } from '../application/getVehiclesQuery'
 
-// obtener vehículos
 router.get('/', (req, res) => {
-
-    let filters = {}
-
-    // si filtra por tipo de vehículo
-    if (req.query.type !== undefined) {
-        filters.type = req.query.type
-    }
-
-    // si filtra por marca
-    if (req.query.make !== undefined) {
-        filters.make = req.query.make
-    }
-
-    // si filtra por tipo de combustible
-    if (req.query.fuel_type !== undefined) {
-        filters.fuel_type = req.query.fuel_type
-    }
-
-    // si filtra por tipo de transmisión
-    if (req.query.transmission !== undefined) {
-        filters.transmission = req.query.transmission
-    }
-
-    // si filtra por año
-    if (req.query.minYear !== undefined || req.query.maxYear !== undefined) {
-        
-        let yearRange = {}
-
-        if (req.query.minYear !== undefined) yearRange.$gte = parseInt(req.query.minYear, 10)
-
-        if (req.query.maxYear !== undefined) yearRange.$lte = parseInt(req.query.maxYear, 10)
-
-        filters.year = yearRange
-    }
-
-    // si filtra por precio
-    if (req.query.minPrice !== undefined || req.query.maxPrice !== undefined) {
-        
-        let priceRange = {}
-
-        if (req.query.minPrice !== undefined) priceRange.$gte = parseInt(req.query.minPrice, 10)
-
-        if (req.query.maxPrice !== undefined) priceRange.$lte = parseInt(req.query.maxPrice, 10)
-
-        filters.price = priceRange
-    }
-
-    // si filtra por kilometraje
-    if (req.query.minKilometers !== undefined || req.query.maxKilometers !== undefined) {
-        
-        let kilometersRange = {}
-
-        if (req.query.minKilometers !== undefined) kilometersRange.$gte = parseInt(req.query.minKilometers, 10)
-
-        if (req.query.maxKilometers !== undefined) kilometersRange.$lte = parseInt(req.query.maxKilometers, 10)
-
-        filters.kilometers = kilometersRange
-    }
-    
-    Vehicle.find(filters, {
-        type: 1,
-        make: 1,
-        model: 1,
-        color: 1,
-        year: 1, 
-        fuel_type: 1, 
-        horsepower: 1, 
-        kilometers: 1, 
-        transmission: 1, 
-        price: 1,
-        pictures: 1,
-        featured: 1
-    }).exec((err, vehicles) => {
-
-        if (err) return res.status(500).send(err)
+    const filters = getFiltersFromQuery(req.query)
+    const callback = (error, vehicles) => {
+        if (error) return res.status(500).send(error)
 
         vehicles = vehicles.sort((a, b) => {
             if (a.make > b.make) return 1
             return 0
         })
-
         res.status(200).send(vehicles)
-    })
+    }
+    getVehiclesQuery.execute(filters, callback)
 })
+
+function getFiltersFromQuery (query) {
+    let filters = {}
+
+    // si filtra por tipo de vehículo
+    if (query.type !== undefined) {
+        filters.type = query.type
+    }
+
+    // si filtra por marca
+    if (query.make !== undefined) {
+        filters.make = query.make
+    }
+
+    // si filtra por tipo de combustible
+    if (query.fuel_type !== undefined) {
+        filters.fuel_type = query.fuel_type
+    }
+
+    // si filtra por tipo de transmisión
+    if (query.transmission !== undefined) {
+        filters.transmission = query.transmission
+    }
+
+    // si filtra por año
+    if (query.minYear !== undefined || query.maxYear !== undefined) {
+        
+        let yearRange = {}
+
+        if (query.minYear !== undefined) yearRange.$gte = parseInt(query.minYear, 10)
+
+        if (query.maxYear !== undefined) yearRange.$lte = parseInt(query.maxYear, 10)
+
+        filters.year = yearRange
+    }
+
+    // si filtra por precio
+    if (query.minPrice !== undefined || query.maxPrice !== undefined) {
+        
+        let priceRange = {}
+
+        if (query.minPrice !== undefined) priceRange.$gte = parseInt(query.minPrice, 10)
+
+        if (query.maxPrice !== undefined) priceRange.$lte = parseInt(query.maxPrice, 10)
+
+        filters.price = priceRange
+    }
+
+    // si filtra por kilometraje
+    if (query.minKilometers !== undefined || query.maxKilometers !== undefined) {
+        
+        let kilometersRange = {}
+
+        if (query.minKilometers !== undefined) kilometersRange.$gte = parseInt(query.minKilometers, 10)
+
+        if (query.maxKilometers !== undefined) kilometersRange.$lte = parseInt(query.maxKilometers, 10)
+
+        filters.kilometers = kilometersRange
+    }
+    return filters
+}
 
 // obtener filtros de los vehículos
 router.get('/filtros', (req, res) => {
@@ -289,6 +277,7 @@ router.put('/:id/datos', (req, res) => {
     })
 })
 
+const upload = createMediaStorageUploader('uploads', Date.now())
 // actualizar fotos del vehículo
 router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
     // redimensionando las imágenes subidas del vehículo
