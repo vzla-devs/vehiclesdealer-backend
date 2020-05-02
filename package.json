@@ -4,14 +4,13 @@
   "description": "vehiclesdealer backend",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/vdevs/vehiclesdealer-backend.git"
   },
-  "author": "gabrielnunez.developer@gmail.com",
+  "author": "gabriel.nzn@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://gitlab.com/vdevs/vehiclesdealer-backend/issues"
