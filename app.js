@@ -6,7 +6,7 @@ const cors = require('cors')
 app.use('/api/static', express.static('uploads'))
 app.use('/api/static', express.static('assets'))
 app.use(cors()) // para manejar solicitudes Cross-origin
-app.use(bodyParser.json({limit: '50mb'})) // para parsear json
+app.use(bodyParser.json({ limit: '50mb' })) // para parsear json
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })) // para parsear application/x-www-form-urlencoded
 
 var mongoose = require('mongoose')
