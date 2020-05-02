@@ -2,7 +2,7 @@
   "name": "vehiclesdealer-backend",
   "version": "1.0.0",
   "description": "vehiclesdealer backend",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "build": "babel src -d dist",
     "start": "npm run build && node dist/index.js"
