@@ -1,21 +1,21 @@
 {
-  "name": "api",
+  "name": "vehiclesdealer-backend",
   "version": "1.0.0",
-  "description": "api de la herradura",
+  "description": "vehiclesdealer backend",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/laherradura/api.git"
+    "url": "git+https://gitlab.com/vdevs/vehiclesdealer-backend.git"
   },
-  "author": "",
+  "author": "gabrielnunez.developer@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/laherradura/api/issues"
+    "url": "https://gitlab.com/vdevs/vehiclesdealer-backend/issues"
   },
-  "homepage": "https://gitlab.com/laherradura/api#README",
+  "homepage": "https://gitlab.com/vdevs/vehiclesdealer-backend#README",
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.3",
