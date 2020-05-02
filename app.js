@@ -31,10 +31,5 @@ app.use('/api/contacto', contact)
 app.use('/api/financiacion', financing)
 app.use('/api/pdf', pdf)
 
-// conexión con mongoDB
-db.on('error', console.error.bind(console, 'Error de conexión:'))
-db.once('open', () => {
-
-})
-
-app.listen(port, () => console.log(`Servidor express escuchando en el puerto ${port}`))
+app.listen(port, () => console.log(`Escuchando en el puerto ${port}`))
+db.on('error', console.error.bind(console, 'Hubo un error de conexión con la base de datos: '))
