@@ -1,4 +1,5 @@
-import { getWebApplication } from './src/infrastructure/applicationFactory'
+import '@babel/polyfill'
+import { getWebApplication } from './infrastructure/applicationFactory'
 const app = getWebApplication()
 const port = 8000
 
@@ -8,13 +9,13 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = global.Promise
 const db = mongoose.connection
 
-const vehicles = require('./src/routes/vehicles')
-const features = require('./src/routes/features')
-const services = require('./src/routes/services')
-const about = require('./src/routes/about')
-const contact = require('./src/routes/contact')
-const financing = require('./src/routes/financing')
-const pdf = require('./src/routes/pdf')
+const vehicles = require('./routes/vehicles')
+const features = require('./routes/features')
+const services = require('./routes/services')
+const about = require('./routes/about')
+const contact = require('./routes/contact')
+const financing = require('./routes/financing')
+const pdf = require('./routes/pdf')
 
 app.use('/api/vehiculos', vehicles)
 app.use('/api/caracteristicas', features)

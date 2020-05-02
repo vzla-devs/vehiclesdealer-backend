@@ -4,7 +4,7 @@
   "description": "vehiclesdealer backend",
   "main": "app.js",
   "scripts": {
-    "build": "babel index.js -d dist",
+    "build": "babel src -d dist",
     "start": "npm run build && node dist/index.js"
   },
   "repository": {
@@ -14,6 +14,7 @@
   "author": "gabriel.nzn@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "^7.8.7",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.9.11",
