@@ -1,8 +1,8 @@
-const express = require('./node_modules/express')
-const bodyParser = require('./node_modules/body-parser')
-const cors = require('./node_modules/cors')
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 
-const getWebApplication = () => {
+function getWebApplication () {
   const app = express()
   addStaticRouteToApp(app, 'uploads')
   addStaticRouteToApp(app, 'assets')
