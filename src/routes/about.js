@@ -2,25 +2,8 @@ const express = require('express')
 const router = express.Router()
 const About = require('../domain/models/about')
 const fs = require('fs')
-const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'assets')
-    },
-    filename: function(req, file, cb) {
-        let filename = 'home_image'
-        switch (file.mimetype) {
-            case 'image/png':
-            filename = `${filename}.png`
-            break
-            case 'image/jpeg':
-            filename = `${filename}.jpeg`
-            break
-        }
-        cb(null, filename)
-    }
-})
-const upload = multer({ storage: storage })
+import { createMediaStorageUploader } from '../infrastructure/persistenceFactory'
+const upload = createMediaStorageUploader('assets', 'home_image')
 
 router.get('/', (req, res) => {
     About.findOne({}).exec((err, about) => {

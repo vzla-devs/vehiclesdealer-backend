@@ -2,27 +2,9 @@ const express = require('express')
 const router = express.Router()
 const Vehicle = require('../domain/models/vehicle')
 const fs = require('fs')
-const multer = require('multer')
 const sharp = require('sharp')
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads')
-    },
-    filename: function(req, file, cb) {
-        let filename = Date.now()
-        switch (file.mimetype) {
-            case 'image/png':
-            filename = filename + '.png'
-            break;
-            case 'image/jpeg':
-            filename = filename + '.jpeg'
-            break;
-        }
-        cb(null, filename);
-    }
-})
-   
-const upload = multer({ storage: storage })
+import { createMediaStorageUploader } from '../infrastructure/persistenceFactory'
+const upload = createMediaStorageUploader('uploads', Date.now())
 
 // obtener vehículos
 router.get('/', (req, res) => {
