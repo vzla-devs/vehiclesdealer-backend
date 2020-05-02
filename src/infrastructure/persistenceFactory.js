@@ -1,17 +1,17 @@
 import mongoose from 'mongoose'
 
-function getDatabaseConnection () {
+function connectToDatabase () {
   const connectionString = 'mongodb://localhost:32768/vehiclesdealer'
-  connectToDatabase(connectionString)
-  return getConnection()
+  createDatabaseConnection(connectionString)
+  return getDatabaseConnection()
 }
 
-function connectToDatabase (connectionString) {
+function createDatabaseConnection (connectionString) {
   mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
 }
 
-function getConnection () {
+function getDatabaseConnection () {
   return mongoose.connection
 }
 
-export { getDatabaseConnection }
+export { connectToDatabase }

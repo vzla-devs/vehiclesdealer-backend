@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-function getWebApplication () {
+function createWebApplication () {
   const app = express()
   addStaticRouteToApp(app, 'uploads')
   addStaticRouteToApp(app, 'assets')
@@ -28,4 +28,4 @@ function addURLEncodedParserToApp(app) {
   app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 }
 
-export { getWebApplication }
+export { createWebApplication }
