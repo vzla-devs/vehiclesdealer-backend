@@ -1,13 +1,8 @@
 import '@babel/polyfill'
 import { getWebApplication } from './infrastructure/applicationFactory'
+import { getDatabaseConnection } from './infrastructure/persistenceFactory'
 const app = getWebApplication()
 const port = 8000
-
-var mongoose = require('mongoose')
-const mongoDB = 'mongodb://localhost:32768/vehiclesdealer'
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.Promise = global.Promise
-const db = mongoose.connection
 
 const vehicles = require('./routes/vehicles')
 const features = require('./routes/features')
@@ -25,5 +20,6 @@ app.use('/api/contacto', contact)
 app.use('/api/financiacion', financing)
 app.use('/api/pdf', pdf)
 
+const databaseConnection = getDatabaseConnection()
 app.listen(port, () => console.log(`Escuchando en el puerto ${port}`))
-db.on('error', console.error.bind(console, 'Hubo un error de conexión con la base de datos: '))
+databaseConnection.on('error', console.error.bind(console, 'Hubo un error de conexión con la base de datos: '))
