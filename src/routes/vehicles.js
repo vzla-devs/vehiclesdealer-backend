@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
         })
         res.status(200).send(vehicles)
     }
-    getVehiclesQuery.execute(filters, callback)
+    getVehiclesQuery.getAllFilteredBy(filters, callback)
 })
 
 function getFiltersFromQuery (query) {
