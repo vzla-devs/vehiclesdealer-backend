@@ -1,9 +1,9 @@
 import express from 'express'
-import Vehicle from '../../domain/models/vehicle'
+import Vehicle from '@/domain/models/vehicle'
 import fs from 'fs'
 import sharp from 'sharp'
-import { createMediaStorageUploader } from '../../infrastructure/persistenceFactory'
-import { getVehiclesQuery } from '../../application/getVehiclesQuery'
+import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
+import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 
 const router = express.Router()
 

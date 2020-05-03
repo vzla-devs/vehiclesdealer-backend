@@ -1,4 +1,4 @@
-import Vehicle from '../domain/models/vehicle'
+import Vehicle from '@/domain/models/vehicle'
 
 function getAllFilteredBy (filters, callback) {
   Vehicle.find(filters, {

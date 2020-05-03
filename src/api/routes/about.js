@@ -1,7 +1,7 @@
 import express from 'express'
-import About from '../../domain/models/about'
+import About from '@/domain/models/about'
 import fs from 'fs'
-import { createMediaStorageUploader } from '../../infrastructure/persistenceFactory'
+import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 const upload = createMediaStorageUploader('assets', 'home_image')
 
 const router = express.Router()

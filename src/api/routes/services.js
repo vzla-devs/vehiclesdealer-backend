@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Service = require('../../domain/models/service')
+const Service = require('@/domain/models/service')
 
 router.get('/', (req, res) => {
     Service.find({}).exec((err, services) => {
