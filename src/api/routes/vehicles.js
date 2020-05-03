@@ -6,6 +6,7 @@ import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/addVehicleAction'
+import { editVehicleAction } from '@/application/editVehicleAction'
 
 const router = express.Router()
 
@@ -108,59 +109,14 @@ router.post('/', async (req, res) => {
     }
 })
 
-// actualizar datos del vehículo
-router.put('/:id/datos', (req, res) => {
-
-    let fields = req.body
-    console.log(req.body.picturesToDelete)
-
-    Vehicle.findOne({_id: req.params.id})
-    .exec(async (err, vehicle) => {
-        if (err) return res.status(500).send(err)
-
-        if (vehicle === null) return res.status(404).send('El vehículo no existe')
-        if (fields.make !== undefined) vehicle.make = fields.make
-        if (fields.year !== undefined) vehicle.year = fields.year
-        if (fields.fuelType !== undefined) vehicle.fuel_type = fields.fuelType
-        if (fields.transmission !== undefined) vehicle.transmission = fields.transmission
-        if (fields.color !== undefined) vehicle.color = fields.color
-        if (fields.model !== undefined) vehicle.model = fields.model
-        if (fields.kilometers !== undefined) vehicle.kilometers = fields.kilometers
-        if (fields.horsepower !== undefined) vehicle.horsepower = fields.horsepower
-        if (fields.price !== undefined) vehicle.price = parseInt(fields.price, 10)
-        if (fields.features !== undefined) vehicle.features = fields.features
-        if (fields.services !== undefined) vehicle.services = fields.services
-        if (fields.description !== undefined) vehicle.description = fields.description
-        if (fields.cylinders !== undefined) vehicle.cylinders = fields.cylinders
-        if (fields.featured !== undefined) vehicle.featured = fields.featured
-        if (fields.emissions !== undefined) vehicle.emissions = fields.emissions
-
-        // si se van a eliminar fotos del vehículo
-        if (fields.picturesToDelete !== undefined) {
-            // eliminando fotos previas del vehículo
-            fields.picturesToDelete.forEach(removedPic => {
-                let index = vehicle.pictures.findIndex(pic => pic === removedPic)
-                // elimina la foto del array de fotos del vehículo
-                vehicle.pictures.splice(index, 1)
-                // elimina la foto del sistema de archivos del servidor
-                fs.unlink(`uploads/${removedPic}`, err => {
-                    if (err) {
-                        console.error(err)
-                    } else {
-                        console.log('archivo eliminado')
-                    }
-                })
-            })
-        }
-
-        // guarda el vehículo en la db
-        try {
-            let updatedVehicle = await vehicle.save()
-            res.status(200).send(updatedVehicle)
-        } catch (err) {
-            res.status(500).send(err)
-        }
-    })
+router.put('/:id/datos', async (req, res) => {
+    const command = req.body
+    try {
+        const updatedVehicle = await editVehicleAction.execute(command)
+        res.status(200).send(updatedVehicle)
+    } catch (err) {
+        res.status(500).send(err)
+    }
 })
 
 const upload = createMediaStorageUploader('uploads', Date.now())
