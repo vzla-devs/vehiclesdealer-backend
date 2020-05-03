@@ -19,15 +19,14 @@ async function execute (command) {
   if (command.cylinders !== undefined) existingVehicle.cylinders = command.cylinders
   if (command.featured !== undefined) existingVehicle.featured = command.featured
   if (command.emissions !== undefined) existingVehicle.emissions = command.emissions
-  // si se van a eliminar fotos del vehículo
+  
   if (command.picturesToDelete !== undefined) {
-    // eliminando fotos previas del vehículo
-    command.picturesToDelete.forEach(removedPic => {
-      let index = existingVehicle.pictures.findIndex(pic => pic === removedPic)
+    command.picturesToDelete.forEach(pictureToDelete => {
+      let index = existingVehicle.pictures.findIndex(pic => pic === pictureToDelete)
       // elimina la foto del array de fotos del vehículo
       existingVehicle.pictures.splice(index, 1)
       // elimina la foto del sistema de archivos del servidor
-      fs.unlink(`uploads/${removedPic}`, err => {
+      fs.unlink(`public/uploads/${pictureToDelete}`, err => {
         if (err) console.error(err)
       })
     })
