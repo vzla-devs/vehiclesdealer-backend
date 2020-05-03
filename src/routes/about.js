@@ -1,9 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const About = require('../domain/models/about')
-const fs = require('fs')
+import express from 'express'
+import About from '../domain/models/about'
+import fs from 'fs'
 import { createMediaStorageUploader } from '../infrastructure/persistenceFactory'
 const upload = createMediaStorageUploader('assets', 'home_image')
+
+const router = express.Router()
 
 router.get('/', (req, res) => {
     About.findOne({}).exec((err, about) => {
@@ -64,4 +65,4 @@ router.put('/imagen', upload.single('picture'), (req, res) => {
     })
 })
 
-module.exports = router
+export default router

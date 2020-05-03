@@ -1,6 +1,13 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import vehicles from '../routes/vehicles'
+import features from '../routes/features'
+import services from '../routes/services'
+import about from '../routes/about'
+import contact from '../routes/contact'
+import financing from '../routes/financing'
+import pdf from '../routes/pdf'
 
 const app = express()
 
@@ -31,14 +38,6 @@ function addURLEncodedParserToApp() {
 }
 
 function addRoutesToApp () {
-  const vehicles = require('../routes/vehicles')
-  const features = require('../routes/features')
-  const services = require('../routes/services')
-  const about = require('../routes/about')
-  const contact = require('../routes/contact')
-  const financing = require('../routes/financing')
-  const pdf = require('../routes/pdf')
-
   app.use('/api/vehiculos', vehicles)
   app.use('/api/caracteristicas', features)
   app.use('/api/servicios', services)

@@ -1,10 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const Vehicle = require('../domain/models/vehicle')
-const fs = require('fs')
-const sharp = require('sharp')
+import express from 'express'
+import Vehicle from '../domain/models/vehicle'
+import fs from 'fs'
+import sharp from 'sharp'
 import { createMediaStorageUploader } from '../infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '../application/getVehiclesQuery'
+
+const router = express.Router()
 
 router.get('/', (req, res) => {
     const filters = getFiltersFromQuery(req.query)
@@ -342,4 +343,4 @@ router.delete('/:id', (req, res) => {
     })
 })
 
-module.exports = router
+export default router
