@@ -5,6 +5,7 @@ import sharp from 'sharp'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/getVehicleFiltersQuery'
+import { createVehicleAction } from '@/application/createVehicleAction'
 
 const router = express.Router()
 
@@ -97,35 +98,11 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-// crear vehículo
 router.post('/', async (req, res) => {
-    const fields = req.body
-    // crea el vehículo
-    let vehicle = new Vehicle({
-        type: fields.type,
-        make: fields.make,
-        year: parseInt(fields.year),
-        fuel_type: fields.fuelType,
-        transmission: fields.transmission,
-        model: fields.model,
-        color: fields.color,
-        kilometers: parseInt(fields.kilometers),
-        horsepower: parseInt(fields.horsepower),
-        price: parseInt(fields.price),
-        pictures: [],
-        description: fields.description,
-        features: fields.features,
-        services: fields.services,
-        cylinders: fields.cylinders,
-        featured: fields.featured,
-        emissions: fields.emissions
-    })
-
-    // guarda el vehículo en la db
+    const command = req.body
     try {
-        let newVehicle = await vehicle.save()
+        const newVehicle = await createVehicleAction.execute(command)
         res.status(201).send(newVehicle)
-    // si ocurre un error al intentar guardar el vehículo en la base de datos
     } catch (err) {
         res.status(500).send(err)
     }
