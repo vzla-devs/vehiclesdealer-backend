@@ -88,20 +88,13 @@ router.get('/filtros', async (req, res) => {
     }
 })
 
-// obtener un vehículo en específico
-router.get('/:id', (req, res) => {
-    Vehicle.findOne({_id: req.params.id})
-    .populate('features')
-    .populate('services')
-    .exec((err, vehicle) => {
-        if (err) return res.status(500).send(err)
-
-        // si el vehículo no existe en la base de datos
-        if (vehicle == null) return res.status(404).send('El vehículo no existe')
-        
-        // si el vehículo sí existe en la base de datos
+router.get('/:id', async (req, res) => {
+    try {
+        const vehicle = await getVehiclesQuery.getOneById(req.params.id)
         res.status(200).send(vehicle)
-    })
+    } catch (error) {
+        if (error) return res.status(500).send(err)
+    }
 })
 
 // crear vehículo

@@ -25,8 +25,18 @@ function sortVehiclesByBrand (vehicles) {
   })
 }
 
+async function getOneById (id) {
+  const vehicle = await Vehicle.findOne({ _id: id })
+  .populate('features')
+  .populate('services')
+  .exec()
+  if (!vehicle) throw new Error('el vehículo no existe')
+  return vehicle
+}
+
 const getVehiclesQuery = {
-  getAllFilteredBy
+  getAllFilteredBy,
+  getOneById
 }
 
 export { getVehiclesQuery }
