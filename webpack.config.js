@@ -3,7 +3,7 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './src/api/index.js',
   target: 'node',
   externals: [nodeExternals()],
   output: {

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Financing = require('../domain/models/financing')
+const Financing = require('../../domain/models/financing')
 
 router.get('/', (req, res) => {
     Financing.findOne({}).exec((err, financing) => {

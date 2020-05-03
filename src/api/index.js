@@ -1,6 +1,6 @@
 import '@babel/polyfill'
-import { connectToDatabase } from './infrastructure/persistenceFactory'
-import { createWebApplication } from './infrastructure/applicationFactory'
+import { connectToDatabase } from '../infrastructure/persistenceFactory'
+import { createWebApplication } from '../infrastructure/applicationFactory'
 
 const databaseConnection = connectToDatabase()
 logDatabaseErrors()

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Contact = require('../domain/models/contact')
+const Contact = require('../../domain/models/contact')
 
 router.get('/', (req, res) => {
     Contact.findOne({}).exec((err, contact) => {

@@ -1,13 +1,13 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import vehicles from '../routes/vehicles'
-import features from '../routes/features'
-import services from '../routes/services'
-import about from '../routes/about'
-import contact from '../routes/contact'
-import financing from '../routes/financing'
-import pdf from '../routes/pdf'
+import vehicles from '../api/routes/vehicles'
+import features from '../api/routes/features'
+import services from '../api/routes/services'
+import about from '../api/routes/about'
+import contact from '../api/routes/contact'
+import financing from '../api/routes/financing'
+import pdf from '../api/routes/pdf'
 
 const app = express()
 
