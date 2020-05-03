@@ -5,7 +5,7 @@ import sharp from 'sharp'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/getVehicleFiltersQuery'
-import { createVehicleAction } from '@/application/createVehicleAction'
+import { addVehicleAction } from '@/application/addVehicleAction'
 
 const router = express.Router()
 
@@ -101,7 +101,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const command = req.body
     try {
-        const newVehicle = await createVehicleAction.execute(command)
+        const newVehicle = await addVehicleAction.execute(command)
         res.status(201).send(newVehicle)
     } catch (err) {
         res.status(500).send(err)
