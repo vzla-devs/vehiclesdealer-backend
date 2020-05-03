@@ -1,12 +1,12 @@
 import express from 'express'
 import Vehicle from '@/domain/models/vehicle'
 import fs from 'fs'
-import sharp from 'sharp'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/addVehicleAction'
 import { editVehicleAction } from '@/application/editVehicleAction'
+import { editVehiclePicturesAction } from '@/application/editVehiclePicturesAction'
 
 const router = express.Router()
 
@@ -120,42 +120,14 @@ router.put('/:id/datos', async (req, res) => {
 })
 
 const upload = createMediaStorageUploader('uploads', Date.now())
-// actualizar fotos del vehículo
-router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
-    // redimensionando las imágenes subidas del vehículo
-    req.files.forEach(file => {
-        sharp(`uploads/${file.filename}`)
-        .withMetadata()
-        .resize(1920, 1080)
-        .toBuffer(`uploads/${file.filename}`, (err, data) => {
-            if (err) throw err
-            fs.writeFile(`uploads/${file.filename}`, data, 'binary', err => {
-                if (err) throw err
-            })
-        })
-    })
-
-    Vehicle.findOne({_id: req.params.id})
-    .exec(async (err, vehicle) => {
-        if (err) return res.status(500).send(err)
-
-        // si el vehículo no existe en la base de datos
-        if (vehicle === null) return res.status(404).send('El vehículo no existe')
-
-        // si se van a subir fotos nuevas
-        if (req.files.length > 0) {
-            let newPictures = req.files.map(pic => `${pic.filename}`)
-            vehicle.pictures = [...vehicle.pictures, ...newPictures]
-        }
-
-        // guarda el vehículo en la db
-        try {
-            let updatedVehicle = await vehicle.save()
-            res.status(200).send(updatedVehicle)
-        } catch (err) {
-            res.status(500).send(err)
-        }
-    })
+router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
+    const command = { id: req.params.id, files: req.files }
+    try {
+        await editVehiclePicturesAction.execute(command)
+        res.status(200).send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
 })
 
 // eliminar vehículo
