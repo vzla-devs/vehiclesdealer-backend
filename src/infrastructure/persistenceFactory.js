@@ -16,11 +16,11 @@ function getDatabaseConnection () {
 }
 
 function createMediaStorageUploader (foldername, filename) {
-  const storage = getMediaStorage()
+  const storage = getMediaStorage(foldername, filename)
   return getMediaUploader(storage)
 }
 
-function getMediaStorage () {
+function getMediaStorage (foldername, filename) {
   return multer.diskStorage({
     destination: function (req, file, callback) {
       callback(null, foldername)
