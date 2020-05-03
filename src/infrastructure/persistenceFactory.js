@@ -34,7 +34,7 @@ function getMediaStorage (foldername, filename) {
 }
 
 function getFileFormatExtension (file) {
-  return file.mimetype === 'image/png' ? '.png' : 'jpeg'
+  return file.mimetype === 'image/png' ? '.png' : '.jpeg'
 }
 
 function getMediaUploader (storage) {
