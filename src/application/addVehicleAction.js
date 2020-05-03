@@ -20,7 +20,8 @@ async function execute (command) {
     featured: command.featured,
     emissions: command.emissions
 })
-  return await vehicle.save()
+  const addedVehicle = await vehicle.save()
+  return addedVehicle._id
 }
 
 const addVehicleAction = {

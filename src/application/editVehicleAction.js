@@ -32,7 +32,7 @@ async function execute (command) {
       })
     })
   }
-  return await existingVehicle.save()
+  await existingVehicle.save()
 }
 
 const editVehicleAction = {
