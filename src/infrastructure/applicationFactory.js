@@ -24,7 +24,7 @@ function createWebApplication () {
 }
 
 function addStaticRouteToApp (staticRoute) {
-  app.use('api/static', express.static(`public/${staticRoute}`))
+  app.use('/api/static', express.static(`public/${staticRoute}`))
 }
 
 function addCrossOriginResourceSharingToApp () {
