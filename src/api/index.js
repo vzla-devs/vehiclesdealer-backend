@@ -1,4 +1,3 @@
-import '@babel/polyfill'
 import { connectToDatabase } from '../infrastructure/persistenceFactory'
 import { createWebApplication } from '../infrastructure/applicationFactory'
 
