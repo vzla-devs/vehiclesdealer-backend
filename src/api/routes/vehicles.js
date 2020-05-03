@@ -101,8 +101,8 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const command = req.body
     try {
-        const newVehicleId = addVehicleAction.execute(command)
-        res.status(201).send(newVehicleId)
+        const newVehicleId = await addVehicleAction.execute(command)
+        res.status(201).send({ _id: newVehicleId })
     } catch (err) {
         res.status(500).send(err)
     }
@@ -119,12 +119,10 @@ router.put('/:id/datos', (req, res) => {
 })
 
 const upload = createMediaStorageUploader('public/uploads')
-router.put('/:id/fotos', upload.array('pictures'), (req, res) => {
-    console.log('entras en la ruta para actualizar fotos', req.params.id)
+router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     try {
-        editVehiclePicturesAction.execute(command)
-        console.log('terminas de ejecutar la accion')
+        await editVehiclePicturesAction.execute(command)
         res.status(200).send()
     } catch (err) {
         res.status(500).send(err)
