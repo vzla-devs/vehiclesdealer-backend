@@ -109,7 +109,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id/datos', (req, res) => {
-    const command = req.body
+    const command = { id: req.params.id, ...req.body }
     try {
         editVehicleAction.execute(command)
         res.status(200).send()
