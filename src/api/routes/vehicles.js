@@ -118,7 +118,7 @@ router.put('/:id/datos', async (req, res) => {
     }
 })
 
-const upload = createMediaStorageUploader('public/uploads', Date.now())
+const upload = createMediaStorageUploader('public/uploads')
 router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     try {

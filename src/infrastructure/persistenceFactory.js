@@ -15,18 +15,18 @@ function getDatabaseConnection () {
   return mongoose.connection
 }
 
-function createMediaStorageUploader (foldername, filename) {
+function createMediaStorageUploader (foldername, filename = null) {
   const storage = getMediaStorage(foldername, filename)
   return getMediaUploader(storage)
 }
 
-function getMediaStorage (foldername, filename) {
+function getMediaStorage (foldername, filename = null) {
   return multer.diskStorage({
     destination: function (req, file, callback) {
       callback(null, foldername)
     },
     filename: function (req, file, callback) {
-      let finalFilename = filename
+      let finalFilename = filename ? filename : Date.now()
       finalFilename += getFileFormatExtension(file)
       callback(null, finalFilename)
     }
