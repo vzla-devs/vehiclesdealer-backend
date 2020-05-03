@@ -1,12 +1,11 @@
 import express from 'express'
-import Vehicle from '@/domain/models/vehicle'
-import fs from 'fs'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/addVehicleAction'
 import { editVehicleAction } from '@/application/editVehicleAction'
 import { editVehiclePicturesAction } from '@/application/editVehiclePicturesAction'
+import { removeVehicleAction } from '@/application/removeVehicleAction'
 
 const router = express.Router()
 
@@ -130,30 +129,13 @@ router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
     }
 })
 
-// eliminar vehículo
-router.delete('/:id', (req, res) => {
-    // mejorar la implementacion del borrado
-    Vehicle.findOne({_id: req.params.id})
-    .exec((err, vehicle) => {
-        if (err) return res.status(500).send(err)
-
-        // si el vehículo no existe en la base de datos
-        if (vehicle === null) return res.status(404).send('El vehículo no existe')
-
-        vehicle.pictures.forEach(pic => {
-            fs.unlink(`uploads/${pic}`, (err) => {
-                if (err) console.log(err)
-
-                console.log(`imagen ${pic} eliminada del servidor`)
-            })
-        })
-
-        Vehicle.deleteOne({ _id: req.params.id }, (err, response) => {
-            if(err) return res.status(500).send(err)
-
-            res.status(200).send(response)
-        })
-    })
+router.delete('/:id', async (req, res) => {
+    try {
+        await removeVehicleAction.execute(req.params.id)
+        res.status(200).send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
 })
 
 export default router
