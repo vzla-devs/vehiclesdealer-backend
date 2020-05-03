@@ -1,7 +1,7 @@
 import Vehicle from '@/domain/models/vehicle'
 
-function getAllFilteredBy (filters) {
- return  Vehicle.find(filters, {
+async function getAllFilteredBy (filters) {
+ const vehicles = await Vehicle.find(filters, {
     type: 1,
     make: 1,
     model: 1,
@@ -15,6 +15,14 @@ function getAllFilteredBy (filters) {
     pictures: 1,
     featured: 1
   }).exec()
+  return sortVehiclesByBrand(vehicles)
+}
+
+function sortVehiclesByBrand (vehicles) {
+  return vehicles.sort((a, b) => {
+    if (a.make > b.make) return 1
+    return 0
+  })
 }
 
 const getVehiclesQuery = {

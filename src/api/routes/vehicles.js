@@ -10,11 +10,7 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     const filters = getFiltersFromQuery(req.query)
     try {
-        let vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
-        vehicles = vehicles.sort((a, b) => {
-            if (a.make > b.make) return 1
-            return 0
-        })
+        const vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
         res.status(200).send(vehicles)
     } catch (error) {
         res.status(500).send(error)
