@@ -8,7 +8,7 @@ router.get('/:picture', (req, res) => {
     const format = file.substring(dotIndex + 1, file.length)
     const appendData = `data:image/${format};base64,`
 
-    fs.readFile(`uploads/${file}`, (err, data) => {
+    fs.readFile(`public/uploads/${file}`, (err, data) => {
         if (err) return res.status(500).send(err)
         const base64 = appendData + data.toString('base64')
         return res.status(200).send({
