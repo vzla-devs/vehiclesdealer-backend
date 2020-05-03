@@ -1,7 +1,7 @@
 import Vehicle from '@/domain/models/vehicle'
 
-function getAllFilteredBy (filters, callback) {
-  Vehicle.find(filters, {
+function getAllFilteredBy (filters) {
+ return  Vehicle.find(filters, {
     type: 1,
     make: 1,
     model: 1,
@@ -14,7 +14,7 @@ function getAllFilteredBy (filters, callback) {
     price: 1,
     pictures: 1,
     featured: 1
-  }).exec(callback)
+  }).exec()
 }
 
 const getVehiclesQuery = {

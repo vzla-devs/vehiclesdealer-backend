@@ -7,18 +7,18 @@ import { getVehiclesQuery } from '@/application/getVehiclesQuery'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     const filters = getFiltersFromQuery(req.query)
-    const callback = (error, vehicles) => {
-        if (error) return res.status(500).send(error)
-
+    try {
+        let vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
         vehicles = vehicles.sort((a, b) => {
             if (a.make > b.make) return 1
             return 0
         })
         res.status(200).send(vehicles)
+    } catch (error) {
+        res.status(500).send(error)
     }
-    getVehiclesQuery.getAllFilteredBy(filters, callback)
 })
 
 function getFiltersFromQuery (query) {
