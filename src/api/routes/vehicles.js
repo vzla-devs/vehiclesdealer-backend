@@ -19,6 +19,64 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/filtros', async (req, res) => {
+    try {
+        const filters = await getVehicleFiltersQuery.execute()
+        res.status(200).send(filters)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const vehicle = await getVehiclesQuery.getOneById(req.params.id)
+        res.status(200).send(vehicle)
+    } catch (error) {
+        if (error) return res.status(500).send(err)
+    }
+})
+
+router.post('/', async (req, res) => {
+    const command = req.body
+    try {
+        const newVehicleId = await addVehicleAction.execute(command)
+        res.status(201).send({ _id: newVehicleId })
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
+router.put('/:id/datos', (req, res) => {
+    const command = { id: req.params.id, ...req.body }
+    try {
+        editVehicleAction.execute(command)
+        res.status(200).send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
+const upload = createMediaStorageUploader('public/uploads')
+router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
+    const command = { id: req.params.id, files: req.files }
+    try {
+        await editVehiclePicturesAction.execute(command)
+        res.status(200).send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        await removeVehicleAction.execute(req.params.id)
+        res.status(200).send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
 function getFiltersFromRequest (request) {
     let filters = {}
 
@@ -79,63 +137,5 @@ function getFiltersFromRequest (request) {
     }
     return filters
 }
-
-router.get('/filtros', async (req, res) => {
-    try {
-        const filters = await getVehicleFiltersQuery.execute()
-        res.status(200).send(filters)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
-
-router.get('/:id', async (req, res) => {
-    try {
-        const vehicle = await getVehiclesQuery.getOneById(req.params.id)
-        res.status(200).send(vehicle)
-    } catch (error) {
-        if (error) return res.status(500).send(err)
-    }
-})
-
-router.post('/', async (req, res) => {
-    const command = req.body
-    try {
-        const newVehicleId = await addVehicleAction.execute(command)
-        res.status(201).send({ _id: newVehicleId })
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
-
-router.put('/:id/datos', (req, res) => {
-    const command = { id: req.params.id, ...req.body }
-    try {
-        editVehicleAction.execute(command)
-        res.status(200).send()
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
-
-const upload = createMediaStorageUploader('public/uploads')
-router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
-    const command = { id: req.params.id, files: req.files }
-    try {
-        await editVehiclePicturesAction.execute(command)
-        res.status(200).send()
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
-
-router.delete('/:id', async (req, res) => {
-    try {
-        await removeVehicleAction.execute(req.params.id)
-        res.status(200).send()
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
 
 export default router
