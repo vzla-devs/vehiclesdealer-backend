@@ -14,9 +14,8 @@ router.get('/', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const serviceToAdd = req.body.service
+    const command = { description: req.body.service }
     try {
-        const command = { description: serviceToAdd }
         await addServiceAction.execute(command)
         res.status(200).send('ok')
     } catch (error) {

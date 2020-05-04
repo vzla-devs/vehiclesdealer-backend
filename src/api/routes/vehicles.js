@@ -29,8 +29,9 @@ router.get('/filtros', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
+    const vehicleId = req.params.id
     try {
-        const vehicle = await getVehiclesQuery.getOneById(req.params.id)
+        const vehicle = await getVehiclesQuery.getOneById(vehicleId)
         res.status(200).send(vehicle)
     } catch (error) {
         res.status(500).send(err)
