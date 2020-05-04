@@ -1,5 +1,6 @@
 import express from 'express'
 import { getServicesQuery } from '@/application/getServicesQuery'
+import { addServiceAction } from '@/application/addServiceAction'
 
 const router = express.Router()
 
@@ -13,21 +14,16 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const services = req.body.services
-    // mapea todas las características para guardarlas individualmente
-    let newServices = await services.map(async s => {
-        let service = new Service ({
-            spanish: s
-        })
-        // guarda el vehículo en la db
+    const servicesToAdd = req.body.services
+    await servicesToAdd.map(async serviceToAdd => {
         try {
-            return service.save()
-        // si ocurre un error al intentar guardar el vehículo en la base de datos
-        } catch (err) {
-            return err
+            const command = { description: serviceToAdd }
+            await addServiceAction.execute(command)
+            res.status(200).send('ok')
+        } catch (error) {
+            res.status(500).send(error)
         }
     })
-    res.status(200).send('ok')
 })
 
 export default router
