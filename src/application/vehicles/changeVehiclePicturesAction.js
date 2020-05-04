@@ -10,8 +10,8 @@ async function execute (command) {
   await vehicle.save()
 }
 
-const editVehiclePicturesAction = {
+const changeVehiclePicturesAction = {
   execute
 }
 
-export { editVehiclePicturesAction }
+export { changeVehiclePicturesAction }

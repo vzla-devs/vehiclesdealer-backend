@@ -4,7 +4,7 @@ import { getVehiclesQuery } from '@/application/vehicles/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/vehicles/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
 import { changeVehicleAction } from '@/application/vehicles/changeVehicleAction'
-import { editVehiclePicturesAction } from '@/application/vehicles/editVehiclePicturesAction'
+import { changeVehiclePicturesAction } from '@/application/vehicles/changeVehiclePicturesAction'
 import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
 
 const router = express.Router()
@@ -61,7 +61,7 @@ const upload = createMediaStorageUploader('public/uploads')
 router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     try {
-        await editVehiclePicturesAction.execute(command)
+        await changeVehiclePicturesAction.execute(command)
         res.status(200).send('ok')
     } catch (err) {
         res.status(500).send(err)
