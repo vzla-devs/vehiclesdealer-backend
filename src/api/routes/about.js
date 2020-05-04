@@ -2,7 +2,6 @@ import express from 'express'
 import About from '@/domain/models/about'
 import fs from 'fs'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
-const upload = createMediaStorageUploader('assets', 'home_image')
 
 const router = express.Router()
 
@@ -38,6 +37,8 @@ router.put('/', (req, res) => {
         }
     })
 })
+
+const upload = createMediaStorageUploader('assets', 'home_image')
 
 router.put('/imagen', upload.single('picture'), (req, res) => {
     req.file.sharp(`assets/${file.filename}`)
