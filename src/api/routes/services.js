@@ -4,7 +4,7 @@ import { addServiceAction } from '@/application/addServiceAction'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
+router.get('/', async(req, res) => {
     try {
         const services = await getServicesQuery().execute()
         res.status(200).send(services)
