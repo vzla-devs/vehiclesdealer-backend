@@ -1,6 +1,6 @@
 import Vehicle from '@/domain/models/vehicle'
 
-async function getVehicleFilters () {
+async function execute () {
   const vehicles = await Vehicle.find({}, {
     _id: 0,
     type: 1,
@@ -82,7 +82,7 @@ async function getVehicleFilters () {
 }
 
 const getVehicleFiltersQuery = {
-  getVehicleFilters
+  execute
 }
 
 export { getVehicleFiltersQuery }

@@ -82,7 +82,7 @@ function getFiltersFromRequest (request) {
 
 router.get('/filtros', async (req, res) => {
     try {
-        const filters = await getVehicleFiltersQuery.getVehicleFilters()
+        const filters = await getVehicleFiltersQuery.execute()
         res.status(200).send(filters)
     } catch (error) {
         res.status(500).send(error)
