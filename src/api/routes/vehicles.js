@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
         const vehicle = await getVehiclesQuery.getOneById(req.params.id)
         res.status(200).send(vehicle)
     } catch (error) {
-        if (error) return res.status(500).send(err)
+        res.status(500).send(err)
     }
 })
 
@@ -51,7 +51,7 @@ router.put('/:id/datos', (req, res) => {
     const command = { id: req.params.id, ...req.body }
     try {
         editVehicleAction.execute(command)
-        res.status(200).send()
+        res.status(200).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
@@ -62,7 +62,7 @@ router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     try {
         await editVehiclePicturesAction.execute(command)
-        res.status(200).send()
+        res.status(200).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
@@ -71,7 +71,7 @@ router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         await removeVehicleAction.execute(req.params.id)
-        res.status(200).send()
+        res.status(200).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
