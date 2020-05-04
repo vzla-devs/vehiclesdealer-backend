@@ -1,7 +1,7 @@
 import express from 'express'
-import Financing from '@/domain/models/financing'
 import { getFinancingQuery } from '@/application/financing/getFinancingQuery'
 import { changeFinancingAction } from '@/application/financing/changeFinancingAction'
+
 const router = express.Router()
 
 router.get('/', async(req, res) => {
