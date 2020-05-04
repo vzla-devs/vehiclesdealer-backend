@@ -2,18 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Feature = require('@/domain/models/feature')
 
-router.get('/', (req, res) => {
-    Feature.find({}).exec((err, features) => {
-        if (err) return res.status(500).send(err)
-
-        features = features.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1
-            return 0
-        })
-        res.status(200).send(features)
-    })
-})
-
 router.get('/coches', (req, res) => {
     Feature.find({ type: 'car' }).exec((err, features) => {
         if (err) return res.status(500).send(err)
