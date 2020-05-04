@@ -1,13 +1,15 @@
-const express = require('express')
+import express from 'express'
+import Financing from '@/domain/models/financing'
+import { getFinancingQuery } from '@/application/financing/getFinancingQuery'
 const router = express.Router()
-const Financing = require('@/domain/models/financing')
 
-router.get('/', (req, res) => {
-    Financing.findOne({}).exec((err, financing) => {
-        if (err) return res.status(500).send(err)
-
+router.get('/', async(req, res) => {
+    try {
+        const financing = await getFinancingQuery.execute()
         res.status(200).send(financing)
-    })
+    } catch (error) {
+        res.status(500).send(err)
+    }
 })
 
 router.put('/', async(req, res) => {
@@ -32,4 +34,4 @@ router.put('/', async(req, res) => {
     })
 })
 
-module.exports = router
+export default router
