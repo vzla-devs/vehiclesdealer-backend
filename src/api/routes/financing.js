@@ -1,6 +1,7 @@
 import express from 'express'
 import Financing from '@/domain/models/financing'
 import { getFinancingQuery } from '@/application/financing/getFinancingQuery'
+import { changeFinancingAction } from '@/application/financing/changeFinancingAction'
 const router = express.Router()
 
 router.get('/', async(req, res) => {
@@ -13,25 +14,13 @@ router.get('/', async(req, res) => {
 })
 
 router.put('/', async(req, res) => {
-    const { amount } = req.body
-
-    Financing.findOne({})
-    .exec(async(err, financing) => {
-        if (err) return res.status(500).send(err)
-        
-        if (financing !== null) {
-            financing.amount = amount
-        } else {
-            financing = new Financing ({ amount })
-        }
-        
-        try {
-            financing = await financing.save()
-            res.status(200).send(financing)
-        } catch (err) {
-           res.status(500).send(err)
-        }
-    })
+    const command = { amount: req.body.amount }
+    try {
+        await changeFinancingAction.execute(command)
+        res.status(200).send('ok')
+    } catch (error) {
+        res.status(500).send(err)
+    }
 })
 
 export default router
