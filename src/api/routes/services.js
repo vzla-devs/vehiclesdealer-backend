@@ -1,18 +1,15 @@
 import express from 'express'
-import Service from '@/domain/models/service'
+import { getServicesQuery } from '@/application/getServicesQuery'
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    Service.find({}).exec((err, services) => {
-        if (err) return res.status(500).send(err)
-
-        services = services.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1
-            return 0
-        })
+    try {
+        const services = await getServicesQuery().execute()
         res.status(200).send(services)
-    })
+    } catch (error) {
+        res.status(500).send(error)
+    }
 })
 
 router.post('/', async(req, res) => {
