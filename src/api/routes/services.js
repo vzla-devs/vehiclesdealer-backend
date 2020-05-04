@@ -19,11 +19,11 @@ router.post('/', async(req, res) => {
         try {
             const command = { description: serviceToAdd }
             await addServiceAction.execute(command)
-            res.status(200).send('ok')
         } catch (error) {
             res.status(500).send(error)
         }
     })
+    res.status(200).send('ok')
 })
 
 export default router
