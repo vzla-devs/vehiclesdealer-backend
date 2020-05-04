@@ -3,7 +3,7 @@ import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/vehicles/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/vehicles/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
-import { editVehicleAction } from '@/application/vehicles/editVehicleAction'
+import { changeVehicleAction } from '@/application/vehicles/changeVehicleAction'
 import { editVehiclePicturesAction } from '@/application/vehicles/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
 
@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
 router.put('/:id/datos', (req, res) => {
     const command = { id: req.params.id, ...req.body }
     try {
-        editVehicleAction.execute(command)
+        changeVehicleAction.execute(command)
         res.status(200).send('ok')
     } catch (err) {
         res.status(500).send(err)

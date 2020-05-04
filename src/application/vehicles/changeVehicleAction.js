@@ -34,8 +34,8 @@ async function execute (command) {
   await existingVehicle.save()
 }
 
-const editVehicleAction = {
+const changeVehicleAction = {
   execute
 }
 
-export { editVehicleAction }
+export { changeVehicleAction }
