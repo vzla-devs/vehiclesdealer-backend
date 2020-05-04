@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express'
+import Service from '@/domain/models/service'
+
 const router = express.Router()
-const Service = require('@/domain/models/service')
 
 router.get('/', (req, res) => {
     Service.find({}).exec((err, services) => {
@@ -32,4 +33,4 @@ router.post('/', async(req, res) => {
     res.status(200).send('ok')
 })
 
-module.exports = router
+export default router
