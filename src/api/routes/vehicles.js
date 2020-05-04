@@ -80,60 +80,41 @@ router.delete('/:id', async (req, res) => {
 
 function getFiltersFromRequest (request) {
     let filters = {}
-
     // si filtra por tipo de vehículo
     if (request.query.type !== undefined) {
         filters.type = request.query.type
     }
-
     // si filtra por marca
     if (request.query.make !== undefined) {
         filters.make = request.query.make
     }
-
     // si filtra por tipo de combustible
     if (request.query.fuel_type !== undefined) {
         filters.fuel_type = request.query.fuel_type
     }
-
     // si filtra por tipo de transmisión
     if (request.query.transmission !== undefined) {
         filters.transmission = request.query.transmission
     }
-
     // si filtra por año
     if (request.query.minYear !== undefined || request.query.maxYear !== undefined) {
-        
         let yearRange = {}
-
         if (request.query.minYear !== undefined) yearRange.$gte = parseInt(request.query.minYear, 10)
-
         if (request.query.maxYear !== undefined) yearRange.$lte = parseInt(request.query.maxYear, 10)
-
         filters.year = yearRange
     }
-
     // si filtra por precio
     if (request.query.minPrice !== undefined || request.query.maxPrice !== undefined) {
-        
         let priceRange = {}
-
         if (request.query.minPrice !== undefined) priceRange.$gte = parseInt(request.query.minPrice, 10)
-
         if (request.query.maxPrice !== undefined) priceRange.$lte = parseInt(request.query.maxPrice, 10)
-
         filters.price = priceRange
     }
-
     // si filtra por kilometraje
     if (request.query.minKilometers !== undefined || request.query.maxKilometers !== undefined) {
-        
         let kilometersRange = {}
-
         if (request.query.minKilometers !== undefined) kilometersRange.$gte = parseInt(request.query.minKilometers, 10)
-
         if (request.query.maxKilometers !== undefined) kilometersRange.$lte = parseInt(request.query.maxKilometers, 10)
-
         filters.kilometers = kilometersRange
     }
     return filters
