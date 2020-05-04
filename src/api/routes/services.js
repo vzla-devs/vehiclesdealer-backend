@@ -14,16 +14,14 @@ router.get('/', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
-    const servicesToAdd = req.body.services
-    await servicesToAdd.map(async serviceToAdd => {
-        try {
-            const command = { description: serviceToAdd }
-            await addServiceAction.execute(command)
-        } catch (error) {
-            res.status(500).send(error)
-        }
-    })
-    res.status(200).send('ok')
+    const serviceToAdd = req.body.service
+    try {
+        const command = { description: serviceToAdd }
+        await addServiceAction.execute(command)
+        res.status(200).send('ok')
+    } catch (error) {
+        res.status(500).send(error)
+    }
 })
 
 export default router
