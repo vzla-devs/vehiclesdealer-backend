@@ -1,11 +1,11 @@
 import express from 'express'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
-import { getVehiclesQuery } from '@/application/getVehiclesQuery'
-import { getVehicleFiltersQuery } from '@/application/getVehicleFiltersQuery'
-import { addVehicleAction } from '@/application/addVehicleAction'
-import { editVehicleAction } from '@/application/editVehicleAction'
-import { editVehiclePicturesAction } from '@/application/editVehiclePicturesAction'
-import { removeVehicleAction } from '@/application/removeVehicleAction'
+import { getVehiclesQuery } from '@/application/vehicles/getVehiclesQuery'
+import { getVehicleFiltersQuery } from '@/application/vehicles/getVehicleFiltersQuery'
+import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
+import { editVehicleAction } from '@/application/vehicles/editVehicleAction'
+import { editVehiclePicturesAction } from '@/application/vehicles/editVehiclePicturesAction'
+import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
 
 const router = express.Router()
 

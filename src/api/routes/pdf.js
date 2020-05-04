@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPictureAsBase64Query } from '@/application/getPictureAsBase64Query'
+import { getPictureAsBase64Query } from '@/application/pictures/getPictureAsBase64Query'
 
 const router = express.Router()
 
