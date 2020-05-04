@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-function execute (pictureToGet) {
+function getAsBase64 (pictureToGet) {
   const dotSeparatorPosition = pictureToGet.indexOf('.')
   const pictureFormat = pictureToGet.substring(dotSeparatorPosition + 1, pictureToGet.length)
   const pictureFormatData = `data:image/${pictureFormat};base64,`
@@ -12,8 +12,8 @@ function execute (pictureToGet) {
   })
 }
 
-const getPictureAsBase64Query = {
-  execute
+const getPictureQuery = {
+  getAsBase64
 }
 
-export { getPictureAsBase64Query }
+export { getPictureQuery }

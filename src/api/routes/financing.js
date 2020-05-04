@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get('/', async(req, res) => {
     try {
-        const financing = await getFinancingQuery.execute()
+        const financing = await getFinancingQuery.get()
         res.status(200).send(financing)
     } catch (error) {
         res.status(500).send(err)

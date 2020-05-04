@@ -1,6 +1,6 @@
 import Service from '@/domain/models/service'
 
-async function execute () {
+async function getAll () {
   const services = await Service.find({}).exec()
   return services.sort((a, b) => {
     if (a.spanish > b.spanish) return 1
@@ -9,7 +9,7 @@ async function execute () {
 }
 
 const getServicesQuery = {
-  execute
+  getAll
 }
 
 export { getServicesQuery }

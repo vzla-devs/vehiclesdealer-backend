@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
 router.get('/filtros', async (req, res) => {
     try {
-        const filters = await getVehicleFiltersQuery.execute()
+        const filters = await getVehicleFiltersQuery.getAll()
         res.status(200).send(filters)
     } catch (error) {
         res.status(500).send(error)
