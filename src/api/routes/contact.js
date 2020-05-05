@@ -11,17 +11,16 @@ router.get('/', tryThis(async(req, res) => {
 }))
 
 router.put('/', async(req, res) => {
-    const command = {
-        mobilePhone,
-        mainPhone,
-        emails,
-        monday,
-        tuesday,
-        wednesday,
-        thursday,
-        friday,
-        saturday
-    } = req.body
+    const command = {}
+    command.mobilePhone = req.body.mobilePhone ? req.body.mobilePhone : undefined
+    command.mainPhone = req.body.mainPhone ? req.body.mainPhone : undefined
+    command.emails = req.body.emails ? req.body.emails : undefined
+    command.monday = req.body.monday ? req.body.monday : undefined
+    command.tuesday = req.body.tuesday ? req.body.tuesday : undefined
+    command.wednesday = req.body.wednesday ? req.body.wednesday : undefined
+    command.thursday = req.body.thursday ? req.body.thursday : undefined
+    command.friday = req.body.friday ? req.body.friday : undefined
+    command.saturday = req.body.saturday ? req.body.saturday : undefined
     await changeContactAction.execute(command)
     res.sendStatus(200)
 })
