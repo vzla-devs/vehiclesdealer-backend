@@ -36,19 +36,19 @@ router.post('/', tryThis(async (req, res) => {
 router.put('/:id/datos', tryThis((req, res) => {
     const command = { id: req.params.id, ...req.body }
     changeVehicleAction.execute(command)
-    res.status(200).send('ok')
+    res.sendStatus(200)
 }))
 
 const upload = createMediaStorageUploader('public/uploads')
 router.put('/:id/fotos', upload.array('pictures'), tryThis(async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     await changeVehiclePicturesAction.execute(command)
-    res.status(200).send('ok')
+    res.sendStatus(200)
 }))
 
 router.delete('/:id', tryThis(async (req, res) => {
     await removeVehicleAction.execute(req.params.id)
-    res.status(200).send('ok')
+    res.sendStatus(200)
 }))
 
 function getFiltersFromRequest (request) {
