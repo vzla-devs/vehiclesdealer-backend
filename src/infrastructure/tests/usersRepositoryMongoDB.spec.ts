@@ -28,7 +28,11 @@ describe('usersRepositoryMongoDB', () => {
 
     const createdUser = await users.findOne()
     const expectedUser = { username: 'anyUsername', password: 'anyPassword' }
+    verifyUsersAreEqual(createdUser, expectedUser)
+  })
+
+  function verifyUsersAreEqual(createdUser: any, expectedUser: any) {
     expect(createdUser.username).toBe(expectedUser.username)
     expect(createdUser.password).toBe(expectedUser.password)
-  })
+  }
 })
