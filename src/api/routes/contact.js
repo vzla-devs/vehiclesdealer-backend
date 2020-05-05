@@ -1,14 +1,14 @@
-const express = require('express')
+import express from 'express'
+import Contact from '@/domain/models/contact'
+import { getContacQuery } from '@/application/contact/getContacQuery'
+import { tryThis } from '@/api/decorators'
+
 const router = express.Router()
-const Contact = require('@/domain/models/contact')
 
-router.get('/', (req, res) => {
-    Contact.findOne({}).exec((err, contact) => {
-        if (err) return res.status(500).send(err)
-
-        res.status(200).send(contact)
-    })
-})
+router.get('/', tryThis((req, res) => {
+    const contact = await getContacQuery.get()
+    res.status(200).send(contact)
+}))
 
 router.put('/', async(req, res) => {
     const {
@@ -61,4 +61,4 @@ router.put('/', async(req, res) => {
     })
 })
 
-module.exports = router
+export default router
