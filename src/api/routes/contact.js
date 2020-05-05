@@ -1,12 +1,12 @@
 import express from 'express'
-import { getContacQuery } from '@/application/contact/getContacQuery'
+import { getContactQuery } from '@/application/contact/getContactQuery'
 import { changeContactAction } from '@/application/contact/changeContactAction'
 import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
 
 router.get('/', tryThis(async(req, res) => {
-    const contact = await getContacQuery.get()
+    const contact = await getContactQuery.get()
     res.status(200).send(contact)
 }))
 
