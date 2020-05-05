@@ -52,23 +52,12 @@ router.delete('/:id', tryThis(async (req, res) => {
 }))
 
 function getFiltersFromRequest (request) {
-    let filters = {}
-    // si filtra por tipo de vehículo
-    if (request.query.type !== undefined) {
-        filters.type = request.query.type
-    }
-    // si filtra por marca
-    if (request.query.make !== undefined) {
-        filters.make = request.query.make
-    }
-    // si filtra por tipo de combustible
-    if (request.query.fuel_type !== undefined) {
-        filters.fuel_type = request.query.fuel_type
-    }
-    // si filtra por tipo de transmisión
-    if (request.query.transmission !== undefined) {
-        filters.transmission = request.query.transmission
-    }
+    let filters = {
+        type,
+        make,
+        fuel_type,
+        transmission
+    } = request.query
     // si filtra por año
     if (request.query.minYear !== undefined || request.query.maxYear !== undefined) {
         let yearRange = {}
