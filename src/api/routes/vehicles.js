@@ -6,77 +6,50 @@ import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
 import { changeVehicleAction } from '@/application/vehicles/changeVehicleAction'
 import { changeVehiclePicturesAction } from '@/application/vehicles/changeVehiclePicturesAction'
 import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
+import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/', tryThis(async (req, res) => {
     const filters = getFiltersFromRequest(req)
-    try {
-        const vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
-        res.status(200).send(vehicles)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+    const vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
+    res.status(200).send(vehicles)
+}))
 
-router.get('/filtros', async (req, res) => {
-    try {
-        const filters = await getVehicleFiltersQuery.getAll()
-        res.status(200).send(filters)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+router.get('/filtros', tryThis(async (req, res) => {
+    const filters = await getVehicleFiltersQuery.getAll()
+    res.status(200).send(filters)
+}))
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', tryThis(async (req, res) => {
     const vehicleId = req.params.id
-    try {
-        const vehicle = await getVehiclesQuery.getOneById(vehicleId)
-        res.status(200).send(vehicle)
-    } catch (error) {
-        res.status(500).send(err)
-    }
-})
+    const vehicle = await getVehiclesQuery.getOneById(vehicleId)
+    res.status(200).send(vehicle)
+}))
 
-router.post('/', async (req, res) => {
+router.post('/', tryThis(async (req, res) => {
     const command = req.body
-    try {
-        const newVehicleId = await addVehicleAction.execute(command)
-        res.status(201).send({ _id: newVehicleId })
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
+    const newVehicleId = await addVehicleAction.execute(command)
+    res.status(201).send({ _id: newVehicleId })
+}))
 
-router.put('/:id/datos', (req, res) => {
+router.put('/:id/datos', tryThis((req, res) => {
     const command = { id: req.params.id, ...req.body }
-    try {
-        changeVehicleAction.execute(command)
-        res.status(200).send('ok')
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
+    changeVehicleAction.execute(command)
+    res.status(200).send('ok')
+}))
 
 const upload = createMediaStorageUploader('public/uploads')
-router.put('/:id/fotos', upload.array('pictures'), async (req, res) => {
+router.put('/:id/fotos', upload.array('pictures'), tryThis(async (req, res) => {
     const command = { id: req.params.id, files: req.files }
-    try {
-        await changeVehiclePicturesAction.execute(command)
-        res.status(200).send('ok')
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
+    await changeVehiclePicturesAction.execute(command)
+    res.status(200).send('ok')
+}))
 
-router.delete('/:id', async (req, res) => {
-    try {
-        await removeVehicleAction.execute(req.params.id)
-        res.status(200).send('ok')
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
+router.delete('/:id', tryThis(async (req, res) => {
+    await removeVehicleAction.execute(req.params.id)
+    res.status(200).send('ok')
+}))
 
 function getFiltersFromRequest (request) {
     let filters = {}
