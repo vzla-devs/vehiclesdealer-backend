@@ -20,6 +20,7 @@ function createWebApplication () {
   addURLEncodedParserToApp(app)
   addRoutesToApp(app)
   addNotFoundRoutesHandlerToApp(app)
+  addErrorsHandlerToApp(app)
   return app
 }
 
@@ -52,6 +53,13 @@ function addRoutesToApp(app) {
 function addNotFoundRoutesHandlerToApp(app) {
   app.use((req, res, next) => {
     res.status(404).send('Uh-oh...not found :(')
+  })
+}
+
+function addErrorsHandlerToApp(app) {
+  app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send(err.stack)
   })
 }
 
