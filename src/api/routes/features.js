@@ -12,7 +12,7 @@ router.get('/', tryThis(async(req, res) => {
     res.status(200).send(features)
 }))
 
-router.post('/', async(req, res) => {
+router.post('/', tryThis(async(req, res) => {
     const featureType = req.body.type
     const featuresToAdd = req.body.features
     featuresToAdd.forEach(async featureToAdd => {
@@ -22,6 +22,6 @@ router.post('/', async(req, res) => {
         })
     })
     res.sendStatus(200)
-})
+}))
 
 export default router
