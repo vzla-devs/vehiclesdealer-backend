@@ -2,6 +2,7 @@ import express from 'express'
 import About from '@/domain/models/about'
 import fs from 'fs'
 import { getAboutQuery } from '@/application/about/getAboutQuery'
+import { changeAboutAction } from '@/application/about/changeAboutAction'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { tryThis } from '@/api/decorators'
 
@@ -12,30 +13,11 @@ router.get('/', tryThis(async(req, res) => {
     res.status(200).send(about)
 }))
 
-router.put('/', (req, res) => {
-    const { text } = req.body
-
-    About.findOne({})
-    .exec(async(err, about) => {
-        if (err) return res.status(500).send(err)
-
-        // si la información de contacto no existe en la base de datos
-        if (about !== null) {
-            about.text = text
-        } else {
-            about = new About ({
-                text: text
-            })
-        }
-
-        try {
-            about = await about.save()
-            res.status(200).send(about)
-        } catch (err) {
-           res.status(500).send(err)
-        }
-    })
-})
+router.put('/', tryThis(async(req, res) => {
+    const command = { text: req.body.text }
+    await changeAboutAction.execute(command)
+    res.sendStatus(200)
+}))
 
 const upload = createMediaStorageUploader('assets', 'home_image')
 router.put('/imagen', upload.single('picture'), (req, res) => {
