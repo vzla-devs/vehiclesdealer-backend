@@ -4,15 +4,16 @@ import { User } from '@/domain/models/user'
 
 describe('usersRepositoryMongoDB', () => {
   let connection
-  let db
-  const usersRepo = new UsersRepositoryMongoDB()
+  let databaseInstance
+  let usersRepo
 
   beforeAll(async () => {
     connection = await MongoClient.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
-    db = await connection.db()
+    databaseInstance = await connection.db()
+    usersRepo = new UsersRepositoryMongoDB(databaseInstance)
   })
 
   afterAll(async () => {
@@ -20,10 +21,10 @@ describe('usersRepositoryMongoDB', () => {
   })
 
   it('creates a user', async() => {
-    const users = db.collection('users')
+    const users = databaseInstance.collection('users')
     const givenUser = new User('anyUsername', 'anyPassword')
 
-    usersRepo.create(givenUser)
+    await usersRepo.create(givenUser)
 
     const createdUser = await users.findOne()
     const expectedUser = { username: 'anyUsername', password: 'anyPassword' }

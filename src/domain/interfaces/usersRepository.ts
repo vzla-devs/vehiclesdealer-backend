@@ -1,3 +1,5 @@
+import { User } from '@/domain/models/user'
+
 export interface UsersRepository {
-  create: Function
+  create(userToCreate: User): void
 }
