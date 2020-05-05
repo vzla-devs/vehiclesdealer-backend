@@ -1,5 +1,4 @@
 import express from 'express'
-import Feature from '@/domain/models/feature'
 import { getFeaturesQuery } from '@/application/features/getFeaturesQuery'
 import { addFeatureAction } from '@/application/features/addFeatureAction'
 import { tryThis } from '@/api/decorators'
