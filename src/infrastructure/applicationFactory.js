@@ -20,6 +20,7 @@ function createWebApplication () {
   addJSONParserToApp()
   addURLEncodedParserToApp()
   addRoutesToApp()
+  addNotFoundRoutesHandler()
   return app
 }
 
@@ -47,6 +48,12 @@ function addRoutesToApp () {
   app.use('/api/contacto', contact)
   app.use('/api/financiacion', financing)
   app.use('/api/pdf', pdf)
+}
+
+function addNotFoundRoutesHandler () {
+  app.use((req, res, next) => {
+    res.status(404).send('Uh-oh...not found :(')
+  })
 }
 
 export { createWebApplication }
