@@ -1,6 +1,5 @@
 import express from 'express'
 import About from '@/domain/models/about'
-import fs from 'fs'
 import { getAboutQuery } from '@/application/about/getAboutQuery'
 import { changeAboutAction } from '@/application/about/changeAboutAction'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
@@ -19,18 +18,8 @@ router.put('/', tryThis(async(req, res) => {
     res.sendStatus(200)
 }))
 
-const upload = createMediaStorageUploader('assets', 'home_image')
+const upload = createMediaStorageUploader('public/assets', 'home_image')
 router.put('/imagen', upload.single('picture'), (req, res) => {
-    req.file.sharp(`assets/${file.filename}`)
-        .withMetadata()
-        .resize(1920, 1080)
-        .toBuffer(`assets/${file.filename}`, (err, data) => {
-            if (err) throw err
-            fs.writeFile(`assets/${file.filename}`, data, 'binary', err => {
-                if (err) throw err
-            })
-        })
-
     About.findOne({})
     .exec(async(err, about) => {
         if (err) return res.status(500).send(err)
