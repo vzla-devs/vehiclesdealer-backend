@@ -1,5 +1,4 @@
 import express from 'express'
-import About from '@/domain/models/about'
 import { getAboutQuery } from '@/application/about/getAboutQuery'
 import { changeAboutAction } from '@/application/about/changeAboutAction'
 import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
@@ -19,20 +18,10 @@ router.put('/', tryThis(async(req, res) => {
 }))
 
 const upload = createMediaStorageUploader('public/assets', 'home_image')
-router.put('/imagen', upload.single('picture'), (req, res) => {
-    About.findOne({})
-    .exec(async(err, about) => {
-        if (err) return res.status(500).send(err)
-
-        about.picture = req.file.filename
-
-        try {
-            about = await about.save()
-            res.status(200).send(about)
-        } catch (err) {
-            res.status(500).send(err)
-        }
-    })
-})
+router.put('/imagen', upload.single('picture'), tryThis(async(req, res) => {
+    const command = { picture: req.file.filename }
+    await changeAboutAction.execute(command)
+    res.sendStatus(200)
+}))
 
 export default router
