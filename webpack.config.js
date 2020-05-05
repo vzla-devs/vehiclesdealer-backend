@@ -3,7 +3,8 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: './src/api/index.js',
+  entry: './src/api/index.ts',
+  devtool: 'inline-source-map',
   target: 'node',
   externals: [nodeExternals()],
   output: {
@@ -14,14 +15,19 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env']
           }
         }
-      }
+      },
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ]
   },
   resolve: {
