@@ -52,12 +52,11 @@ router.delete('/:id', tryThis(async (req, res) => {
 }))
 
 function getFiltersFromRequest (request) {
-    let filters = {
-        type,
-        make,
-        fuel_type,
-        transmission
-    } = request.query
+    let filters = {}
+    filters.type = request.query.type ? request.query.type : undefined
+    filters.make = request.query.make ? request.query.make : undefined
+    filters.fuel_type = request.query.fuel_type ? request.query.fuel_type : undefined
+    filters.transmission = request.query.transmission ? request.query.transmission : undefined
     // si filtra por año
     if (request.query.minYear !== undefined || request.query.maxYear !== undefined) {
         let yearRange = {}
