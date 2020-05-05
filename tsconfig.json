@@ -3,6 +3,9 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "baseUrl": ".",
+    "types": [
+      "jest"
+    ],
     "paths": {
       "@/*": ["src/*"]
     }
