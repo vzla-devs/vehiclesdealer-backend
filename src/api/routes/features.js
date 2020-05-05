@@ -1,18 +1,17 @@
-const express = require('express')
+import express from 'express'
+import Feature from '@/domain/models/feature'
+import { getFeaturesQuery } from '@/application/features/getFeaturesQuery'
+
 const router = express.Router()
-const Feature = require('@/domain/models/feature')
 
-router.get('/', (req, res) => {
-    const type = req.query.type
-    Feature.find({ type }).exec((err, features) => {
-        if (err) return res.status(500).send(err)
-
-        features = features.sort((a, b) => {
-            if (a.spanish > b.spanish) return 1
-            return 0
-        })
+router.get('/', async(req, res) => {
+    const featureType = req.query.type
+    try {
+        const features = await getFeaturesQuery.getByType(featureType)
         res.status(200).send(features)
-    })
+    } catch (error) {
+        res.status(500).send(err)
+    }
 })
 
 router.post('/', async(req, res) => {
@@ -35,4 +34,4 @@ router.post('/', async(req, res) => {
     res.status(200).send(newFeatures)
 })
 
-module.exports = router
+export default router
