@@ -4,7 +4,8 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "types": [
-      "jest"
+      "jest",
+      "node"
     ],
     "paths": {
       "@/*": ["src/*"]
