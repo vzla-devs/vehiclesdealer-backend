@@ -1,18 +1,15 @@
 import express from 'express'
 import Feature from '@/domain/models/feature'
 import { getFeaturesQuery } from '@/application/features/getFeaturesQuery'
+import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
 
-router.get('/', async(req, res) => {
+router.get('/', tryThis(async(req, res) => {
     const featureType = req.query.type
-    try {
-        const features = await getFeaturesQuery.getByType(featureType)
-        res.status(200).send(features)
-    } catch (error) {
-        res.status(500).send(err)
-    }
-})
+    const features = await getFeaturesQuery.getByType(featureType)
+    res.status(200).send(features)
+}))
 
 router.post('/', async(req, res) => {
     const type = req.body.type

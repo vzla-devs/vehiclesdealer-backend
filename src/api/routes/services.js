@@ -1,26 +1,19 @@
 import express from 'express'
 import { getServicesQuery } from '@/application/services/getServicesQuery'
 import { addServiceAction } from '@/application/services/addServiceAction'
+import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
 
-router.get('/', async(req, res) => {
-    try {
-        const services = await getServicesQuery.getAll()
-        res.status(200).send(services)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+router.get('/', tryThis(async(req, res) => {
+    const services = await getServicesQuery.getAll()
+    res.status(200).send(services)
+}))
 
-router.post('/', async(req, res) => {
+router.post('/', tryThis(async(req, res) => {
     const command = { description: req.body.service }
-    try {
-        await addServiceAction.execute(command)
-        res.status(200).send('ok')
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+    await addServiceAction.execute(command)
+    res.sendStatus(200)
+}))
 
 export default router

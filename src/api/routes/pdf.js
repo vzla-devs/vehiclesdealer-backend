@@ -1,16 +1,13 @@
 import express from 'express'
 import { getPictureQuery } from '@/application/pictures/getPictureQuery'
+import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
 
-router.get('/:picture', (req, res) => {
+router.get('/:picture', tryThis((req, res) => {
     const pictureToGet = req.params.picture
-    try {
-        const pictureData = getPictureQuery.getAsBase64(pictureToGet)
-        res.status(200).send(pictureData)
-    } catch (error) {
-        res.status(500).send(err)
-    }
-})
+    const pictureData = getPictureQuery.getAsBase64(pictureToGet)
+    res.status(200).send(pictureData)
+}))
 
 export default router
