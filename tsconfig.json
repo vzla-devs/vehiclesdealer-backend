@@ -2,6 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": false,
+    "esModuleInterop": true,
     "baseUrl": ".",
     "types": [
       "jest",

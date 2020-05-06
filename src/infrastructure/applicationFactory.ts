@@ -11,7 +11,7 @@ import contact from '@/api/routes/contact'
 import financing from '@/api/routes/financing'
 import pdf from '@/api/routes/pdf'
 
-function createWebApplication () {
+function createWebApplication (): express.Application {
   const app = express()
   addStaticRouteToApp(app, 'uploads')
   addStaticRouteToApp(app, 'assets')
@@ -24,23 +24,23 @@ function createWebApplication () {
   return app
 }
 
-function addStaticRouteToApp(app, staticRoute) {
+function addStaticRouteToApp(app: express.Application, staticRoute: string): void {
   app.use('/api/static', express.static(`public/${staticRoute}`))
 }
 
-function addCrossOriginResourceSharingToApp(app) {
+function addCrossOriginResourceSharingToApp(app: express.Application): void {
   app.use(cors())
 }
 
-function addJSONParserToApp(app) {
+function addJSONParserToApp(app: express.Application): void {
   app.use(bodyParser.json({ limit: '50mb' }))
 }
 
-function addURLEncodedParserToApp(app) {
+function addURLEncodedParserToApp(app: express.Application): void {
   app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 }
 
-function addRoutesToApp(app) {
+function addRoutesToApp(app: express.Application): void {
   app.use('/api/vehiculos', vehicles)
   app.use('/api/caracteristicas', features)
   app.use('/api/servicios', services)
@@ -50,13 +50,13 @@ function addRoutesToApp(app) {
   app.use('/api/pdf', pdf)
 }
 
-function addNotFoundRoutesHandlerToApp(app) {
+function addNotFoundRoutesHandlerToApp(app: express.Application): void {
   app.use((req, res, next) => {
     res.status(404).send('Uh-oh...not found :(')
   })
 }
 
-function addErrorsHandlerToApp(app) {
+function addErrorsHandlerToApp(app: express.Application): void {
   app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).send(err.stack)

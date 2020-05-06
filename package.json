@@ -34,6 +34,7 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
     "@shelf/jest-mongodb": "^1.1.5",
+    "@types/express": "^4.17.6",
     "@types/jest": "^25.2.1",
     "@types/mongodb": "^3.5.16",
     "@types/node": "^13.13.5",
