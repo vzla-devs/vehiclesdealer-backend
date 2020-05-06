@@ -10,6 +10,7 @@ import about from '@/api/routes/about'
 import contact from '@/api/routes/contact'
 import financing from '@/api/routes/financing'
 import pdf from '@/api/routes/pdf'
+import users from '@/api/routes/users'
 
 function createWebApplication(): express.Application {
   const app = express()
@@ -48,6 +49,7 @@ function addRoutesToApp(app: express.Application): void {
   app.use('/api/contacto', contact)
   app.use('/api/financiacion', financing)
   app.use('/api/pdf', pdf)
+  app.use('/api/usuarios', users)
 }
 
 function addNotFoundRoutesHandlerToApp(app: express.Application): void {
