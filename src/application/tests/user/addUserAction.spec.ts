@@ -2,6 +2,7 @@ import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { AddUserAction, AddUserCommand } from '@/application/user/addUserAction'
 import { UserModel } from '@/domain/interfaces/userModel'
 import { User, NoUser } from '@/domain/models/user'
+import { tryActionAndGetError } from '@/application/decorators'
 
 describe('addUserAction', () => {
   let usersRepository: UsersRepository
@@ -32,12 +33,8 @@ describe('addUserAction', () => {
     const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyPassword'))
 
-    let thrownError
-    try {
-      await addUserAction.execute(givenUserToCreateCommand)
-    } catch(error) {
-      thrownError = error
-    }
+    const action = tryActionAndGetError(addUserAction)
+    const thrownError = await action(givenUserToCreateCommand)
 
     expect(thrownError).toEqual(new Error('the user already exists'))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
@@ -48,12 +45,8 @@ describe('addUserAction', () => {
     const givenUserToCreateCommand: AddUserCommand = { username: '', password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new NoUser())
 
-    let thrownError
-    try {
-      await addUserAction.execute(givenUserToCreateCommand)
-    } catch(error) {
-      thrownError = error
-    }
+    const action = tryActionAndGetError(addUserAction)
+    const thrownError = await action(givenUserToCreateCommand)
 
     expect(thrownError).toEqual(new Error('the user has invalid credentials'))
     expect(usersRepository.create).not.toHaveBeenCalled()
