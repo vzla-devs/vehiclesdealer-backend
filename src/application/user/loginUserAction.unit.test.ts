@@ -1,6 +1,7 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { LoginUserAction, LoginUserCommand } from '@/application/user/loginUserAction'
 import { UserModel, User } from '@/domain/models/user'
+import { tryActionAndGetError } from '../decorators'
 
 describe('loginUserAction unit tests', () => {
   let usersRepository: UsersRepository
@@ -23,6 +24,18 @@ describe('loginUserAction unit tests', () => {
 
     await loginUserAction.execute(givenUserToLoginCommand)
 
+    expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
+  })
+
+  it('does not login a user when the password mismatches', async() => {
+    const givenUsername = 'anyExistingUsername'
+    const givenUserToCreateCommand: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
+    givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyDifferentPassword'))
+
+    const action = tryActionAndGetError(loginUserAction)
+    const thrownError = await action(givenUserToCreateCommand)
+
+    expect(thrownError).toEqual(new Error('the user has invalid credentials'))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 
