@@ -50,19 +50,29 @@ describe('addUserAction', () => {
         password: 'anyPassword'
       },
       {
-        name: 'with an empty password',
-        username: 'anyUsername',
-        password: ''
-      },
-      {
         name: 'with a null username',
         username: null,
         password: 'anyPassword'
       },
       {
+        name: 'with an undefined username',
+        username: undefined,
+        password: 'anyPassword'
+      },
+      {
+        name: 'with an empty password',
+        username: 'anyUsername',
+        password: ''
+      },
+      {
         name: 'with a null password',
         username: 'anyUsername',
         password: null
+      },
+      {
+        name: 'with an undefined password',
+        username: 'anyUsername',
+        password: undefined
       }
     ]
 
