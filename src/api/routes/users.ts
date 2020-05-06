@@ -1,5 +1,5 @@
 import express from 'express'
-import { UsersFactory } from '@/infrastructure/usersFactory'
+import { UsersFactory } from '@/infrastructure/factories/usersFactory'
 import { tryThisAndHandleAnyError } from '@/api/decorators'
 import { AddUserCommand } from '@/application/user/addUserAction'
 

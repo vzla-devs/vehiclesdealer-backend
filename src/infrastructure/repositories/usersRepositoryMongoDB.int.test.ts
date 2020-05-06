@@ -1,5 +1,5 @@
 import { MongoClient, Db } from 'mongodb'
-import { UsersRepositoryMongoDB } from '@/infrastructure/usersRepositoryMongoDB'
+import { UsersRepositoryMongoDB } from '@/infrastructure/repositories/usersRepositoryMongoDB'
 import { User, NoUser } from '@/domain/models/user'
 
 describe('usersRepositoryMongoDB integration tests', () => {

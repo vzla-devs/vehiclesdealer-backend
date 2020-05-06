@@ -1,5 +1,5 @@
-import { createDatabaseConnection, getDatabaseConnection } from '@/infrastructure/persistenceFactory'
-import { createWebApplication } from '@/infrastructure/applicationFactory'
+import { createDatabaseConnection, getDatabaseConnection } from '@/infrastructure/factories/persistenceFactory'
+import { createWebApplication } from '@/infrastructure/factories/applicationFactory'
 
 let server
 createDatabaseConnection()

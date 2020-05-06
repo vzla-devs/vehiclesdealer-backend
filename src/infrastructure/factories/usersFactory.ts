@@ -1,5 +1,5 @@
-import { getDatabaseConnection } from '@/infrastructure/persistenceFactory'
-import { UsersRepositoryMongoDB } from '@/infrastructure/usersRepositoryMongoDB'
+import { getDatabaseConnection } from '@/infrastructure/factories/persistenceFactory'
+import { UsersRepositoryMongoDB } from '@/infrastructure/repositories/usersRepositoryMongoDB'
 import { AddUserAction } from '@/application/user/addUserAction'
 
 export class UsersFactory {

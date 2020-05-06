@@ -1,7 +1,7 @@
 import express from 'express'
 import { getAboutQuery } from '@/application/about/getAboutQuery'
 import { editAboutAction } from '@/application/about/editAboutAction'
-import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
+import { createMediaStorageUploader } from '@/infrastructure/factories/persistenceFactory'
 import { tryThisAndHandleAnyError } from '@/api/decorators'
 
 const router = express.Router()

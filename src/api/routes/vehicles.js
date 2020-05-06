@@ -1,5 +1,5 @@
 import express from 'express'
-import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
+import { createMediaStorageUploader } from '@/infrastructure/factories/persistenceFactory'
 import { getVehiclesQuery } from '@/application/vehicles/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/vehicles/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
