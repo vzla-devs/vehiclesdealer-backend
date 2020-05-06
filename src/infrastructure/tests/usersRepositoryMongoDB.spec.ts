@@ -21,12 +21,12 @@ describe('usersRepositoryMongoDB', () => {
   })
 
   it('creates a user', async() => {
-    const users = databaseInstance.collection('users')
     const givenUser = new User('anyUsername', 'anyPassword')
-
+    
     await usersRepo.create(givenUser)
-
-    const createdUser = await users.findOne()
+    
+    const usersCollection = databaseInstance.collection('users')
+    const createdUser = await usersCollection.findOne()
     const expectedUser = { username: 'anyUsername', password: 'anyPassword' }
     verifyUsersAreEqual(createdUser, expectedUser)
   })
