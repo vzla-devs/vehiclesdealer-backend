@@ -12,7 +12,7 @@ describe('usersRepositoryMongoDB', () => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
-    databaseInstance = await connection.db()
+    databaseInstance = connection.db()
     usersRepo = new UsersRepositoryMongoDB(databaseInstance)
   })
 
