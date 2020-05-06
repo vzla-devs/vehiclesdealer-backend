@@ -8,7 +8,8 @@ describe('usersRepositoryMongoDB', () => {
   let usersRepo: UsersRepositoryMongoDB
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.MONGO_URL, {
+    const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
+    connection = await MongoClient.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
@@ -17,7 +18,7 @@ describe('usersRepositoryMongoDB', () => {
   })
 
   beforeEach(async () => {
-    await databaseInstance.collection('users').remove({})
+    await databaseInstance.collection('users').deleteMany({})
   })
 
   afterAll(async () => {
