@@ -2,7 +2,7 @@ import Financing from '@/domain/models/financing'
 
 async function execute (command) {
   const existingFinancing = await Financing.findOne({}).exec()
-  if (!!existingFinancing) {
+  if (existingFinancing) {
     existingFinancing.amount = command.amount
     await existingFinancing.save()
   } else {
