@@ -1,8 +1,9 @@
-import { connectToDatabase } from '@/infrastructure/persistenceFactory'
+import { createDatabaseConnection, getDatabaseConnection } from '@/infrastructure/persistenceFactory'
 import { createWebApplication } from '@/infrastructure/applicationFactory'
 
 let server
-const databaseConnection = connectToDatabase()
+createDatabaseConnection()
+const databaseConnection = getDatabaseConnection()
 runAppOnceTheDatabaseIsConnected()
 logDatabaseErrors()
 
