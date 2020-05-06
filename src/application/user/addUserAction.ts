@@ -22,7 +22,7 @@ export interface AddUserCommand {
   password: string
 }
 
-function checkThatTheUserCanBeCreated (existingUser: User) {
+function checkThatTheUserCanBeCreated (existingUser: User): void {
   const userAlreadyExists = !(existingUser instanceof NoUser)
   if (userAlreadyExists) throw new Error('the user already exists')
 }
