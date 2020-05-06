@@ -1,5 +1,6 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { AddUserAction, AddUserCommand } from '@/application/user/addUserAction'
+import { UserModel } from '@/domain/interfaces/userModel'
 import { User, NoUser } from '@/domain/models/user'
 
 describe('addUserAction', () => {
@@ -38,7 +39,7 @@ describe('addUserAction', () => {
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
 
-  function givenAMockedUsersRepoGetByWith(user: User) {
+  function givenAMockedUsersRepoGetByWith(user: UserModel) {
     usersRepository.getBy = jest.fn(async() => user)
   }
 })

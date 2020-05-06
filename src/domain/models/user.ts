@@ -1,7 +1,8 @@
-export class User {
+import { UserModel } from '@/domain/interfaces/userModel'
+export class User implements UserModel {
   private username: string
   private password: string
-  getCredentials(): any {
+  getCredentials() {
     return { username: this.username, password: this.password }
   }
 
@@ -11,8 +12,8 @@ export class User {
   }
 }
 
-export class NoUser extends User {
-  constructor() {
-    super('', '')
+export class NoUser implements UserModel {
+  getCredentials() {
+    return { username: '', password: '' }
   }
 }

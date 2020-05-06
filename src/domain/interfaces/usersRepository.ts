@@ -1,6 +1,6 @@
-import { User } from '@/domain/models/user'
+import { UserModel } from '@/domain/interfaces/userModel'
 
 export interface UsersRepository {
-  create(userToCreate: User): Promise<void>
-  getBy(username: string): Promise<User>
+  create(userToCreate: UserModel): Promise<void>
+  getBy(username: string): Promise<UserModel>
 }

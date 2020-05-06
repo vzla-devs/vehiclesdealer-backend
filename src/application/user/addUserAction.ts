@@ -1,5 +1,6 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { User, NoUser } from '@/domain/models/user'
+import { UserModel } from '@/domain/interfaces/userModel'
 
 export class AddUserAction {
   usersRepository: UsersRepository
@@ -22,7 +23,7 @@ export interface AddUserCommand {
   password: string
 }
 
-function checkThatTheUserCanBeCreated (existingUser: User): void {
+function checkThatTheUserCanBeCreated (existingUser: UserModel): void {
   const userAlreadyExists = !(existingUser instanceof NoUser)
   if (userAlreadyExists) throw new Error('the user already exists')
 }
