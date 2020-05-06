@@ -3,7 +3,7 @@ import { User, NoUser } from '@/domain/models/user'
 import { Db } from 'mongodb'
 
 class UsersRepositoryMongoDB implements UsersRepository {
-  databaseInstance: Db
+  private databaseInstance: Db
 
   async create(userToCreate: User) {
     const usersCollection = this.databaseInstance.collection('users')
