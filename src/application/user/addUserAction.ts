@@ -7,12 +7,9 @@ export class AddUserAction {
 
   async execute(command: AddUserCommand) {
     const existingUser = await this.usersRepository.getBy(command.username)
-    if (existingUser instanceof NoUser) {
-      const userToCreate = new User(command.username, command.password)
-      await this.usersRepository.create(userToCreate)
-    } else {
-      throw new Error('the user already exists')
-    }
+    checkThatTheUserCanBeCreated(existingUser)
+    const userToCreate = new User(command.username, command.password)
+    await this.usersRepository.create(userToCreate)
   }
 
   constructor(usersRepository: UsersRepository) {
@@ -23,4 +20,9 @@ export class AddUserAction {
 export interface AddUserCommand {
   username: string,
   password: string
+}
+
+function checkThatTheUserCanBeCreated (existingUser: User) {
+  const userAlreadyExists = !(existingUser instanceof NoUser)
+  if (userAlreadyExists) throw new Error('the user already exists')
 }
