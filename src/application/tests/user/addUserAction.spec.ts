@@ -53,6 +53,11 @@ describe('addUserAction', () => {
         name: 'with an empty password',
         username: 'anyUsername',
         password: ''
+      },
+      {
+        name: 'with a null username',
+        username: null,
+        password: 'anyPassword'
       }
     ]
 
