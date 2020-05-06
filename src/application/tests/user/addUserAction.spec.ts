@@ -15,15 +15,18 @@ describe('addUserAction', () => {
   })
 
   it('adds a new user', async() => {
-    const givenUserToCreateCommand: AddUserCommand = { username: 'anyUsername', password: 'anyPassword' }
+    const givenUsername = 'anyUsername'
+    const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
+    usersRepository.getBy = jest.fn(async() => new NoUser())
 
     await addUserAction.execute(givenUserToCreateCommand)
 
-    const expectedUserToCreate = new User('anyUsername', 'anyPassword')
+    expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
+    const expectedUserToCreate = new User(givenUsername, 'anyPassword')
     expect(usersRepository.create).toHaveBeenCalledWith(expectedUserToCreate)
   })
 
-  it.only('does not add a user that already exists', async() => {
+  it('does not add a user that already exists', async() => {
     const givenUsername = 'anyExistingUsername'
     const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
     usersRepository.getBy = jest.fn(async() => new User(givenUsername, 'anyPassword'))
