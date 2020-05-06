@@ -1,11 +1,11 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/domain/models/user'
 
 describe('usersRepositoryMongoDB', () => {
-  let connection
-  let databaseInstance
-  let usersRepo
+  let connection: MongoClient
+  let databaseInstance: Db
+  let usersRepo: UsersRepositoryMongoDB
 
   beforeAll(async () => {
     connection = await MongoClient.connect(process.env.MONGO_URL, {
@@ -17,7 +17,7 @@ describe('usersRepositoryMongoDB', () => {
   })
 
   beforeEach(async () => {
-    await databaseInstance.collection('users').remove()
+    await databaseInstance.collection('users').remove({})
   })
 
   afterAll(async () => {
@@ -30,7 +30,7 @@ describe('usersRepositoryMongoDB', () => {
     await usersRepo.create(givenUserToCreate)
     
     const usersCollection = databaseInstance.collection('users')
-    const createdUser = await usersCollection.findOne()
+    const createdUser = await usersCollection.findOne({})
     const expectedUser = { username: 'anyUsername', password: 'anyPassword' }
     verifyUsersAreEqual(createdUser, expectedUser)
   })

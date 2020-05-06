@@ -1,8 +1,9 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { User, NoUser } from '@/domain/models/user'
+import { Db } from 'mongodb'
 
 class UsersRepositoryMongoDB implements UsersRepository {
-  database: any
+  database: Db
 
   async create(userToCreate: User) {
     const usersCollection = this.database.collection('users')
@@ -17,7 +18,7 @@ class UsersRepositoryMongoDB implements UsersRepository {
     return new User(returnedUser.username, returnedUser.password)
   }
 
-  constructor(databaseInstance: any) {
+  constructor(databaseInstance: Db) {
     this.database = databaseInstance
   }
 }
