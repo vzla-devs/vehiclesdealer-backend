@@ -5,9 +5,16 @@ class UsersRepositoryMongoDB implements UsersRepository {
   database: any
 
   async create(userToCreate: User) {
-    const users = this.database.collection('users')
+    const usersCollection = this.database.collection('users')
     const userData = userToCreate.getCredentials()
-    await users.insertOne(userData)
+    await usersCollection.insertOne(userData)
+  }
+
+  async getBy(username: string) {
+    const usersCollection = this.database.collection('users')
+    const returnedUserFromPersistence = await usersCollection.findOne({ username })
+    const user = new User(returnedUserFromPersistence.username, returnedUserFromPersistence.password)
+    return user
   }
 
   constructor(databaseInstance: any) {
