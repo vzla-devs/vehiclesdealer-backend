@@ -11,7 +11,7 @@ import contact from '@/api/routes/contact'
 import financing from '@/api/routes/financing'
 import pdf from '@/api/routes/pdf'
 
-function createWebApplication (): express.Application {
+function createWebApplication(): express.Application {
   const app = express()
   addStaticRouteToApp(app, 'uploads')
   addStaticRouteToApp(app, 'assets')
