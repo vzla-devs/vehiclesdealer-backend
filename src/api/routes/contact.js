@@ -1,6 +1,6 @@
 import express from 'express'
 import { getContactQuery } from '@/application/contact/getContactQuery'
-import { changeContactAction } from '@/application/contact/changeContactAction'
+import { editContactAction } from '@/application/contact/editContactAction'
 import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
@@ -21,7 +21,7 @@ router.put('/', async(req, res) => {
     command.thursday = req.body.thursday ? req.body.thursday : undefined
     command.friday = req.body.friday ? req.body.friday : undefined
     command.saturday = req.body.saturday ? req.body.saturday : undefined
-    await changeContactAction.execute(command)
+    await editContactAction.execute(command)
     res.sendStatus(200)
 })
 

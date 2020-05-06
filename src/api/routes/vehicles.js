@@ -3,8 +3,8 @@ import { createMediaStorageUploader } from '@/infrastructure/persistenceFactory'
 import { getVehiclesQuery } from '@/application/vehicles/getVehiclesQuery'
 import { getVehicleFiltersQuery } from '@/application/vehicles/getVehicleFiltersQuery'
 import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
-import { changeVehicleAction } from '@/application/vehicles/changeVehicleAction'
-import { changeVehiclePicturesAction } from '@/application/vehicles/changeVehiclePicturesAction'
+import { editVehicleAction } from '@/application/vehicles/editVehicleAction'
+import { editVehiclePicturesAction } from '@/application/vehicles/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
 import { tryThis } from '@/api/decorators'
 
@@ -35,14 +35,14 @@ router.post('/', tryThis(async (req, res) => {
 
 router.put('/:id/datos', tryThis((req, res) => {
     const command = { id: req.params.id, ...req.body }
-    changeVehicleAction.execute(command)
+    editVehicleAction.execute(command)
     res.sendStatus(200)
 }))
 
 const upload = createMediaStorageUploader('public/uploads')
 router.put('/:id/fotos', upload.array('pictures'), tryThis(async (req, res) => {
     const command = { id: req.params.id, files: req.files }
-    await changeVehiclePicturesAction.execute(command)
+    await editVehiclePicturesAction.execute(command)
     res.sendStatus(200)
 }))
 

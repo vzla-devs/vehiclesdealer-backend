@@ -1,6 +1,6 @@
 import express from 'express'
 import { getFinancingQuery } from '@/application/financing/getFinancingQuery'
-import { changeFinancingAction } from '@/application/financing/changeFinancingAction'
+import { editFinancingAction } from '@/application/financing/editFinancingAction'
 import { tryThis } from '@/api/decorators'
 
 const router = express.Router()
@@ -12,7 +12,7 @@ router.get('/', tryThis(async(req, res) => {
 
 router.put('/', tryThis(async(req, res) => {
     const command = { amount: req.body.amount }
-    await changeFinancingAction.execute(command)
+    await editFinancingAction.execute(command)
     res.sendStatus(200)
 }))
 

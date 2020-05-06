@@ -11,8 +11,8 @@ async function execute (command) {
   }
 }
 
-const changeFinancingAction = {
+const editFinancingAction = {
   execute
 }
 
-export { changeFinancingAction }
+export { editFinancingAction }

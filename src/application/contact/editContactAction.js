@@ -29,8 +29,8 @@ async function execute(command) {
   }
 }
 
-const changeContactAction = {
+const editContactAction = {
   execute
 }
 
-export { changeContactAction }
+export { editContactAction }
