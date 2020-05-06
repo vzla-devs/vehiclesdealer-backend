@@ -1,5 +1,5 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
-import { User } from '@/domain/models/user'
+import { User, NoUser } from '@/domain/models/user'
 
 class UsersRepositoryMongoDB implements UsersRepository {
   database: any
@@ -12,9 +12,9 @@ class UsersRepositoryMongoDB implements UsersRepository {
 
   async getBy(username: string) {
     const usersCollection = this.database.collection('users')
-    const returnedUserFromPersistence = await usersCollection.findOne({ username })
-    const user = new User(returnedUserFromPersistence.username, returnedUserFromPersistence.password)
-    return user
+    const returnedUser = await usersCollection.findOne({ username })
+    if (!returnedUser) return new NoUser()
+    return new User(returnedUser.username, returnedUser.password)
   }
 
   constructor(databaseInstance: any) {

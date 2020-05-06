@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/infrastructure/usersRepositoryMongoDB'
-import { User } from '@/domain/models/user'
+import { User, NoUser } from '@/domain/models/user'
 
 describe('usersRepositoryMongoDB', () => {
   let connection
@@ -14,6 +14,10 @@ describe('usersRepositoryMongoDB', () => {
     })
     databaseInstance = await connection.db()
     usersRepo = new UsersRepositoryMongoDB(databaseInstance)
+  })
+
+  beforeEach(async () => {
+    await databaseInstance.collection('users').remove()
   })
 
   afterAll(async () => {
@@ -38,7 +42,17 @@ describe('usersRepositoryMongoDB', () => {
     
     const returnedUser = await usersRepo.getBy(givenUsername)
 
-    expect(givenUserToGet).toEqual(returnedUser)
+    expect(returnedUser).toEqual(givenUserToGet)
+  })
+
+  it('gets an unexistant user', async() => {
+    const givenUsername = 'anyUsername'
+    const givenAnyOtherUser = new User('anyOtherUsername', 'anyOtherPassword')
+    await givenAPersistedUser(givenAnyOtherUser)
+    
+    const returnedUser = await usersRepo.getBy(givenUsername)
+
+    expect(returnedUser).toBeInstanceOf(NoUser)
   })
 
   function verifyUsersAreEqual(createdUser: any, expectedUser: any) {

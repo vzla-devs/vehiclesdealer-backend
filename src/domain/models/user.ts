@@ -10,3 +10,9 @@ export class User {
     this.password = password
   }
 }
+
+export class NoUser extends User {
+  constructor() {
+    super('', '')
+  }
+}
