@@ -3,6 +3,7 @@ import { AddUserAction, AddUserCommand } from '@/application/user/addUserAction'
 import { UserModel } from '@/domain/interfaces/userModel'
 import { User, NoUser } from '@/domain/models/user'
 import { tryActionAndGetError } from '@/application/decorators'
+import { TestCase } from '@/testHelpers'
 
 describe('addUserAction', () => {
   let usersRepository: UsersRepository
@@ -41,15 +42,27 @@ describe('addUserAction', () => {
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
 
-  it('does not add a user with an empty username', async() => {
-    const givenUserToCreateCommand: AddUserCommand = { username: '', password: 'anyPassword' }
-    givenAMockedUsersRepoGetByWith(new NoUser())
+  describe('when trying to create a user with invalid credentials', () => {
+    const testCases: Array<TestCase> = [
+      {
+        name: 'with an empty username is empty',
+        username: '',
+        password: 'anyPassword'
+      }
+    ]
 
-    const action = tryActionAndGetError(addUserAction)
-    const thrownError = await action(givenUserToCreateCommand)
-
-    expect(thrownError).toEqual(new Error('the user has invalid credentials'))
-    expect(usersRepository.create).not.toHaveBeenCalled()
+    testCases.forEach(testCase => {
+      it(`does not add a user ${testCase.name}`, async() => {
+        const givenUserToCreateCommand: AddUserCommand = { username: testCase.username, password: testCase.password }
+        givenAMockedUsersRepoGetByWith(new NoUser())
+    
+        const action = tryActionAndGetError(addUserAction)
+        const thrownError = await action(givenUserToCreateCommand)
+    
+        expect(thrownError).toEqual(new Error('the user has invalid credentials'))
+        expect(usersRepository.create).not.toHaveBeenCalled()
+      })
+    })
   })
 
   function givenAMockedUsersRepoGetByWith(user: UserModel) {
