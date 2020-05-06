@@ -2,6 +2,7 @@ import { UserModel } from '@/domain/interfaces/userModel'
 export class User implements UserModel {
   private username: string
   private password: string
+  
   getCredentials() {
     return { username: this.username, password: this.password }
   }
