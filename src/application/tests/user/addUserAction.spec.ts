@@ -32,10 +32,25 @@ describe('addUserAction', () => {
     const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyPassword'))
 
+    let thrownError
+    try {
+      await addUserAction.execute(givenUserToCreateCommand)
+    } catch(error) {
+      thrownError = error
+    }
+
+    expect(thrownError).toEqual(new Error('the user already exists'))
+    expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
+    expect(usersRepository.create).not.toHaveBeenCalled()
+  })
+
+  it.skip('does not add a user with an empty username', async() => {
+    const givenUserToCreateCommand: AddUserCommand = { username: '', password: 'anyPassword' }
+    givenAMockedUsersRepoGetByWith(new NoUser())
+
     const returnedPromise = addUserAction.execute(givenUserToCreateCommand)
 
-    expect(returnedPromise).rejects.toThrowError(new Error('the user already exists'))
-    expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
+    expect(returnedPromise).rejects.toThrowError(new Error('the user has invalid credentials'))
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
 
