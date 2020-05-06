@@ -34,8 +34,7 @@ describe('usersRepositoryMongoDB', () => {
   it('gets a user', async() => {
     const givenUsername = 'anyUsername'
     const givenUserToGet = new User(givenUsername, 'anyPassword')
-    const usersCollection = databaseInstance.collection('users')
-    await usersCollection.insertOne(givenUserToGet.getCredentials())
+    await givenAPersistedUser(givenUserToGet)
     
     const returnedUser = await usersRepo.getBy(givenUsername)
 
@@ -45,5 +44,10 @@ describe('usersRepositoryMongoDB', () => {
   function verifyUsersAreEqual(createdUser: any, expectedUser: any) {
     expect(createdUser.username).toBe(expectedUser.username)
     expect(createdUser.password).toBe(expectedUser.password)
+  }
+
+  async function givenAPersistedUser(givenUserToGet: User) {
+    const usersCollection = databaseInstance.collection('users')
+    await usersCollection.insertOne(givenUserToGet.getCredentials())
   }
 })
