@@ -1,7 +1,6 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { AddUserAction, AddUserCommand } from '@/application/user/addUserAction'
-import { UserModel } from '@/domain/interfaces/userModel'
-import { User, NoUser } from '@/domain/models/user'
+import { UserModel, User, NoUser } from '@/domain/models/user'
 import { tryActionAndGetError } from '@/application/decorators'
 import { TestCase } from '@/testHelpers'
 

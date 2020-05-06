@@ -1,4 +1,6 @@
-import { UserModel } from '@/domain/interfaces/userModel'
+export interface UserModel {
+  getCredentials(): { username: string, password: string }
+}
 export class User implements UserModel {
   private username: string
   private password: string
