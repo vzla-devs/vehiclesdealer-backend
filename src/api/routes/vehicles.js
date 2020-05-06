@@ -6,47 +6,47 @@ import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
 import { editVehicleAction } from '@/application/vehicles/editVehicleAction'
 import { editVehiclePicturesAction } from '@/application/vehicles/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
-import { tryThis } from '@/api/decorators'
+import { tryThisAndHandleAnyError } from '@/api/decorators'
 
 const router = express.Router()
 
-router.get('/', tryThis(async (req, res) => {
+router.get('/', tryThisAndHandleAnyError(async (req, res) => {
     const filters = getFiltersFromRequest(req)
     const vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
     res.status(200).send(vehicles)
 }))
 
-router.get('/filtros', tryThis(async (req, res) => {
+router.get('/filtros', tryThisAndHandleAnyError(async (req, res) => {
     const filters = await getVehicleFiltersQuery.getAll()
     res.status(200).send(filters)
 }))
 
-router.get('/:id', tryThis(async (req, res) => {
+router.get('/:id', tryThisAndHandleAnyError(async (req, res) => {
     const vehicleId = req.params.id
     const vehicle = await getVehiclesQuery.getOneById(vehicleId)
     res.status(200).send(vehicle)
 }))
 
-router.post('/', tryThis(async (req, res) => {
+router.post('/', tryThisAndHandleAnyError(async (req, res) => {
     const command = req.body
     const newVehicleId = await addVehicleAction.execute(command)
     res.status(201).send({ _id: newVehicleId })
 }))
 
-router.put('/:id/datos', tryThis((req, res) => {
+router.put('/:id/datos', tryThisAndHandleAnyError((req, res) => {
     const command = { id: req.params.id, ...req.body }
     editVehicleAction.execute(command)
     res.sendStatus(200)
 }))
 
 const upload = createMediaStorageUploader('public/uploads')
-router.put('/:id/fotos', upload.array('pictures'), tryThis(async (req, res) => {
+router.put('/:id/fotos', upload.array('pictures'), tryThisAndHandleAnyError(async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     await editVehiclePicturesAction.execute(command)
     res.sendStatus(200)
 }))
 
-router.delete('/:id', tryThis(async (req, res) => {
+router.delete('/:id', tryThisAndHandleAnyError(async (req, res) => {
     await removeVehicleAction.execute(req.params.id)
     res.sendStatus(200)
 }))

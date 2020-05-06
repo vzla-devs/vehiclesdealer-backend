@@ -1,11 +1,11 @@
 import express from 'express'
 import { getContactQuery } from '@/application/contact/getContactQuery'
 import { editContactAction } from '@/application/contact/editContactAction'
-import { tryThis } from '@/api/decorators'
+import { tryThisAndHandleAnyError } from '@/api/decorators'
 
 const router = express.Router()
 
-router.get('/', tryThis(async(req, res) => {
+router.get('/', tryThisAndHandleAnyError(async(req, res) => {
     const contact = await getContactQuery.get()
     res.status(200).send(contact)
 }))
