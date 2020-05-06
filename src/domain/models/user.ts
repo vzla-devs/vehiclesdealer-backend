@@ -10,6 +10,11 @@ export class User implements UserModel {
   constructor(username: string, password: string) {
     this.username = username
     this.password = password
+    this.checkThatTheCredentialsAreValid()
+  }
+
+  private checkThatTheCredentialsAreValid() {
+    if (this.username === '') throw new Error('the user has invalid credentials')
   }
 }
 
