@@ -15,6 +15,7 @@ export class User implements UserModel {
 
   private checkThatTheCredentialsAreValid() {
     if (this.username === '') throw new Error('the user has invalid credentials')
+    if (this.password === '') throw new Error('the user has invalid credentials')
   }
 }
 

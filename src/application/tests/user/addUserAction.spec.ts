@@ -45,9 +45,14 @@ describe('addUserAction', () => {
   describe('when trying to create a user with invalid credentials', () => {
     const testCases: Array<TestCase> = [
       {
-        name: 'with an empty username is empty',
+        name: 'with an empty username',
         username: '',
         password: 'anyPassword'
+      },
+      {
+        name: 'with an empty password',
+        username: 'anyUsername',
+        password: ''
       }
     ]
 
