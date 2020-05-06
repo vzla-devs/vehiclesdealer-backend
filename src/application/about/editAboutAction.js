@@ -2,7 +2,7 @@ import About from '@/domain/models/about'
 
 async function execute(command) {
   const existingAbout = await About.findOne({}).exec()
-  if (!!existingAbout) {
+  if (existingAbout) {
     if(command.text) existingAbout.text = command.text
     if (command.picture) existingAbout.picture = command.picture
     await existingAbout.save()
@@ -13,8 +13,8 @@ async function execute(command) {
   }
 }
 
-const changeAboutAction = {
+const editAboutAction = {
   execute
 }
 
-export { changeAboutAction }
+export { editAboutAction }
