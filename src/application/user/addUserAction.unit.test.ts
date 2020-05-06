@@ -4,7 +4,7 @@ import { UserModel, User, NoUser } from '@/domain/models/user'
 import { tryActionAndGetError } from '@/application/decorators'
 import { TestCase } from '@/testHelpers'
 
-describe('addUserAction', () => {
+describe('addUserAction unit tests', () => {
   let usersRepository: UsersRepository
   let addUserAction: AddUserAction
 

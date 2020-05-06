@@ -2,7 +2,7 @@ import { MongoClient, Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/domain/models/user'
 
-describe('usersRepositoryMongoDB', () => {
+describe('usersRepositoryMongoDB integration tests', () => {
   let connection: MongoClient
   let databaseInstance: Db
   let usersRepo: UsersRepositoryMongoDB
