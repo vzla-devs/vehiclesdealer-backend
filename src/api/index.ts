@@ -15,7 +15,7 @@ function runAppOnceTheDatabaseIsConnected (): void {
 }
 
 function logDatabaseErrors () {
-  databaseConnection.on('error', console.error.bind(console, 'There was an error when trying to connec to the database: '))
+  databaseConnection.on('error', console.error.bind(console, 'There was an error when trying to connect to the database: '))
 }
 
 process.on('SIGTERM', () => {
