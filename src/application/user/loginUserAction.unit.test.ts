@@ -28,8 +28,8 @@ describe('loginUserAction unit tests', () => {
   })
 
   it('does not login a user when is not found', async() => {
-    const givenUsername = 'anyExistingUsername'
-    const givenUserToCreateCommand: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
+    const givenUsername = 'anyUsername'
+    const givenUserToCreateCommand: LoginUserCommand = { username: givenUsername, password: '' }
     givenAMockedUsersRepoGetByWith(new NoUser())
 
     const action = tryActionAndGetError(loginUserAction)
