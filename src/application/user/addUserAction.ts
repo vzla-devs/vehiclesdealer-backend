@@ -9,13 +9,13 @@ export class AddUserAction {
   }
 
   async execute(command: AddUserCommand): Promise<void> {
-    const existingUser = await this.usersRepository.getBy(command.username)
-    this.checkThatTheUserCanBeCreated(existingUser)
+    await this.checkThatTheUserCanBeCreated(command.username)
     const userToCreate = new User(command.username, command.password)
     await this.usersRepository.create(userToCreate)
   }
 
-  private checkThatTheUserCanBeCreated(existingUser: UserModel): void {
+  private async checkThatTheUserCanBeCreated(username: string): Promise<void> {
+    const existingUser = await this.usersRepository.getBy(username)
     const userAlreadyExists = existingUser.isValid()
     if (userAlreadyExists) throw new Error('the user already exists')
   }
