@@ -6,7 +6,7 @@ export class LoginUserAction {
 
   constructor(usersRepository: UsersRepository) {
     this.usersRepository = usersRepository
-  } 
+  }
   
   async execute(command: LoginUserCommand): Promise<void> {
     const user = await this.usersRepository.getBy(command.username)
