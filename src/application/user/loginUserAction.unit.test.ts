@@ -27,9 +27,9 @@ describe('loginUserAction unit tests', () => {
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 
-  it('does not login a user when is not found and the password is empty', async() => {
+  it('does not login a user when is not found', async() => {
     const givenUsername = 'anyUsername'
-    const givenUserToCreateCommand: LoginUserCommand = { username: givenUsername, password: '' }
+    const givenUserToCreateCommand: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new NoUser())
 
     const action = tryActionAndGetError(loginUserAction)
