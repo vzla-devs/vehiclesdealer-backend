@@ -1,3 +1,5 @@
+import { UserError, UserErrorReason } from '@/domain/errors/userError'
+
 export interface UserModel {
   getCredentials(): { username: string, password: string }
   login(password: string): void
@@ -15,7 +17,7 @@ export class User implements UserModel {
 
   private checkThatTheCredentialsAreValid() {
     if (!this.username || this.username === '' || !this.password || this.password === '') {
-      throw new Error('the user has invalid credentials')
+      throw new UserError(UserErrorReason.userHasInvalidCredentials)
     }
   }
 

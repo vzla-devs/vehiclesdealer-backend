@@ -3,7 +3,7 @@ import { AddUserAction, AddUserCommand } from '@/application/user/addUserAction'
 import { UserModel, User, NoUser } from '@/domain/models/user'
 import { tryActionAndGetError } from '@/application/decorators'
 import { TestCase } from '@/helpers/testCase'
-import { AddUserError, AddUserErrorReason } from '@/domain/errors/addUserError'
+import { UserError, UserErrorReason } from '@/domain/errors/userError'
 
 describe('addUserAction unit tests', () => {
   let usersRepository: UsersRepository
@@ -29,7 +29,7 @@ describe('addUserAction unit tests', () => {
     expect(usersRepository.create).toHaveBeenCalledWith(expectedUserToCreate)
   })
 
-  it.only('does not add a user that already exists', async() => {
+  it('does not add a user that already exists', async() => {
     const givenUsername = 'anyExistingUsername'
     const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyPassword'))
@@ -37,7 +37,7 @@ describe('addUserAction unit tests', () => {
     const action = tryActionAndGetError(addUserAction)
     const thrownError = await action(givenUserToCreateCommand)
 
-    expect(thrownError).toEqual(new AddUserError(AddUserErrorReason.userAlreadyExists))
+    expect(thrownError).toEqual(new UserError(UserErrorReason.userAlreadyExists))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
@@ -84,7 +84,7 @@ describe('addUserAction unit tests', () => {
         const action = tryActionAndGetError(addUserAction)
         const thrownError = await action(givenUserToCreateCommand)
     
-        expect(thrownError).toEqual(new Error('the user has invalid credentials'))
+        expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
         expect(usersRepository.create).not.toHaveBeenCalled()
       })
     })
