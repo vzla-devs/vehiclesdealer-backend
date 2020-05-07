@@ -11,12 +11,12 @@ export class LoginUserAction {
   async execute(command: LoginUserCommand): Promise<void> {
     const user = await this.usersRepository.getBy(command.username)
     this.checkThatTheUserIsValid(user, command.password)
+    user.login(command.password)
   }
 
   private checkThatTheUserIsValid(userToCheck: UserModel, password: string): void {
     const userDoesNotExist = userToCheck instanceof NoUser
     if (userDoesNotExist) throw new Error('the user has invalid credentials')
-    userToCheck.login(password)
   }
 }
 
