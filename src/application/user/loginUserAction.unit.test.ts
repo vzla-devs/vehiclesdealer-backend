@@ -48,7 +48,7 @@ describe('loginUserAction unit tests', () => {
     const action = tryActionAndGetError(loginUserAction)
     const thrownError = await action(givenUserToCreateCommand)
 
-    expect(thrownError).toEqual(new Error('the user has invalid credentials'))
+    expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 

@@ -26,7 +26,7 @@ export class User implements UserModel {
   }
 
   login(password: string) {
-    if (this.password !== password) throw new Error('the user has invalid credentials')
+    if (this.password !== password) throw new UserError(UserErrorReason.userHasInvalidCredentials)
   }
 
   isValid() {
