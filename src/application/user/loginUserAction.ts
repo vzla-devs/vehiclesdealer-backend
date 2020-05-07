@@ -6,7 +6,7 @@ export class LoginUserAction {
 
   constructor(usersRepository: UsersRepository) {
     this.usersRepository = usersRepository
-  }
+  } 
   
   async execute(command: LoginUserCommand): Promise<void> {
     const user = await this.usersRepository.getBy(command.username)
@@ -15,8 +15,8 @@ export class LoginUserAction {
 
   private checkThatTheUserIsValid(userToCheck: UserModel, password: string): void {
     const userDoesNotExist = userToCheck instanceof NoUser
-    const credentials = userToCheck.getCredentials()
-    if (userDoesNotExist || credentials.password !== password) throw new Error('the user has invalid credentials')
+    if (userDoesNotExist) throw new Error('the user has invalid credentials')
+    userToCheck.login(password)
   }
 }
 

@@ -1,5 +1,6 @@
 export interface UserModel {
   getCredentials(): { username: string, password: string }
+  login(password: string): void
 }
 export class User implements UserModel {
   private username: string
@@ -20,9 +21,15 @@ export class User implements UserModel {
   getCredentials() {
     return { username: this.username, password: this.password }
   }
+
+  login(password: string): void {
+    if (this.password !== password) throw new Error('the user has invalid credentials')
+  }
 }
 
 export class NoUser implements UserModel {
+  login(password: string): void {}
+  
   getCredentials() {
     return { username: '', password: '' }
   }
