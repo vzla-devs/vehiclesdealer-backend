@@ -16,7 +16,7 @@ export class AddUserAction {
   }
 
   private checkThatTheUserCanBeCreated(existingUser: UserModel): void {
-    const userAlreadyExists = !(existingUser instanceof NoUser)
+    const userAlreadyExists = existingUser.isValid()
     if (userAlreadyExists) throw new Error('the user already exists')
   }
 }
