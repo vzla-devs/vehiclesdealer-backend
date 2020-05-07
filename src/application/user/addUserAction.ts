@@ -1,5 +1,5 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
-import { UserModel, User, NoUser } from '@/domain/models/user'
+import { User } from '@/domain/models/user'
 
 export class AddUserAction {
   usersRepository: UsersRepository
