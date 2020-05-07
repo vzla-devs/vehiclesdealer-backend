@@ -28,7 +28,9 @@ export class User implements UserModel {
 }
 
 export class NoUser implements UserModel {
-  login(password: string): void {}
+  login(password: string): void {
+    throw new Error('the user has invalid credentials')
+  }
   
   getCredentials() {
     return { username: '', password: '' }
