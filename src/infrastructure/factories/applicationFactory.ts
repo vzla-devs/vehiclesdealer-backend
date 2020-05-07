@@ -11,6 +11,7 @@ import contact from '@/api/routes/contact'
 import financing from '@/api/routes/financing'
 import pdf from '@/api/routes/pdf'
 import users from '@/api/routes/users'
+import { DomainError } from '@/domain/errors/domainError'
 
 function createWebApplication(): express.Application {
   const app = express()
@@ -60,8 +61,11 @@ function addNotFoundRoutesHandlerToApp(app: express.Application): void {
 
 function addErrorsHandlerToApp(app: express.Application): void {
   app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send(err.stack)
+    if (err instanceof DomainError) {
+      res.status(400).send(err.reason)
+    } else {
+      res.status(500).send(err.stack)
+    }
   })
 }
 

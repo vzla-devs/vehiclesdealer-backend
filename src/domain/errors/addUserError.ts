@@ -1,10 +1,7 @@
-export class AddUserError extends Error {
-  reason: AddUserErrorReason
+import { DomainError } from '@/domain/errors/domainError'
 
-  constructor(reason: AddUserErrorReason) {
-    super(reason)
-    this.reason = reason
-  }
+export class AddUserError extends DomainError {
+  reason: AddUserErrorReason
 }
 
 export enum AddUserErrorReason {
