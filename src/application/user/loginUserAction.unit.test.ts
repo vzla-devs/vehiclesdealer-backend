@@ -2,6 +2,7 @@ import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { LoginUserAction, LoginUserCommand } from '@/application/user/loginUserAction'
 import { UserModel, User, NoUser } from '@/domain/models/user'
 import { tryActionAndGetError } from '@/application/decorators'
+import { UserError, UserErrorReason } from '@/domain/errors/userError'
 
 describe('loginUserAction unit tests', () => {
   let usersRepository: UsersRepository
@@ -35,7 +36,7 @@ describe('loginUserAction unit tests', () => {
     const action = tryActionAndGetError(loginUserAction)
     const thrownError = await action(givenUserToCreateCommand)
 
-    expect(thrownError).toEqual(new Error('the user has invalid credentials'))
+    expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 

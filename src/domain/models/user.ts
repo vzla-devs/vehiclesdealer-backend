@@ -36,7 +36,7 @@ export class User implements UserModel {
 
 export class NoUser implements UserModel {
   login() {
-    throw new Error('the user has invalid credentials')
+    throw new UserError(UserErrorReason.userHasInvalidCredentials)
   }
   
   getCredentials() {
