@@ -3,15 +3,14 @@ import { UserModel } from '@/domain/models/user'
 
 export class LoginUserAction {
   usersRepository: UsersRepository
-  execute(command: LoginUserCommand): Promise<void>
-
-  async execute(command: LoginUserCommand) {
-    const user = await this.usersRepository.getBy(command.username)
-    this.checkThatTheUserCredentialsAreValid(user, command.password)
-  }
 
   constructor(usersRepository: UsersRepository) {
     this.usersRepository = usersRepository
+  }
+  
+  async execute(command: LoginUserCommand): Promise<void> {
+    const user = await this.usersRepository.getBy(command.username)
+    this.checkThatTheUserCredentialsAreValid(user, command.password)
   }
 
   private checkThatTheUserCredentialsAreValid(userToCheck: UserModel, password: string): void {
