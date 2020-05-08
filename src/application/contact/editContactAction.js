@@ -2,7 +2,7 @@ import Contact from '@/domain/models/contact'
 
 async function execute(command) {
   const existingContact = await Contact.findOne({}).exec()
-  if(!!existingContact) {
+  if(existingContact) {
     existingContact.mobilePhone = command.mobilePhone
     existingContact.mainPhone = command.mainPhone
     existingContact.emails = command.emails
