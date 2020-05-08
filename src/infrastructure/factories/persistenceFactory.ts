@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 import multer from 'multer'
 
 function createDatabaseConnection(): void {
-  const connectionString = 'mongodb://localhost:32768/vehiclesdealer'
+  const port = process.env.MONGO_PORT || 27017
+  const connectionString = `mongodb://localhost:${port}/vehiclesdealer`
   mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
 }
 
