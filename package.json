@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "start": "npm run build && node dist/main.js",
-    "test": "jest"
+    "test": "jest",
+    "build-production": "webpack --config webpack.config.prod.js"
   },
   "jest": {
     "transform": {
