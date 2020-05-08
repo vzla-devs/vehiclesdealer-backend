@@ -27,6 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Find out the local path
+      run: pwd
+    - name: Find out the contents
+      run: ls
     - name: Copy files to La Herradura's remote server
       uses: garygrossgarten/github-action-scp@release
       
