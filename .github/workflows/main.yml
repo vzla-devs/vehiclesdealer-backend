@@ -6,14 +6,15 @@ on:
 
 jobs:
   build:
-    name: Building project
+    name: Building project and running tests
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v
-    - name: Use Node.js
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
     - name: Install
       run: npm ci
     - name: Build
       run: npm run build
+    - name: Test
+      run: npm test
