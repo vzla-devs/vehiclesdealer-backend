@@ -18,8 +18,7 @@ async function execute (command) {
     services: command.services,
     cylinders: command.cylinders,
     featured: command.featured,
-    emissions: command.emissions,
-    sold: command.sold
+    emissions: command.emissions
 })
   const addedVehicle = await vehicle.save()
   return addedVehicle._id

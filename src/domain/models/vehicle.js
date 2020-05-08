@@ -105,11 +105,6 @@ let VehicleSchema = new Schema({
         min: [0, 'Las emisiones no pueden ser negativas'],
         default: 0,
         required: [true, 'Emisiones requeridas']
-    },
-    sold: {
-        type: Boolean,
-        default: false,
-        required: [true, 'Estado de venta requerido']
     }
 },
 {
