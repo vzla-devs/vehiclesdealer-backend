@@ -35,14 +35,14 @@ jobs:
   
   deploy:
     needs: [build]
-    name: Deploying to production servers
+    name: Deploying to La Herradura
     runs-on: ubuntu-latest
     
     steps:
     - name: Downloading build artifact
       uses: actions/download-artifact@v2
     
-    - name: Copy files to La Herradura's remote server
+    - name: Copying files to remote server
       uses: appleboy/scp-action@v0.0.10
       with:
         source: "artifact/main.js"
@@ -52,3 +52,14 @@ jobs:
         password: ykBsL4Bccw4Hivoj
         overwrite: true
         strip_components: 1
+        
+    - name: Restarting API
+      uses: appleboy/ssh-action@master
+      with:
+        host: 185.166.215.197
+        username: root
+        password: ykBsL4Bccw4Hivoj
+        script: |
+          forever stopall
+          cd /root/api
+          forever start main.js
