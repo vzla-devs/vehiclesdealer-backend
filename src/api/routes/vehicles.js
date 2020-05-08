@@ -57,7 +57,6 @@ function getFiltersFromRequest (request) {
     filters.make = request.query.make ? request.query.make : undefined
     filters.fuel_type = request.query.fuel_type ? request.query.fuel_type : undefined
     filters.transmission = request.query.transmission ? request.query.transmission : undefined
-    // si filtra por año
     if (request.query.minYear !== undefined || request.query.maxYear !== undefined) {
         let yearRange = {}
         if (request.query.minYear !== undefined) yearRange.$gte = parseInt(request.query.minYear, 10)
