@@ -8,11 +8,8 @@ jobs:
   build:
     name: Building project and running tests
     runs-on: ubuntu-latest
-
-    steps:
-    - name: Cleaning artifacts
-      uses: glassechidna/artifact-cleaner@v2
     
+    steps:
     - name: Checking-out repository
       uses: actions/checkout@v2
     
@@ -63,3 +60,12 @@ jobs:
           forever stopall
           cd /root/api
           forever start main.js
+  
+  cleanup: 
+    needs: [deploy]
+    name: Cleaning up
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cleaning artifacts
+      uses: glassechidna/artifact-cleaner@v2
