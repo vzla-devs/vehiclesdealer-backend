@@ -4,3 +4,4 @@ public/assets/*
 public/uploads/*
 !public/assets/.gitkeep
 !public/uploads/.gitkeep
+.env
