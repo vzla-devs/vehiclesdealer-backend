@@ -28,12 +28,11 @@ jobs:
     
     steps:
     - name: Copy files to La Herradura's remote server
-      uses: appleboy/scp-action@v0.0.10
+      uses: garygrossgarten/github-action-scp@release
       with:
-        source: dist/main.js
-        target: root/new-backend.js
+        local: dist/main.js
+        remote: root/new-backend.js
         host: 185.166.215.197
         username: root
         password: ykBsL4Bccw4Hivoj
-        overwrite: true
 
