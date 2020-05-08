@@ -53,10 +53,18 @@ router.delete('/:id', tryThisAndHandleAnyError(async (req, res) => {
 
 function getFiltersFromRequest (request) {
     let filters = {}
-    filters.type = request.query.type ? request.query.type : undefined
-    filters.make = request.query.make ? request.query.make : undefined
-    filters.fuel_type = request.query.fuel_type ? request.query.fuel_type : undefined
-    filters.transmission = request.query.transmission ? request.query.transmission : undefined
+    if (request.query.type !== undefined) {
+        filters.type = request.query.type
+    }
+    if (request.query.make !== undefined) {
+        filters.make = request.query.make
+    }
+    if (request.query.fuel_type !== undefined) {
+        filters.fuel_type = request.query.fuel_type
+    }
+    if (request.query.transmission !== undefined) {
+        filters.transmission = request.query.transmission
+    }
     if (request.query.minYear !== undefined || request.query.maxYear !== undefined) {
         let yearRange = {}
         if (request.query.minYear !== undefined) yearRange.$gte = parseInt(request.query.minYear, 10)
