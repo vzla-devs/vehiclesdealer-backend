@@ -19,6 +19,7 @@ async function execute (command) {
   if (command.cylinders !== undefined) existingVehicle.cylinders = command.cylinders
   if (command.featured !== undefined) existingVehicle.featured = command.featured
   if (command.emissions !== undefined) existingVehicle.emissions = command.emissions
+  if (command.sold !== undefined) existingVehicle.sold = command.sold
   
   if (command.picturesToDelete !== undefined) {
     command.picturesToDelete.forEach(pictureToDelete => {

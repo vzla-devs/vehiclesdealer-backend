@@ -30,7 +30,7 @@ let VehicleSchema = new Schema({
     },
     year: {
         type: Number,
-        min: [1968, 'El año debe ser mayor a 1980'],
+        min: [1968, 'El año debe ser mayor a 1968'],
         required: [true, 'Año de matriculación requerido']
     },
     kilometers: {
@@ -103,8 +103,14 @@ let VehicleSchema = new Schema({
     emissions: {
         type: Number,
         min: [0, 'Las emisiones no pueden ser negativas'],
+        default: 0,
         required: [true, 'Emisiones requeridas']
     },
+    sold: {
+        type: Boolean,
+        default: false,
+        required: [true, 'Estado de venta requerido']
+    }
 },
 {
     timestamps: true
