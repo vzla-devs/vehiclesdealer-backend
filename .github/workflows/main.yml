@@ -45,8 +45,8 @@ jobs:
     - name: Copy files to La Herradura's remote server
       uses: appleboy/scp-action@v0.0.10
       with:
-        source: /home/runner/work/vehiclesdealer-backend/vehiclesdealer-backend/artifact/main.js
-        target: api.js
+        source: "artifact/main.js"
+        target: api
         host: 185.166.215.197
         username: root
         password: ykBsL4Bccw4Hivoj
