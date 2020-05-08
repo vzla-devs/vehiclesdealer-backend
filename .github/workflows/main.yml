@@ -51,4 +51,4 @@ jobs:
         username: root
         password: ykBsL4Bccw4Hivoj
         overwrite: true
-
+        strip_components: 1
