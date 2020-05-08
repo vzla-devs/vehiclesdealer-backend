@@ -10,16 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Cleaning artifacts
+      uses: glassechidna/artifact-cleaner@v2
+    
     - name: Checking-out repository
       uses: actions/checkout@v2
+    
     - name: Using Node.js
       uses: actions/setup-node@v1
+    
     - name: Installing dependencies
       run: npm ci
+    
     - name: Building project
       run: npm run build
+    
     - name: Running tests
       run: npm run test
+    
+    - name: Uploading build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        path: /home/runner/work/vehiclesdealer-backend/vehiclesdealer-backend/dist/main.js
   
   deploy:
     needs: [build]
@@ -27,13 +39,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Find out the local path
-      run: pwd
-    - name: Find out the contents
-      run: ls
+    - name: Downloading build artifact
+      run: actions/download-artifact@v2
+    
     - name: Copy files to La Herradura's remote server
       uses: garygrossgarten/github-action-scp@release
-      
       with:
         local: /home/runner/work/vehiclesdealer-backend/vehiclesdealer-backend/dist/main.js
         remote: root/new-backend.js
