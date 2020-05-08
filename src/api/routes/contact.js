@@ -12,15 +12,15 @@ router.get('/', tryThisAndHandleAnyError(async(req, res) => {
 
 router.put('/', async(req, res) => {
     const command = {}
-    command.mobilePhone = req.body.mobilePhone ? req.body.mobilePhone : undefined
-    command.mainPhone = req.body.mainPhone ? req.body.mainPhone : undefined
-    command.emails = req.body.emails ? req.body.emails : undefined
-    command.monday = req.body.monday ? req.body.monday : undefined
-    command.tuesday = req.body.tuesday ? req.body.tuesday : undefined
-    command.wednesday = req.body.wednesday ? req.body.wednesday : undefined
-    command.thursday = req.body.thursday ? req.body.thursday : undefined
-    command.friday = req.body.friday ? req.body.friday : undefined
-    command.saturday = req.body.saturday ? req.body.saturday : undefined
+    if (req.body.mobilePhone !== undefined) command.mobilePhone = req.body.mobilePhone
+    if (req.body.mainPhone !== undefined) command.mainPhone = req.body.mainPhone
+    if (req.body.emails !== undefined) command.emails = req.body.emails
+    if (req.body.monday !== undefined) command.monday = req.body.monday
+    if (req.body.tuesday !== undefined) command.tuesday = req.body.tuesday
+    if (req.body.wednesday !== undefined) command.wednesday = req.body.wednesday
+    if (req.body.thursday !== undefined) command.thursday = req.body.thursday
+    if (req.body.friday !== undefined) command.friday = req.body.friday
+    if (req.body.saturday !== undefined) command.saturday = req.body.saturday
     await editContactAction.execute(command)
     res.sendStatus(200)
 })
