@@ -14,9 +14,9 @@ jobs:
       uses: actions/checkout@v2
     - name: Using Node.js
       uses: actions/setup-node@v1
-    - name: Installing
+    - name: Installing dependencies
       run: npm ci
-    - name: Building
+    - name: Building project
       run: npm run build
     - name: Running tests
       run: npm run test
