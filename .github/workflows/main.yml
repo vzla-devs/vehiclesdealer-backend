@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build and deploy:
     name: Building project and running tests
     runs-on: ubuntu-latest
 
@@ -20,17 +20,11 @@ jobs:
       run: npm run build
     - name: Running tests
       run: npm run test
-  
-  deploy:
-    name: Deploying to La Herradura
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Copy files to La Herradura's remote server
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: dist/main.js
-          remote: root/new-backend.js
-          host: 185.166.215.197
-          username: root
-          password: ykBsL4Bccw4Hivoj
+    - name: Copy files to La Herradura's remote server
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: dist/main.js
+        remote: root/new-backend.js
+        host: 185.166.215.197
+        username: root
+        password: ykBsL4Bccw4Hivoj
