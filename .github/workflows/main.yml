@@ -11,10 +11,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Using Node.js
     - uses: actions/setup-node@v1
-    - name: Install
+    - name: Installing
       run: npm ci
-    - name: Build
+    - name: Building
       run: npm run build
-    - name: Test
+    - name: Running tests
       run: npm run test
