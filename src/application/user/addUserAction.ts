@@ -17,8 +17,7 @@ export class AddUserAction {
 
   private async checkThatTheUserCanBeCreated(username: string): Promise<void> {
     const existingUser = await this.usersRepository.getBy(username)
-    const userAlreadyExists = existingUser.isValid()
-    if (userAlreadyExists) throw new UserError(UserErrorReason.userAlreadyExists)
+    if (existingUser.isValid()) throw new UserError(UserErrorReason.userAlreadyExists)
   }
 }
 
