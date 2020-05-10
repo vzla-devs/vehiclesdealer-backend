@@ -1,48 +1,48 @@
 import { UsersRepository } from '@/domain/interfaces/usersRepository'
-import { AddUserAction, AddUserCommand } from '@/application/user/addUserAction'
+import { RegisterUserAction, RegisterUserCommand } from '@/application/user/registerUserAction'
 import { UserModel, User, NoUser } from '@/domain/models/user'
 import { tryActionAndGetError } from '@/application/decorators'
 import { TestCase } from '@/helpers/testCase'
 import { UserError, UserErrorReason } from '@/domain/errors/userError'
 
-describe('addUserAction unit tests', () => {
+describe('registerUserAction unit tests', () => {
   let usersRepository: UsersRepository
-  let addUserAction: AddUserAction
+  let registerUserAction: RegisterUserAction
 
   beforeEach(() => {
     usersRepository = {
       getBy: jest.fn(),
       create: jest.fn()
     }
-    addUserAction = new AddUserAction(usersRepository)
+    registerUserAction = new RegisterUserAction(usersRepository)
   })
 
-  it('adds a new user', async() => {
+  it('registers a new user', async() => {
     const givenUsername = 'anyUsername'
-    const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
+    const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new NoUser())
 
-    await addUserAction.execute(givenUserToCreateCommand)
+    await registerUserAction.execute(givenUserToRegisterCommand)
 
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
-    const expectedUserToCreate = new User(givenUsername, 'anyPassword')
-    expect(usersRepository.create).toHaveBeenCalledWith(expectedUserToCreate)
+    const expectedUserToRegister = new User(givenUsername, 'anyPassword')
+    expect(usersRepository.create).toHaveBeenCalledWith(expectedUserToRegister)
   })
 
-  it('does not add a user that already exists', async() => {
+  it('does not register a user that already exists', async() => {
     const givenUsername = 'anyExistingUsername'
-    const givenUserToCreateCommand: AddUserCommand = { username: givenUsername, password: 'anyPassword' }
+    const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyPassword'))
 
-    const action = tryActionAndGetError(addUserAction)
-    const thrownError = await action(givenUserToCreateCommand)
+    const action = tryActionAndGetError(registerUserAction)
+    const thrownError = await action(givenUserToRegisterCommand)
 
     expect(thrownError).toEqual(new UserError(UserErrorReason.userAlreadyExists))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
 
-  describe('when trying to create a user with invalid credentials', () => {
+  describe('when trying to register a user with invalid credentials', () => {
     const testCases: Array<TestCase> = [
       {
         name: 'with an empty username',
@@ -77,12 +77,12 @@ describe('addUserAction unit tests', () => {
     ]
 
     testCases.forEach(testCase => {
-      it(`does not add a user ${testCase.name}`, async() => {
-        const givenUserToCreateCommand: AddUserCommand = { username: testCase.username, password: testCase.password }
+      it(`does not register a user ${testCase.name}`, async() => {
+        const givenUserToRegisterCommand: RegisterUserCommand = { username: testCase.username, password: testCase.password }
         givenAMockedUsersRepoGetByWith(new NoUser())
     
-        const action = tryActionAndGetError(addUserAction)
-        const thrownError = await action(givenUserToCreateCommand)
+        const action = tryActionAndGetError(registerUserAction)
+        const thrownError = await action(givenUserToRegisterCommand)
     
         expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
         expect(usersRepository.create).not.toHaveBeenCalled()
