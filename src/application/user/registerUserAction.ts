@@ -2,14 +2,14 @@ import { UsersRepository } from '@/domain/interfaces/usersRepository'
 import { User } from '@/domain/models/user'
 import { UserError, UserErrorReason } from '@/domain/errors/userError'
 
-export class AddUserAction {
+export class RegisterUserAction {
   usersRepository: UsersRepository
 
   constructor(usersRepository: UsersRepository) {
     this.usersRepository = usersRepository
   }
 
-  async execute(command: AddUserCommand): Promise<void> {
+  async execute(command: RegisterUserCommand): Promise<void> {
     await this.checkThatTheUserCanBeCreated(command.username)
     const userToCreate = new User(command.username, command.password)
     await this.usersRepository.create(userToCreate)
@@ -21,7 +21,7 @@ export class AddUserAction {
   }
 }
 
-export interface AddUserCommand {
+export interface RegisterUserCommand {
   username: string,
   password: string
 }

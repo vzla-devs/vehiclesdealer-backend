@@ -1,18 +1,18 @@
 import express from 'express'
 import { UsersFactory } from '@/infrastructure/factories/usersFactory'
 import { tryThisAndHandleAnyError } from '@/api/decorators'
-import { AddUserCommand } from '@/application/user/addUserAction'
+import { RegisterUserCommand } from '@/application/user/registerUserAction'
 import { LoginUserCommand } from '@/application/user/loginUserAction'
 
 const router = express.Router()
 
-router.post('/', tryThisAndHandleAnyError(async(req, res) => {
-  const command: AddUserCommand = {
+router.post('/register', tryThisAndHandleAnyError(async(req, res) => {
+  const command: RegisterUserCommand = {
     username: req.body.username,
     password: req.body.password
   }
-  const addUserAction = UsersFactory.getAddUserAction()
-  await addUserAction.execute(command)
+  const registerUserAction = UsersFactory.getRegisterUserAction()
+  await registerUserAction.execute(command)
   res.sendStatus(201)
 }))
 
