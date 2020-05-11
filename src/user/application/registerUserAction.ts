@@ -1,6 +1,6 @@
-import { UsersRepository } from '@/domain/interfaces/usersRepository'
-import { User } from '@/domain/models/user'
-import { UserError, UserErrorReason } from '@/domain/errors/userError'
+import { UsersRepository } from '@/user/domain/usersRepository'
+import { User } from '@/user/domain/user'
+import { UserError, UserErrorReason } from '@/user/domain/userError'
 
 export class RegisterUserAction {
   usersRepository: UsersRepository

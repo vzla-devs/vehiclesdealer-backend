@@ -1,4 +1,4 @@
-import { UsersRepository } from '@/domain/interfaces/usersRepository'
+import { UsersRepository } from '@/user/domain/usersRepository'
 
 export class LoginUserAction {
   usersRepository: UsersRepository

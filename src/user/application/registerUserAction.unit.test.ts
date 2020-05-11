@@ -1,9 +1,9 @@
-import { UsersRepository } from '@/domain/interfaces/usersRepository'
-import { RegisterUserAction, RegisterUserCommand } from '@/application/user/registerUserAction'
-import { UserModel, User, NoUser } from '@/domain/models/user'
-import { tryActionAndGetError } from '@/application/decorators'
-import { TestCase } from '@/helpers/testCase'
-import { UserError, UserErrorReason } from '@/domain/errors/userError'
+import { UsersRepository } from '@/user/domain/usersRepository'
+import { RegisterUserAction, RegisterUserCommand } from '@/user/application/registerUserAction'
+import { UserModel, User, NoUser } from '@/user/domain/user'
+import { tryActionAndGetError } from '@/shared/tests/actionDecorators'
+import { TestCase } from '@/shared/tests/testCase'
+import { UserError, UserErrorReason } from '@/user/domain/userError'
 
 describe('registerUserAction unit tests', () => {
   let usersRepository: UsersRepository
