@@ -1,6 +1,6 @@
 import express from 'express'
-import { getPictureQuery } from '@/application/pictures/getPictureQuery'
-import { tryThisAndHandleAnyError } from '@/api/decorators'
+import { getPictureQuery } from '@/shared/application/getPictureQuery'
+import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 
