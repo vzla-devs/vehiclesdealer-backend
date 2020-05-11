@@ -1,4 +1,4 @@
-import Contact from '@/domain/models/contact'
+import Contact from '@/contact/domain/contact'
 
 async function execute(command) {
   const existingContact = await Contact.findOne({}).exec()

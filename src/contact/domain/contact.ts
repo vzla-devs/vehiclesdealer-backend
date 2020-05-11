@@ -1,7 +1,6 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
-// modelo para el contacto
 let ContactSchema = new Schema({
     mobilePhone: {
         type: Number,
@@ -43,4 +42,4 @@ let ContactSchema = new Schema({
     },
 })
 
-module.exports = mongoose.model('Contact', ContactSchema)
+export default mongoose.model('Contact', ContactSchema)

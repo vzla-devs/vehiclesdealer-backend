@@ -1,7 +1,7 @@
 import express from 'express'
-import { getContactQuery } from '@/application/contact/getContactQuery'
-import { editContactAction } from '@/application/contact/editContactAction'
-import { tryThisAndHandleAnyError } from '@/api/decorators'
+import { getContactQuery } from '@/contact/application/getContactQuery'
+import { editContactAction } from '@/contact/application/editContactAction'
+import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 
