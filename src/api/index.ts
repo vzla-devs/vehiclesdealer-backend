@@ -1,5 +1,5 @@
 import { createDatabaseConnection, getDatabaseConnection } from '@/shared/infrastructure/persistenceFactory'
-import { createWebApplication } from '@/api/infrastructure/applicationFactory'
+import { createWebApplication } from '@/api/infrastructure/webApplicationFactory'
 
 let server
 createDatabaseConnection()
