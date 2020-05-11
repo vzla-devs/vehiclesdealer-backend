@@ -1,7 +1,7 @@
 import express from 'express'
-import { getFeaturesQuery } from '@/application/features/getFeaturesQuery'
-import { addFeatureAction } from '@/application/features/addFeatureAction'
-import { tryThisAndHandleAnyError } from '@/api/decorators'
+import { getFeaturesQuery } from '@/feature/application/getFeaturesQuery'
+import { addFeatureAction } from '@/feature/application/addFeatureAction'
+import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 

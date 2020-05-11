@@ -1,4 +1,4 @@
-import Feature from '@/domain/models/feature'
+import Feature from '@/feature/domain/feature'
 
 async function getByType (featureType) {
   const features = await Feature.find({ type: featureType }).exec()

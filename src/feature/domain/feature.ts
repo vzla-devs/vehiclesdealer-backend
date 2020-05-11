@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
-// modelo para las características
 let FeatureSchema = new Schema({
     type: {
         type: String,
@@ -17,4 +17,4 @@ let FeatureSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Feature', FeatureSchema)
+export default mongoose.model('Feature', FeatureSchema)
