@@ -1,4 +1,4 @@
-import Financing from '@/domain/models/financing'
+import Financing from '@/financing/domain/financing'
 
 async function execute (command) {
   const existingFinancing = await Financing.findOne({}).exec()

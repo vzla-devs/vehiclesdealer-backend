@@ -1,7 +1,7 @@
 import express from 'express'
-import { getFinancingQuery } from '@/application/financing/getFinancingQuery'
-import { editFinancingAction } from '@/application/financing/editFinancingAction'
-import { tryThisAndHandleAnyError } from '@/api/decorators'
+import { getFinancingQuery } from '@/financing/application/getFinancingQuery'
+import { editFinancingAction } from '@/financing/application/editFinancingAction'
+import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 

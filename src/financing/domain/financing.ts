@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
 let FinancingSchema = new Schema({
@@ -8,4 +9,4 @@ let FinancingSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Financing', FinancingSchema)
+export default mongoose.model('Financing', FinancingSchema)
