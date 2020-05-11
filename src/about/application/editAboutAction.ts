@@ -1,4 +1,4 @@
-import About from '@/domain/models/about'
+import About from '@/about/domain/about'
 
 async function execute(command) {
   const existingAbout = await About.findOne({}).exec()

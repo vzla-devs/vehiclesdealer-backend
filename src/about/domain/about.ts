@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 // modelo para la historia/información adicional
@@ -13,4 +13,4 @@ let AboutSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('About', AboutSchema)
+export default mongoose.model('About', AboutSchema)
