@@ -11,7 +11,7 @@ router.get('/', tryThisAndHandleAnyError(async(req, res) => {
 }))
 
 router.put('/', async(req, res) => {
-    const command = {}
+    let command: any = {}
     if (req.body.mobilePhone !== undefined) command.mobilePhone = req.body.mobilePhone
     if (req.body.mainPhone !== undefined) command.mainPhone = req.body.mainPhone
     if (req.body.emails !== undefined) command.emails = req.body.emails
