@@ -1,7 +1,7 @@
 import express from 'express'
-import { getServicesQuery } from '@/application/services/getServicesQuery'
-import { addServiceAction } from '@/application/services/addServiceAction'
-import { tryThisAndHandleAnyError } from '@/api/decorators'
+import { getServicesQuery } from '@/service/application/getServicesQuery'
+import { addServiceAction } from '@/service/application/addServiceAction'
+import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 

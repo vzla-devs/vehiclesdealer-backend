@@ -1,4 +1,4 @@
-import Service from '@/domain/models/service'
+import Service from '@/service/domain/service'
 
 async function execute (command) {
   const service = new Service ({

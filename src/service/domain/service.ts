@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
-// modelo para los servicios
 let ServiceSchema = new Schema({
     spanish: {
         type: String,
@@ -10,4 +10,4 @@ let ServiceSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Service', ServiceSchema)
+export default mongoose.model('Service', ServiceSchema)
