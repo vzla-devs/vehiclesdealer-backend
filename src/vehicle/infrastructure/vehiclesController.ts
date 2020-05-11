@@ -1,12 +1,12 @@
 import express from 'express'
-import { createMediaStorageUploader } from '@/infrastructure/factories/persistenceFactory'
-import { getVehiclesQuery } from '@/application/vehicles/getVehiclesQuery'
-import { getVehicleFiltersQuery } from '@/application/vehicles/getVehicleFiltersQuery'
-import { addVehicleAction } from '@/application/vehicles/addVehicleAction'
-import { editVehicleAction } from '@/application/vehicles/editVehicleAction'
-import { editVehiclePicturesAction } from '@/application/vehicles/editVehiclePicturesAction'
-import { removeVehicleAction } from '@/application/vehicles/removeVehicleAction'
-import { tryThisAndHandleAnyError } from '@/api/decorators'
+import { createMediaStorageUploader } from '@/shared/infrastructure/persistenceFactory'
+import { getVehiclesQuery } from '@/vehicle/application/getVehiclesQuery'
+import { getVehicleFiltersQuery } from '@/vehicle/application/getVehicleFiltersQuery'
+import { addVehicleAction } from '@/vehicle/application/addVehicleAction'
+import { editVehicleAction } from '@/vehicle/application/editVehicleAction'
+import { editVehiclePicturesAction } from '@/vehicle/application/editVehiclePicturesAction'
+import { removeVehicleAction } from '@/vehicle/application/removeVehicleAction'
+import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 
@@ -52,7 +52,7 @@ router.delete('/:id', tryThisAndHandleAnyError(async (req, res) => {
 }))
 
 function getFiltersFromRequest (request) {
-    let filters = {}
+    let filters: any = {}
     if (request.query.type !== undefined) {
         filters.type = request.query.type
     }
@@ -66,21 +66,21 @@ function getFiltersFromRequest (request) {
         filters.transmission = request.query.transmission
     }
     if (request.query.minYear !== undefined || request.query.maxYear !== undefined) {
-        let yearRange = {}
+        let yearRange: any = {}
         if (request.query.minYear !== undefined) yearRange.$gte = parseInt(request.query.minYear, 10)
         if (request.query.maxYear !== undefined) yearRange.$lte = parseInt(request.query.maxYear, 10)
         filters.year = yearRange
     }
     // si filtra por precio
     if (request.query.minPrice !== undefined || request.query.maxPrice !== undefined) {
-        let priceRange = {}
+        let priceRange: any = {}
         if (request.query.minPrice !== undefined) priceRange.$gte = parseInt(request.query.minPrice, 10)
         if (request.query.maxPrice !== undefined) priceRange.$lte = parseInt(request.query.maxPrice, 10)
         filters.price = priceRange
     }
     // si filtra por kilometraje
     if (request.query.minKilometers !== undefined || request.query.maxKilometers !== undefined) {
-        let kilometersRange = {}
+        let kilometersRange: any = {}
         if (request.query.minKilometers !== undefined) kilometersRange.$gte = parseInt(request.query.minKilometers, 10)
         if (request.query.maxKilometers !== undefined) kilometersRange.$lte = parseInt(request.query.maxKilometers, 10)
         filters.kilometers = kilometersRange

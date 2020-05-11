@@ -4,6 +4,7 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "strictNullChecks": true,
+    "downlevelIteration": true,
     "baseUrl": ".",
     "types": [
       "jest",

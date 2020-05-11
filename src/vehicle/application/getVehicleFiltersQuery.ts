@@ -1,4 +1,4 @@
-import Vehicle from '@/domain/models/vehicle'
+import Vehicle from '@/vehicle/domain/vehicle'
 
 async function getAll () {
   const vehicles = await Vehicle.find({}, {
@@ -53,23 +53,23 @@ async function getAll () {
       return 0
   })
 
-  // quita los tipos de vehículos repetidos
-  types = [ ...new Set(types) ]
+  const typesWithoutDuplication = new Set(types)
+  types = [...typesWithoutDuplication]
 
-  // quita las marcas repetidas
-  makes = [ ...new Set(makes) ]
+  const makesWithoutDuplication = new Set(makes)
+  makes = [ ...makesWithoutDuplication ]
 
-  // quita los tipos de combustible repetidos
-  fuel_types = [ ...new Set(fuel_types) ]
+  const fuelTypesWithoutDuplication = new Set(fuel_types)
+  fuel_types = [ ...fuelTypesWithoutDuplication ]
 
-  // quita los años repetidos
-  years = [ ...new Set(years) ]
+  const yearsWithoutDuplication = new Set(years)
+  years = [ ...yearsWithoutDuplication ]
 
-  // quita los precios repetidos
-  prices = [ ...new Set(prices) ]
+  const pricesWithoutDuplication = new Set(prices)
+  prices = [ ...pricesWithoutDuplication ]
 
-  // quita los kilómetros repetidos
-  kilometers = [ ...new Set(kilometers) ]
+  const kilometersWithoutDuplication = new Set(kilometers)
+  kilometers = [ ...kilometersWithoutDuplication ]
 
   return {
     types,

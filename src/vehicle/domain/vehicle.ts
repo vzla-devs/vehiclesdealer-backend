@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
 let VehicleSchema = new Schema({
@@ -111,4 +112,4 @@ let VehicleSchema = new Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Vehicle', VehicleSchema)
+export default mongoose.model('Vehicle', VehicleSchema)

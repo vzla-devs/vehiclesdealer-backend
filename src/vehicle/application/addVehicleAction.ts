@@ -1,4 +1,4 @@
-import Vehicle from '@/domain/models/vehicle'
+import Vehicle from '@/vehicle/domain/vehicle'
 
 async function execute (command) {
   const vehicle = new Vehicle({
