@@ -9,7 +9,7 @@ import services from '@/service/infrastructure/servicesController'
 import about from '@/about/infrastructure/aboutController'
 import contact from '@/contact/infrastructure/contactController'
 import financing from '@/financing/infrastructure/financingController'
-import pictures from '@/shared/infrastructure/picturesController'
+import pictures from '@/picture/infrastructure/picturesController'
 import users from '@/user/infrastructure/usersController'
 import { DomainError } from '@/shared/domain/domainError'
 
