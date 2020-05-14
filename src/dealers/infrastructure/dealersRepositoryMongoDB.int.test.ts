@@ -28,7 +28,7 @@ describe('dealersRepositoryMongoDB integration tests', () => {
 
   it('gets a dealer', async() => {
     const givenName = 'anyDealerName'
-    const givenDealerToGet = new Dealer(givenName, [])
+    const givenDealerToGet = new Dealer(givenName, ['anyService', 'anyOtherService'])
     await givenAPersistedDealer(givenDealerToGet)
     
     const returnedDealer = await dealersRepo.get()
@@ -51,7 +51,7 @@ describe('dealersRepositoryMongoDB integration tests', () => {
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
     const dealersCollection = databaseInstance.collection('dealers')
-    await dealersCollection.insertOne({ name: dealerToPersist.getName() })
+    await dealersCollection.insertOne({ name: dealerToPersist.getName(), services: dealerToPersist.getServices() })
   }
 
   function verifyDealersAreEqual(expectedDealer: Dealer, persistedDealerToVerify: any) {
