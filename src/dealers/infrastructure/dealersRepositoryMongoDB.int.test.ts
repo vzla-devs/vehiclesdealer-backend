@@ -41,8 +41,7 @@ describe('dealersRepositoryMongoDB integration tests', () => {
     const givenDealer = new Dealer(givenDealerName, [])
     await givenAPersistedDealer(givenDealer)
     
-    const servicesToAdd = ['firstService', 'secondService', 'thirdService']
-    const dealerToUpdate = new Dealer(givenDealerName, servicesToAdd)
+    const dealerToUpdate = new Dealer(givenDealerName, ['firstService', 'secondService', 'thirdService'])
     await dealersRepo.update(dealerToUpdate)
     
     const dealersCollection = databaseInstance.collection('dealers')
