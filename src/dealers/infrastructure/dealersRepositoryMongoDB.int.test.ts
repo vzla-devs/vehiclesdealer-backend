@@ -1,7 +1,6 @@
 import { MongoClient, Db } from 'mongodb'
 import { DealersRepositoryMongoDB } from '@/dealers/infrastructure/dealersRepositoryMongoDB'
-import { User, NoUser } from '@/user/domain/user'
-import { Dealer } from '../domain/dealerModel'
+import { Dealer } from '@/dealers/domain/dealerModel'
 
 describe('dealersRepositoryMongoDB integration tests', () => {
   let connection: MongoClient
