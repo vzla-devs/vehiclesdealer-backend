@@ -1,8 +1,8 @@
-import { UsersRepository } from '@/user/domain/usersRepository'
-import { LoginUserAction, LoginUserCommand } from '@/user/application/loginUserAction'
-import { UserModel, User, NoUser } from '@/user/domain/user'
+import { UsersRepository } from '@/users/domain/usersRepository'
+import { LoginUserAction, LoginUserCommand } from '@/users/application/loginUserAction'
+import { UserModel, User, NoUser } from '@/users/domain/user'
 import { tryActionAndGetError } from '@/shared/tests/actionDecorators'
-import { UserError, UserErrorReason } from '@/user/domain/userError'
+import { UserError, UserErrorReason } from '@/users/domain/userError'
 
 describe('loginUserAction unit tests', () => {
   let usersRepository: UsersRepository

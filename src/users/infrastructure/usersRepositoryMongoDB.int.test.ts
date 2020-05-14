@@ -1,6 +1,6 @@
 import { MongoClient, Db } from 'mongodb'
-import { UsersRepositoryMongoDB } from '@/user/infrastructure/usersRepositoryMongoDB'
-import { User, NoUser } from '@/user/domain/user'
+import { UsersRepositoryMongoDB } from '@/users/infrastructure/usersRepositoryMongoDB'
+import { User, NoUser } from '@/users/domain/user'
 import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
 describe('usersRepositoryMongoDB integration tests', () => {

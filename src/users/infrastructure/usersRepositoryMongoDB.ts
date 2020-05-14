@@ -1,5 +1,5 @@
-import { UsersRepository } from '@/user/domain/usersRepository'
-import { User, NoUser } from '@/user/domain/user'
+import { UsersRepository } from '@/users/domain/usersRepository'
+import { User, NoUser } from '@/users/domain/user'
 import { Db } from 'mongodb'
 
 class UsersRepositoryMongoDB implements UsersRepository {

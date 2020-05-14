@@ -1,8 +1,8 @@
 import express from 'express'
-import { UsersFactory } from '@/user/infrastructure/usersFactory'
+import { UsersFactory } from '@/users/infrastructure/usersFactory'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
-import { RegisterUserCommand } from '@/user/application/registerUserAction'
-import { LoginUserCommand } from '@/user/application/loginUserAction'
+import { RegisterUserCommand } from '@/users/application/registerUserAction'
+import { LoginUserCommand } from '@/users/application/loginUserAction'
 
 const router = express.Router()
 

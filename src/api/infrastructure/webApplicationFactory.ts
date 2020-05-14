@@ -10,7 +10,7 @@ import about from '@/about/infrastructure/aboutController'
 import contact from '@/contact/infrastructure/contactController'
 import financing from '@/financing/infrastructure/financingController'
 import pictures from '@/picture/infrastructure/picturesController'
-import users from '@/user/infrastructure/usersController'
+import users from '@/users/infrastructure/usersController'
 import { DomainError } from '@/shared/domain/domainError'
 
 function createWebApplication(): express.Application {

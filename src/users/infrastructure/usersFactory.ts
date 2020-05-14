@@ -1,7 +1,7 @@
 import { getDatabaseConnection } from '@/shared/infrastructure/persistenceFactory'
-import { UsersRepositoryMongoDB } from '@/user/infrastructure/usersRepositoryMongoDB'
-import { RegisterUserAction } from '@/user/application/registerUserAction'
-import { LoginUserAction } from '@/user/application/loginUserAction'
+import { UsersRepositoryMongoDB } from '@/users/infrastructure/usersRepositoryMongoDB'
+import { RegisterUserAction } from '@/users/application/registerUserAction'
+import { LoginUserAction } from '@/users/application/loginUserAction'
 
 export class UsersFactory {
   static getRegisterUserAction(): RegisterUserAction {
