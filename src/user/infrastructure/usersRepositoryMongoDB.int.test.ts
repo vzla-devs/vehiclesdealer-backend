@@ -1,6 +1,7 @@
 import { MongoClient, Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/user/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/user/domain/user'
+import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
 describe('usersRepositoryMongoDB integration tests', () => {
   let connection: MongoClient
@@ -8,11 +9,7 @@ describe('usersRepositoryMongoDB integration tests', () => {
   let usersRepo: UsersRepositoryMongoDB
 
   beforeAll(async () => {
-    const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
-    connection = await MongoClient.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    connection =  await getDatabaseConnectionForTests()
     databaseInstance = connection.db()
     usersRepo = new UsersRepositoryMongoDB(databaseInstance)
   })

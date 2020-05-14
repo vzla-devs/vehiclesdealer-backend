@@ -1,6 +1,7 @@
 import { MongoClient, Db } from 'mongodb'
 import { DealersRepositoryMongoDB } from '@/dealers/infrastructure/dealersRepositoryMongoDB'
 import { Dealer } from '@/dealers/domain/dealerModel'
+import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
 describe('dealersRepositoryMongoDB integration tests', () => {
   let connection: MongoClient
@@ -8,11 +9,7 @@ describe('dealersRepositoryMongoDB integration tests', () => {
   let dealersRepo: DealersRepositoryMongoDB
 
   beforeAll(async () => {
-    const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
-    connection = await MongoClient.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    connection = await getDatabaseConnectionForTests()
     databaseInstance = connection.db()
     dealersRepo = new DealersRepositoryMongoDB(databaseInstance)
   })

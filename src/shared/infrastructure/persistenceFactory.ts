@@ -1,3 +1,4 @@
+import { MongoClient } from 'mongodb'
 import mongoose from 'mongoose'
 import multer from 'multer'
 
@@ -37,4 +38,18 @@ function getMediaUploader (storage) {
   return multer({ storage })
 }
 
-export { createDatabaseConnection, getDatabaseConnection, createMediaStorageUploader }
+async function getDatabaseConnectionForTests(): Promise<MongoClient> {
+  const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
+  const connection = await MongoClient.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  return connection
+}
+
+export {
+  createDatabaseConnection,
+  getDatabaseConnection,
+  createMediaStorageUploader,
+  getDatabaseConnectionForTests
+}
