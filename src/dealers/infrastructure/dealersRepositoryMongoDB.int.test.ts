@@ -28,17 +28,35 @@ describe('dealersRepositoryMongoDB integration tests', () => {
 
   it('gets a dealer', async() => {
     const givenName = 'anyDealerName'
-    const givenDealerToGet = new Dealer(givenName)
+    const givenDealerToGet = new Dealer(givenName, [])
     await givenAPersistedDealer(givenDealerToGet)
     
-    const returnedUser = await dealersRepo.get()
+    const returnedDealer = await dealersRepo.get()
 
-    expect(returnedUser).toEqual(givenDealerToGet)
+    expect(returnedDealer).toEqual(givenDealerToGet)
   })
 
-  async function givenAPersistedDealer(givenDealerToGet: Dealer) {
+  it('updates a dealer services', async() => {
+    const givenDealerName = 'anyDealerName'
+    const givenDealer = new Dealer(givenDealerName, [])
+    await givenAPersistedDealer(givenDealer)
+    
+    const servicesToAdd = ['firstService', 'secondService', 'thirdService']
+    const dealerToUpdate = new Dealer(givenDealerName, servicesToAdd)
+    await dealersRepo.update(dealerToUpdate)
+    
     const dealersCollection = databaseInstance.collection('dealers')
-    const dealerToPersist = { name: givenDealerToGet.getName() }
-    await dealersCollection.insertOne(dealerToPersist)
+    const updatedDealer = await dealersCollection.findOne({})
+    verifyDealersAreEqual(dealerToUpdate, updatedDealer)
+  })
+
+  async function givenAPersistedDealer(dealerToPersist: Dealer) {
+    const dealersCollection = databaseInstance.collection('dealers')
+    await dealersCollection.insertOne({ name: dealerToPersist.getName() })
+  }
+
+  function verifyDealersAreEqual(expectedDealer: Dealer, persistedDealerToVerify: any) {
+    expect(expectedDealer.getName()).toBe(persistedDealerToVerify.name)
+    expect(expectedDealer.getServices()).toEqual(persistedDealerToVerify.services)
   }
 })
