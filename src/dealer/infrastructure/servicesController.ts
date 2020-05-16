@@ -1,6 +1,6 @@
 import express from 'express'
-import { getServicesQuery } from '@/dealers/application/getServicesQuery'
-import { addServiceAction } from '@/dealers/application/addServiceAction'
+import { getServicesQuery } from '@/dealer/application/getServicesQuery'
+import { addServiceAction } from '@/dealer/application/addServiceAction'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()

@@ -1,17 +1,17 @@
 import { MongoClient, Db } from 'mongodb'
-import { DealersRepositoryMongoDB } from '@/dealers/infrastructure/dealersRepositoryMongoDB'
-import { Dealer } from '@/dealers/domain/dealerModel'
+import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
+import { Dealer } from '@/dealer/domain/dealerModel'
 import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
-describe('dealersRepositoryMongoDB integration tests', () => {
+describe('dealerRepositoryMongoDB integration tests', () => {
   let connection: MongoClient
   let databaseInstance: Db
-  let dealersRepo: DealersRepositoryMongoDB
+  let dealersRepo: DealerRepositoryMongoDB
 
   beforeAll(async () => {
     connection = await getDatabaseConnectionForTests()
     databaseInstance = connection.db()
-    dealersRepo = new DealersRepositoryMongoDB(databaseInstance)
+    dealersRepo = new DealerRepositoryMongoDB(databaseInstance)
   })
 
   beforeEach(async () => {

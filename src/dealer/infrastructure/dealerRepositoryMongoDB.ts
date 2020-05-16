@@ -1,8 +1,8 @@
-import { DealersRepository } from '@/dealers/domain/dealersRepository'
-import { Dealer } from '@/dealers/domain/dealerModel'
+import { DealerRepository } from '@/dealer/domain/dealerRepository'
+import { Dealer } from '@/dealer/domain/dealerModel'
 import { Db } from 'mongodb'
 
-export class DealersRepositoryMongoDB implements DealersRepository {
+export class DealerRepositoryMongoDB implements DealerRepository {
   private databaseInstance: Db
 
   constructor(databaseInstance: Db) {
