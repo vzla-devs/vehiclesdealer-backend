@@ -22,7 +22,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     await connection.close()
   })
 
-  it('gets a dealer', async() => {
+  it('gets the dealer', async() => {
     const givenName = 'anyDealerName'
     const givenDealerToGet = new Dealer(givenName, ['anyService', 'anyOtherService'])
     await givenAPersistedDealer(givenDealerToGet)
@@ -32,7 +32,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     expect(returnedDealer).toEqual(givenDealerToGet)
   })
 
-  it('updates a dealer services', async() => {
+  it('updates the dealer services', async() => {
     const givenDealerName = 'anyDealerName'
     const givenDealer = new Dealer(givenDealerName, [])
     await givenAPersistedDealer(givenDealer)
