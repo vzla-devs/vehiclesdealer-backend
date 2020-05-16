@@ -1,6 +1,6 @@
 import { MongoClient, Db } from 'mongodb'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
-import { Dealer } from '@/dealer/domain/dealerModel'
+import { Dealer } from '@/dealer/domain/dealer'
 import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
 describe('dealerRepositoryMongoDB integration tests', () => {

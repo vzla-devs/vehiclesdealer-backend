@@ -1,4 +1,4 @@
-import { DealerModel } from '@/dealer/domain/dealerModel'
+import { DealerModel } from '@/dealer/domain/dealer'
 
 export interface DealerRepository {
   get(): Promise<DealerModel>

@@ -1,5 +1,5 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
-import { Dealer } from '@/dealer/domain/dealerModel'
+import { Dealer } from '@/dealer/domain/dealer'
 import { Db } from 'mongodb'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
