@@ -23,8 +23,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   it('gets the dealer', async() => {
-    const givenName = 'anyDealerName'
-    const givenDealerToGet = new Dealer(givenName, ['anyService', 'anyOtherService'])
+    const givenDealerToGet = new Dealer(['anyService', 'anyOtherService'])
     await givenAPersistedDealer(givenDealerToGet)
     
     const returnedDealer = await dealersRepo.get()
@@ -33,11 +32,10 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   it('updates the dealer services', async() => {
-    const givenDealerName = 'anyDealerName'
-    const givenDealer = new Dealer(givenDealerName, [])
+    const givenDealer = new Dealer([])
     await givenAPersistedDealer(givenDealer)
     
-    const dealerToUpdate = new Dealer(givenDealerName, ['firstService', 'secondService', 'thirdService'])
+    const dealerToUpdate = new Dealer(['firstService', 'secondService', 'thirdService'])
     await dealersRepo.update(dealerToUpdate)
     
     const dealersCollection = databaseInstance.collection('dealers')
@@ -47,11 +45,10 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
     const dealersCollection = databaseInstance.collection('dealers')
-    await dealersCollection.insertOne({ name: dealerToPersist.getName(), services: dealerToPersist.getServices() })
+    await dealersCollection.insertOne({ services: dealerToPersist.getServices() })
   }
 
   function verifyDealersAreEqual(expectedDealer: Dealer, persistedDealerToVerify: any) {
-    expect(expectedDealer.getName()).toBe(persistedDealerToVerify.name)
     expect(expectedDealer.getServices()).toEqual(persistedDealerToVerify.services)
   }
 })

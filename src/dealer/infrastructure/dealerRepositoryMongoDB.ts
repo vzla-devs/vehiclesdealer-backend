@@ -12,7 +12,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   async get() {
     const dealersCollection = this.databaseInstance.collection('dealers')
     const returnedDealer = await dealersCollection.findOne({})
-    return new Dealer(returnedDealer.name, returnedDealer.services)
+    return new Dealer(returnedDealer.services)
   }
 
   async update(dealerToUpdate: Dealer) {
