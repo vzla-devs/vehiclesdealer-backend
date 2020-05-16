@@ -1,7 +1,7 @@
 import { Db } from 'mongodb'
-import { DealerServiceDto } from './dealerServiceDto'
+import { DealerServiceDto } from '@/dealer/application/dealerServiceDto'
 
-export class GetDealerServicesQuery {
+export class GetDealerServicesQueryMongoDB {
   private databaseInstance: Db
   
   constructor(databaseInstance: Db) {

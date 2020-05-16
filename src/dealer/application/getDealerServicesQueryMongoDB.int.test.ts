@@ -1,16 +1,16 @@
 import { Db } from 'mongodb'
 import { MongoDatabaseForTests } from '@/shared/tests/mongoDatabaseForTests'
-import { GetDealerServicesQuery } from '@/dealer/application/getDealerServicesQuery'
-import { DealerServiceDto } from './dealerServiceDto'
+import { GetDealerServicesQueryMongoDB } from '@/dealer/application/getDealerServicesQueryMongoDB'
+import { DealerServiceDto } from '@/dealer/application/dealerServiceDto'
 
-describe('getDealerServicesQuery integration tests', () => {
+describe('getDealerServicesQueryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests(['dealers'])
   let databaseInstance: Db
-  let dealerServicesQuery: GetDealerServicesQuery
+  let dealerServicesQuery: GetDealerServicesQueryMongoDB
 
   beforeAll(async () => {
     databaseInstance = await mongoTests.createDatabaseConnection()
-    dealerServicesQuery = new GetDealerServicesQuery(databaseInstance)
+    dealerServicesQuery = new GetDealerServicesQueryMongoDB(databaseInstance)
   })
 
   beforeEach(async () => {
