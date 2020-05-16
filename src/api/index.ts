@@ -1,11 +1,14 @@
 import { createDatabaseConnection, getDatabaseConnection } from '@/shared/infrastructure/persistenceFactory'
 import { createWebApplication } from '@/api/infrastructure/webApplicationFactory'
 
-let server
-createDatabaseConnection()
+const port = process.env.MONGO_PORT || 27017
+const connectionString = `mongodb://localhost:${port}/vehiclesdealer`
+createDatabaseConnection(connectionString)
 const databaseConnection = getDatabaseConnection()
 runAppOnceTheDatabaseIsConnected()
 logDatabaseErrors()
+
+let server
 
 function runAppOnceTheDatabaseIsConnected (): void {
   return databaseConnection.once('open', () => {

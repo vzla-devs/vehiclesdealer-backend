@@ -1,7 +1,6 @@
 import { Db, MongoClient } from 'mongodb'
-import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
-export class MongoDBTests {
+export class MongoDatabaseForTests {
   private connection: MongoClient
   private databaseInstance: Db
   private collectionsToClean: Array<string>
@@ -11,7 +10,11 @@ export class MongoDBTests {
   }
 
   async createDatabaseConnection(): Promise<Db> {
-    this.connection = await getDatabaseConnectionForTests()
+    const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
+    this.connection = await MongoClient.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
     this.databaseInstance = this.connection.db()
     return this.databaseInstance
   }

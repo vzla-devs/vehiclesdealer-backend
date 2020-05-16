@@ -1,11 +1,8 @@
-import { MongoClient } from 'mongodb'
 import mongoose from 'mongoose'
 import multer from 'multer'
 
-function createDatabaseConnection(): void {
-  const port = process.env.MONGO_PORT || 27017
-  const connectionString = `mongodb://localhost:${port}/vehiclesdealer`
-  mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
+function createDatabaseConnection(uri: string): void {
+  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 }
 
 function getDatabaseConnection() {
@@ -38,18 +35,8 @@ function getMediaUploader (storage) {
   return multer({ storage })
 }
 
-async function getDatabaseConnectionForTests(): Promise<MongoClient> {
-  const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
-  const connection = await MongoClient.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  return connection
-}
-
 export {
   createDatabaseConnection,
   getDatabaseConnection,
-  createMediaStorageUploader,
-  getDatabaseConnectionForTests
+  createMediaStorageUploader
 }
