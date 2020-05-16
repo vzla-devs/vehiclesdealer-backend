@@ -10,13 +10,13 @@ export class MongoDBTests {
     this.collectionsToClean = collectionsToClean
   }
 
-  async createDatabaseInstance(): Promise<Db> {
+  async createDatabaseConnection(): Promise<Db> {
     this.connection = await getDatabaseConnectionForTests()
     this.databaseInstance = this.connection.db()
     return this.databaseInstance
   }
 
-  async cleanCollections(): Promise<void> {
+  async cleanDatabaseCollections(): Promise<void> {
     this.collectionsToClean.forEach(async collection => {
       await this.databaseInstance.collection(collection).deleteMany({})
     })

@@ -9,12 +9,12 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   let dealersRepo: DealerRepositoryMongoDB
 
   beforeAll(async () => {
-    databaseInstance = await mongoTests.createDatabaseInstance()
+    databaseInstance = await mongoTests.createDatabaseConnection()
     dealersRepo = new DealerRepositoryMongoDB(databaseInstance)
   })
 
   beforeEach(async () => {
-    await mongoTests.cleanCollections()
+    await mongoTests.cleanDatabaseCollections()
   })
 
   afterAll(async () => {

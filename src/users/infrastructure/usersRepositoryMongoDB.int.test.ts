@@ -9,12 +9,12 @@ describe('usersRepositoryMongoDB integration tests', () => {
   let usersRepo: UsersRepositoryMongoDB
 
   beforeAll(async () => {
-    databaseInstance = await mongoTests.createDatabaseInstance()
+    databaseInstance = await mongoTests.createDatabaseConnection()
     usersRepo = new UsersRepositoryMongoDB(databaseInstance)
   })
 
   beforeEach(async () => {
-    await mongoTests.cleanCollections()
+    await mongoTests.cleanDatabaseCollections()
   })
 
   afterAll(async () => {
