@@ -1,7 +1,7 @@
 import { Db, MongoClient } from 'mongodb'
-import { getDatabaseConnectionForTests } from '../infrastructure/persistenceFactory'
+import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
-export class MongoDBTest {
+export class MongoDBTests {
   private connection: MongoClient
   private databaseInstance: Db
   private collectionsToClean: Array<string>

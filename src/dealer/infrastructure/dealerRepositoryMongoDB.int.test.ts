@@ -1,10 +1,10 @@
 import { Db } from 'mongodb'
-import { MongoDBTest } from '@/shared/tests/mongoDBTest'
+import { MongoDBTests } from '@/shared/tests/mongoDBTests'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 import { Dealer } from '@/dealer/domain/dealer'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
-  const mongoTests = new MongoDBTest(['dealers'])
+  const mongoTests = new MongoDBTests(['dealers'])
   let databaseInstance: Db
   let dealersRepo: DealerRepositoryMongoDB
 
