@@ -1,25 +1,24 @@
-import { MongoClient, Db } from 'mongodb'
+import { Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/users/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/users/domain/user'
-import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
+import { MongoDBTests } from '@/shared/tests/mongoDBTests'
 
 describe('usersRepositoryMongoDB integration tests', () => {
-  let connection: MongoClient
+  const mongoTests = new MongoDBTests(['users'])
   let databaseInstance: Db
   let usersRepo: UsersRepositoryMongoDB
 
   beforeAll(async () => {
-    connection =  await getDatabaseConnectionForTests()
-    databaseInstance = connection.db()
+    databaseInstance = await mongoTests.createDatabaseInstance()
     usersRepo = new UsersRepositoryMongoDB(databaseInstance)
   })
 
   beforeEach(async () => {
-    await databaseInstance.collection('users').deleteMany({})
+    await mongoTests.cleanCollections()
   })
 
   afterAll(async () => {
-    await connection.close()
+    await mongoTests.closeDatabaseConnection()
   })
 
   it('creates a user', async() => {
