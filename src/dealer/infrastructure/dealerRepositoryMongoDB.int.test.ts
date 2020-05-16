@@ -1,25 +1,24 @@
-import { MongoClient, Db } from 'mongodb'
+import { Db } from 'mongodb'
+import { MongoDBTest } from '@/shared/tests/mongoDBTest'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 import { Dealer } from '@/dealer/domain/dealer'
-import { getDatabaseConnectionForTests } from '@/shared/infrastructure/persistenceFactory'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
-  let connection: MongoClient
+  const mongoTests = new MongoDBTest(['dealers'])
   let databaseInstance: Db
   let dealersRepo: DealerRepositoryMongoDB
 
   beforeAll(async () => {
-    connection = await getDatabaseConnectionForTests()
-    databaseInstance = connection.db()
+    databaseInstance = await mongoTests.createDatabaseInstance()
     dealersRepo = new DealerRepositoryMongoDB(databaseInstance)
   })
 
   beforeEach(async () => {
-    await databaseInstance.collection('dealers').deleteMany({})
+    await mongoTests.cleanCollections()
   })
 
   afterAll(async () => {
-    await connection.close()
+    await mongoTests.closeDatabaseConnection()
   })
 
   it('gets the dealer', async() => {
