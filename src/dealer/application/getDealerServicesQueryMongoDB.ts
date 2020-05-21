@@ -8,7 +8,7 @@ export class GetDealerServicesQueryMongoDB {
     this.databaseInstance = databaseInstance
   }
 
-  async getAll(): Promise<Array<DealerServiceDto>> {
+  async execute(): Promise<Array<DealerServiceDto>> {
     const servicesCollection = this.databaseInstance.collection('services')
     const persistedServices = await servicesCollection.find({}).toArray()
     let services: Array<DealerServiceDto> = []

@@ -32,7 +32,7 @@ describe('getDealerServicesQueryMongoDB integration tests', () => {
     ]
     await givenPersistedDealerServices(givenDealerServicesToGet)
     
-    const returnedServices = await dealerServicesQuery.getAll()
+    const returnedServices = await dealerServicesQuery.execute()
     
     const expectedServices: Array<DealerServiceDto> = [
       { _id: firstServiceId, spanish: 'firstService' },
