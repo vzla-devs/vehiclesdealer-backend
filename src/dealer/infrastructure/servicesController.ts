@@ -1,5 +1,5 @@
 import express from 'express'
-import { addServiceAction } from '@/dealer/application/addServiceAction'
+import { addServiceAction } from '@/dealer/application/addServiceObsoleteAction'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 import { DealersFactory } from '@/dealer/infrastructure/dealersFactory'
 
