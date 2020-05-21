@@ -1,4 +1,4 @@
-import { Db, ObjectId } from 'mongodb'
+import { Db } from 'mongodb'
 import { DealerServiceDto } from '@/dealer/application/dealerServiceDto'
 
 export class GetDealerServicesQueryMongoDB {

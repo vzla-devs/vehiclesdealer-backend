@@ -25,14 +25,12 @@ describe('getDealerServicesQueryMongoDB integration tests', () => {
     const firstServiceId = new ObjectId()
     const secondServiceId = new ObjectId()
     const thirdServiceId = new ObjectId()
-    const givenDealerToGet = {
-      services: [
-        { _id: firstServiceId, spanish: 'firstService' },
-        { _id: secondServiceId, spanish: 'secondService' },
-        { _id: thirdServiceId, spanish: 'thirdService' }
-      ]
-    }
-    await givenAPersistedDealer(givenDealerToGet)
+    const givenDealerServicesToGet = [
+      { _id: firstServiceId, spanish: 'firstService' },
+      { _id: secondServiceId, spanish: 'secondService' },
+      { _id: thirdServiceId, spanish: 'thirdService' }
+    ]
+    await givenPersistedDealerServices(givenDealerServicesToGet)
     
     const returnedServices = await dealerServicesQuery.getAll()
     
@@ -44,9 +42,9 @@ describe('getDealerServicesQueryMongoDB integration tests', () => {
     expect(returnedServices).toEqual(expectedServices)
   })
 
-  async function givenAPersistedDealer(dealerToPersist: { services: Array<{ _id: ObjectId, spanish: string }> }) {
+  async function givenPersistedDealerServices(services: Array<{ _id: ObjectId, spanish: string }>) {
     const servicesCollection = databaseInstance.collection('services')
-    await Promise.all(dealerToPersist.services.map(async service => {
+    await Promise.all(services.map(async service => {
       await servicesCollection.insertOne({ _id: service._id, spanish: service.spanish })
     }))
   }
