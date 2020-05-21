@@ -46,15 +46,8 @@ describe('getDealerServicesQueryMongoDB integration tests', () => {
 
   async function givenAPersistedDealer(dealerToPersist: { services: Array<{ _id: ObjectId, spanish: string }> }) {
     const servicesCollection = databaseInstance.collection('services')
-    await servicesCollection.insertOne({ _id: dealerToPersist.services[0]._id, spanish: dealerToPersist.services[0].spanish })
-    await servicesCollection.insertOne({ _id: dealerToPersist.services[1]._id, spanish: dealerToPersist.services[1].spanish })
-    await servicesCollection.insertOne({ _id: dealerToPersist.services[2]._id, spanish: dealerToPersist.services[2].spanish })
-    // dealerToPersist.services.forEach(async service => {
-    //   try {
-    //     await servicesCollection.insertOne({ spanish: service.spanish })
-    //   } catch(err) {
-    //     console.log('error ', err)
-    //   }
-    // })
+    await Promise.all(dealerToPersist.services.map(async service => {
+      await servicesCollection.insertOne({ _id: service._id, spanish: service.spanish })
+    }))
   }
 })
