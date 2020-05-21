@@ -1,12 +1,13 @@
 import express from 'express'
-import { getServicesQuery } from '@/dealer/application/getServicesQuery'
 import { addServiceAction } from '@/dealer/application/addServiceAction'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
+import { DealersFactory } from '@/dealer/infrastructure/dealersFactory'
 
 const router = express.Router()
 
 router.get('/', tryThisAndHandleAnyError(async(req, res) => {
-    const services = await getServicesQuery.getAll()
+    const dealerServicesQuery = DealersFactory.GetDealerServicesQuery()
+    const services = await dealerServicesQuery.execute()
     res.status(200).send(services)
 }))
 
