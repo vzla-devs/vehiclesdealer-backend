@@ -37,10 +37,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     const dealerToUpdate = new Dealer(['firstService', 'secondService', 'thirdService'])
     await dealersRepo.update(dealerToUpdate)
     
-    const servicesCollection = databaseInstance.collection('services')
-    const persistedServices = await servicesCollection.find({}).toArray()
-    const updatedServices = persistedServices.map(service => { return service.spanish })
-    const updatedDealer = new Dealer(updatedServices)
+    const updatedDealer = await getPersistedDealer()
     expect(dealerToUpdate).toEqual(updatedDealer)
   })
 
@@ -49,5 +46,12 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     await Promise.all(dealerToPersist.getServices().map(async service => {
       await servicesCollection.insertOne({ spanish: service })
     }))
+  }
+
+  async function getPersistedDealer(): Promise<Dealer> {
+    const servicesCollection = databaseInstance.collection('services')
+    const persistedServices = await servicesCollection.find({}).toArray()
+    const updatedServices = persistedServices.map(service => { return service.spanish })
+    return new Dealer(updatedServices)
   }
 })
