@@ -4,7 +4,7 @@ import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositor
 import { Dealer } from '@/dealer/domain/dealer'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
-  const mongoTests = new MongoDatabaseForTests(['dealers'])
+  const mongoTests = new MongoDatabaseForTests()
   let databaseInstance: Db
   let dealersRepo: DealerRepositoryMongoDB
 
@@ -13,8 +13,8 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     dealersRepo = new DealerRepositoryMongoDB(databaseInstance)
   })
 
-  beforeEach(async () => {
-    await mongoTests.cleanDatabaseCollections()
+  beforeEach(async() => {
+    await databaseInstance.collection('services').deleteMany({})
   })
 
   afterAll(async () => {

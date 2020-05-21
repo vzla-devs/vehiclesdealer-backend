@@ -4,7 +4,7 @@ import { User, NoUser } from '@/users/domain/user'
 import { MongoDatabaseForTests } from '@/shared/tests/mongoDatabaseForTests'
 
 describe('usersRepositoryMongoDB integration tests', () => {
-  const mongoTests = new MongoDatabaseForTests(['users'])
+  const mongoTests = new MongoDatabaseForTests()
   let databaseInstance: Db
   let usersRepo: UsersRepositoryMongoDB
 
@@ -13,8 +13,8 @@ describe('usersRepositoryMongoDB integration tests', () => {
     usersRepo = new UsersRepositoryMongoDB(databaseInstance)
   })
 
-  beforeEach(async () => {
-    await mongoTests.cleanDatabaseCollections()
+  beforeEach(async() => {
+    await databaseInstance.collection('users').deleteMany({})
   })
 
   afterAll(async () => {
