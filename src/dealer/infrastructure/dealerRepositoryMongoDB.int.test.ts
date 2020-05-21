@@ -43,8 +43,10 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
-    const dealersCollection = databaseInstance.collection('dealers')
-    await dealersCollection.insertOne({ services: dealerToPersist.getServices() })
+    const servicesCollection = databaseInstance.collection('services')
+    await Promise.all(dealerToPersist.getServices().map(async service => {
+      await servicesCollection.insertOne({ spanish: service })
+    }))
   }
 
   function verifyDealersAreEqual(expectedDealer: Dealer, persistedDealerToVerify: any) {

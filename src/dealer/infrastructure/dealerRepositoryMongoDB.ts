@@ -10,9 +10,10 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   async get() {
-    const dealersCollection = this.databaseInstance.collection('dealers')
-    const returnedDealer = await dealersCollection.findOne({})
-    return new Dealer(returnedDealer.services)
+    const servicesCollection = this.databaseInstance.collection('services')
+    const persistedServices = await servicesCollection.find({}).toArray()
+    const services = persistedServices.map(service => service.spanish)
+    return new Dealer(services)
   }
 
   async update(dealerToUpdate: Dealer) {
