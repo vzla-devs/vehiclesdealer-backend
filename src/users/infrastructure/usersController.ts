@@ -6,6 +6,7 @@ import { LoginUserCommand } from '@/users/application/loginUserAction'
 
 const router = express.Router()
 
+//TODO: create a unit test for this endpoint
 router.post('/register', tryThisAndHandleAnyError(async(req, res) => {
   const command: RegisterUserCommand = {
     username: req.body.username,
@@ -16,6 +17,7 @@ router.post('/register', tryThisAndHandleAnyError(async(req, res) => {
   res.sendStatus(201)
 }))
 
+//TODO: create a unit test for this endpoint
 router.post('/login', tryThisAndHandleAnyError(async(req, res) => {
   const command: LoginUserCommand = {
     username: req.body.username,

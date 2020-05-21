@@ -5,7 +5,7 @@ import { DealersFactory } from '@/dealer/infrastructure/dealersFactory'
 
 const router = express.Router()
 
-//TODO: create a unit test for this controller
+//TODO: create a unit test for this endpoint
 router.get('/', tryThisAndHandleAnyError(async(req, res) => {
     const dealerServicesQuery = DealersFactory.GetDealerServicesQuery()
     const services = await dealerServicesQuery.execute()
