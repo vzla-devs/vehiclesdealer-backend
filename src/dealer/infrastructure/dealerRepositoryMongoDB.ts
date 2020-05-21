@@ -17,7 +17,9 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   async update(dealerToUpdate: Dealer) {
-    const dealersCollection = this.databaseInstance.collection('dealers')
-    await dealersCollection.updateOne({}, { $set: { services: dealerToUpdate.getServices() } })
+    const servicesCollection = this.databaseInstance.collection('services')
+    await Promise.all(dealerToUpdate.getServices().map(async service => {
+      await servicesCollection.insertOne({ spanish: service })
+    }))
   }
 }
