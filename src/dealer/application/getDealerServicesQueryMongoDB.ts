@@ -1,4 +1,4 @@
-import { Db } from 'mongodb'
+import { Db, ObjectId } from 'mongodb'
 import { DealerServiceDto } from '@/dealer/application/dealerServiceDto'
 
 export class GetDealerServicesQueryMongoDB {
@@ -9,10 +9,11 @@ export class GetDealerServicesQueryMongoDB {
   }
 
   async getAll(): Promise<Array<DealerServiceDto>> {
-    const dealersCollection = this.databaseInstance.collection('dealers')
-    const dealer = await dealersCollection.findOne({})
-    const services = dealer.services.map(service => {
-      return { spanish: service }
+    const servicesCollection = this.databaseInstance.collection('services')
+    const persistedServices = await servicesCollection.find({}).toArray()
+    let services: Array<DealerServiceDto> = []
+    persistedServices.forEach(service => {
+      services.push({ _id: service._id, spanish: service.spanish })
     })
     return services
   }
