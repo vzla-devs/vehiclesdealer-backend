@@ -1,12 +1,14 @@
+import { Service } from '@/dealer/domain/service'
+
 export interface DealerModel {
-  getServices(): Array<string>
-  addService(serviceDescription: string): void
+  getServices(): Array<Service>
+  addService(serviceDescription: Service): void
 }
 
 export class Dealer implements DealerModel {
-  private services: Array<string>
+  private services: Array<Service>
 
-  constructor(services: Array<string>) {
+  constructor(services: Array<Service>) {
     this.services = services
   }
 
@@ -14,7 +16,7 @@ export class Dealer implements DealerModel {
     return this.services
   }
 
-  addService(serviceDescription: string) {
-    this.services.push(serviceDescription)
+  addService(serviceToAdd: Service) {
+    this.services.push(serviceToAdd)
   }
 }
