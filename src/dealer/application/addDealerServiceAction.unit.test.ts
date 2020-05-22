@@ -14,7 +14,7 @@ describe('addDealerServiceAction unit tests', () => {
     addServiceAction = new AddDealerServiceAction(dealerRepository)
   })
 
-  it('adds a dealer service', async() => {
+  it('adds a new dealer service', async() => {
     const givenDealer = new Dealer([])
     givenAMockedDealerRepoGetWith(givenDealer)
 
@@ -22,7 +22,7 @@ describe('addDealerServiceAction unit tests', () => {
     await addServiceAction.execute(serviceToAdd)
 
     expect(dealerRepository.get).toHaveBeenCalled()
-    const expectedDealerToUpdate = new Dealer(['anyServiceDescription'])
+    const expectedDealerToUpdate = new Dealer([{ description: 'anyServiceDescription' }])
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealerToUpdate)
   })
 

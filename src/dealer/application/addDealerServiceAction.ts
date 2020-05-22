@@ -9,7 +9,7 @@ export class AddDealerServiceAction {
   
   async execute(serviceCommand: AddDealerServiceCommand): Promise<void> {
     const existingDealer = await this.dealerRepository.get()
-    existingDealer.addService(serviceCommand.description)
+    existingDealer.addService({ description: serviceCommand.description })
     await this.dealerRepository.update(existingDealer)
   }
 }
