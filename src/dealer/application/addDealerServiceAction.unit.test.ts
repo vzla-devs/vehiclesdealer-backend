@@ -26,6 +26,8 @@ describe('addDealerServiceAction unit tests', () => {
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealerToUpdate)
   })
 
+  //TODO: do not add an already existing service
+
   function givenAMockedDealerRepoGetWith(dealer: DealerModel) {
     dealerRepository.get = jest.fn(async() => dealer)
   }
