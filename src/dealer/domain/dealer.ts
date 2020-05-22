@@ -1,5 +1,6 @@
 export interface DealerModel {
   getServices(): Array<string>
+  addService(serviceDescription: string): void
 }
 
 export class Dealer implements DealerModel {
@@ -11,5 +12,9 @@ export class Dealer implements DealerModel {
 
   getServices() {
     return this.services
+  }
+
+  addService(serviceDescription: string) {
+    this.services.push(serviceDescription)
   }
 }
