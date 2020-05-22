@@ -36,22 +36,20 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   it('updates the dealer adding new services', async() => {
-    const givenDealer = new Dealer([])
+    const existingService = { id: new ObjectId().toString(), description: 'secondService' }
+    const givenDealer = new Dealer([existingService])
     await givenAPersistedDealer(givenDealer)
     
-    const servicesToAdd: Array<Service> = [
-      { description: 'firstService' },
-      { description: 'secondService' },
-      { description: 'thirdService' },
-    ]
+    const servicesToAdd: Array<Service> = [existingService, { description: 'firstService' }, { description: 'thirdService' }]
     const dealerToUpdate = new Dealer(servicesToAdd)
     await dealersRepo.update(dealerToUpdate)
     
     const updatedDealer = await getPersistedDealer()
     const addedServices = updatedDealer.getServices()
-    expect(servicesToAdd[0].description).toBe(addedServices[0].description)
-    expect(servicesToAdd[1].description).toBe(addedServices[1].description)
-    expect(servicesToAdd[2].description).toBe(addedServices[2].description)
+    expect(addedServices).toHaveLength(3)
+    expect(addedServices[0]).toEqual(servicesToAdd[0])
+    expect(addedServices[1].description).toBe(servicesToAdd[1].description)
+    expect(addedServices[2].description).toBe(servicesToAdd[2].description)
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
