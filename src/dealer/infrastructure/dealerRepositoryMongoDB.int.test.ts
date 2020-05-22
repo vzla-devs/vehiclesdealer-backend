@@ -35,7 +35,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     expect(returnedDealer).toEqual(givenDealerToGet)
   })
 
-  it('updates the dealer adding new services', async() => {
+  it('updates the dealer services', async() => {
     const existingService = { id: new ObjectId().toString(), description: 'secondService' }
     const givenDealer = new Dealer([existingService])
     await givenAPersistedDealer(givenDealer)
