@@ -15,6 +15,10 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     return new Dealer(services)
   }
 
+  async update(dealerToUpdate: Dealer) {
+    await this.updateDealerServices(dealerToUpdate)
+  }
+
   private async getDealerServices(): Promise<Array<Service>> {
     const servicesCollection = this.databaseInstance.collection('services')
     const persistedServices = await servicesCollection.find({}).toArray()
@@ -24,7 +28,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     return services
   }
 
-  async update(dealerToUpdate: Dealer) {
+  private async updateDealerServices(dealerToUpdate: Dealer): Promise<void> {
     const servicesCollection = this.databaseInstance.collection('services')
     const newServices = dealerToUpdate.getServices().filter(service => !service.id)
     await Promise.all(newServices.map(async service => {
