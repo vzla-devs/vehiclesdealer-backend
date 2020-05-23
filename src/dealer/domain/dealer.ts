@@ -18,10 +18,14 @@ export class Dealer implements DealerModel {
   }
 
   addService(serviceToAdd: Service) {
+    this.checkThatTheServiceCanBeAdded(serviceToAdd)
+    this.services.push(serviceToAdd)
+  }
+
+  private checkThatTheServiceCanBeAdded(serviceToAdd: Service): void {
     const servicesWithTheSameDescription = this.services.filter(service => service.description === serviceToAdd.description)
     if (servicesWithTheSameDescription.length > 0) {
       throw new DealerError(DealerErrorReason.serviceAlreadyExists)
     }
-    this.services.push(serviceToAdd)
   }
 }
