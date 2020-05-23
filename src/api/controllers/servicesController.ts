@@ -1,7 +1,7 @@
 import express from 'express'
-import { addServiceAction } from '@/dealer/application/addServiceObsoleteAction'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 import { DealersFactory } from '@/dealer/infrastructure/dealersFactory'
+import { AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
 
 const router = express.Router()
 
@@ -12,9 +12,11 @@ router.get('/', tryThisAndHandleAnyError(async(req, res) => {
     res.status(200).send(services)
 }))
 
+//TODO: create a unit test for this endpoint
 router.post('/', tryThisAndHandleAnyError(async(req, res) => {
-    const command = { description: req.body.service }
-    await addServiceAction.execute(command)
+    const command: AddDealerServiceCommand = { description: req.body.service }
+    const addDealerServicesAction = DealersFactory.AddDealerServiceAction()
+    await addDealerServicesAction.execute(command)
     res.sendStatus(200)
 }))
 
