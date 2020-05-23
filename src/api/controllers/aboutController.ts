@@ -1,6 +1,6 @@
 import express from 'express'
-import { getAboutQuery } from '@/about/application/getAboutQuery'
-import { editAboutAction } from '@/about/application/editAboutAction'
+import { getAboutQuery } from '@/about/application/getAboutObsoleteQuery'
+import { editAboutAction } from '@/about/application/editAboutObsoleteAction'
 import { createMediaStorageUploader } from '@/shared/infrastructure/persistenceFactory'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
 
