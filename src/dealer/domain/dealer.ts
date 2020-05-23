@@ -23,7 +23,9 @@ export class Dealer implements DealerModel {
   }
 
   private checkThatTheServiceCanBeAdded(serviceToAdd: Service): void {
-    const servicesWithTheSameDescription = this.services.filter(service => service.description === serviceToAdd.description)
+    const servicesWithTheSameDescription = this.services.filter(service => {
+      return service.description.toLowerCase() === serviceToAdd.description.toLowerCase()
+    })
     if (servicesWithTheSameDescription.length > 0) {
       throw new DealerError(DealerErrorReason.serviceAlreadyExists)
     }

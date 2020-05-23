@@ -3,6 +3,7 @@ import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/applic
 import { Dealer, DealerModel } from '@/dealer/domain/dealer'
 import { tryActionAndGetError } from '@/shared/tests/actionDecorators'
 import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
+import { TestCase } from '@/shared/tests/testCase'
 
 describe('addDealerServiceAction unit tests', () => {
   let dealerRepository: DealerRepository
@@ -28,18 +29,41 @@ describe('addDealerServiceAction unit tests', () => {
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealerToUpdate)
   })
 
-  it('does not add a dealer service that already exists', async() => {
-    const alreadyExistingService = { id: 'anyId', description: 'anyDescription' }
-    const givenDealer = new Dealer([alreadyExistingService])
-    givenAMockedDealerRepoGetWith(givenDealer)
+  describe('when trying to add a service that already exists', () => {
+    const testCases: Array<TestCase> = [
+      {
+        name: 'with the same description',
+        serviceDescription: 'alreadyExistingService'
+      },
+      {
+        name: 'with the same description in uppercase',
+        serviceDescription: 'ALREADYEXISTINGSERVICE'
+      },
+      {
+        name: 'with the same description in lowercase',
+        serviceDescription: 'alreadyexistingservice'
+      },
+      {
+        name: 'with the same description in different case',
+        serviceDescription: 'ALREADYeXISTINGsERVICE'
+      }
+    ]
 
-    const action = tryActionAndGetError(addServiceAction)
-    const serviceToAdd: AddDealerServiceCommand = { description: 'anyDescription' }
-    const thrownError = await action(serviceToAdd)
+    testCases.forEach(testCase => {
+      it(`does not add a dealer service that already exists ${testCase.name}`, async() => {
+        const alreadyExistingService = { id: 'anyId', description: 'alreadyExistingService' }
+        const givenDealer = new Dealer([alreadyExistingService])
+        givenAMockedDealerRepoGetWith(givenDealer)
 
-    expect(thrownError).toEqual(new DealerError(DealerErrorReason.serviceAlreadyExists))
-    expect(dealerRepository.get).toHaveBeenCalled()
-    expect(dealerRepository.update).not.toHaveBeenCalled()
+        const action = tryActionAndGetError(addServiceAction)
+        const serviceToAdd: AddDealerServiceCommand = { description: testCase.serviceDescription }
+        const thrownError = await action(serviceToAdd)
+
+        expect(thrownError).toEqual(new DealerError(DealerErrorReason.serviceAlreadyExists))
+        expect(dealerRepository.get).toHaveBeenCalled()
+        expect(dealerRepository.update).not.toHaveBeenCalled()
+      })
+    })
   })
 
   function givenAMockedDealerRepoGetWith(dealer: DealerModel) {
