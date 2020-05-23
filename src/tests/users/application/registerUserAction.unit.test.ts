@@ -1,8 +1,8 @@
 import { UsersRepository } from '@/users/domain/usersRepository'
 import { RegisterUserAction, RegisterUserCommand } from '@/users/application/registerUserAction'
 import { UserModel, User, NoUser } from '@/users/domain/user'
-import { tryActionAndGetError } from '@/shared/tests/actionDecorators'
-import { TestCase } from '@/shared/tests/testCase'
+import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
+import { TestCase } from '@/tests/testCase'
 import { UserError, UserErrorReason } from '@/users/domain/userError'
 
 describe('registerUserAction unit tests', () => {

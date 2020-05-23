@@ -1,9 +1,9 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
 import { Dealer, DealerModel } from '@/dealer/domain/dealer'
-import { tryActionAndGetError } from '@/shared/tests/actionDecorators'
+import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
 import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
-import { TestCase } from '@/shared/tests/testCase'
+import { TestCase } from '@/tests/testCase'
 
 describe('addDealerServiceAction unit tests', () => {
   let dealerRepository: DealerRepository

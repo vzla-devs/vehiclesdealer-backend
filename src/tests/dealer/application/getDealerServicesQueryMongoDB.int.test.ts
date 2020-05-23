@@ -1,5 +1,5 @@
 import { Db, ObjectId } from 'mongodb'
-import { MongoDatabaseForTests } from '@/shared/tests/mongoDatabaseForTests'
+import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
 import { GetDealerServicesQueryMongoDB } from '@/dealer/application/getDealerServicesQueryMongoDB'
 import { DealerServiceDto } from '@/dealer/application/dealerServiceDto'
 
