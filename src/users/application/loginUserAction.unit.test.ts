@@ -42,11 +42,11 @@ describe('loginUserAction unit tests', () => {
 
   it('does not login a user when the password mismatches', async() => {
     const givenUsername = 'anyExistingUsername'
-    const givenUserToCreateCommand: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyDifferentPassword'))
-
+    
     const action = tryActionAndGetError(loginUserAction)
-    const thrownError = await action(givenUserToCreateCommand)
+    const userToCreate: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
+    const thrownError = await action(userToCreate)
 
     expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
