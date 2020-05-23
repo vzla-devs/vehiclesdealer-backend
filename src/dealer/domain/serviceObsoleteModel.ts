@@ -1,3 +1,4 @@
+//TODO: delete when the population of this model in the vehicle model is solved using mongoDB
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
