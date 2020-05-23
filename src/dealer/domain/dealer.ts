@@ -26,8 +26,6 @@ export class Dealer implements DealerModel {
     const servicesWithTheSameDescription = this.services.filter(service => {
       return service.description.toLowerCase() === serviceToAdd.description.toLowerCase()
     })
-    if (servicesWithTheSameDescription.length > 0) {
-      throw new DealerError(DealerErrorReason.serviceAlreadyExists)
-    }
+    if (servicesWithTheSameDescription.length > 0) throw new DealerError(DealerErrorReason.serviceAlreadyExists)
   }
 }
