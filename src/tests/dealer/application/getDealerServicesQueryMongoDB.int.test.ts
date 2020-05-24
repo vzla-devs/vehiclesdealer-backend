@@ -45,7 +45,8 @@ describe('getDealerServicesQueryMongoDB integration tests', () => {
   async function givenPersistedDealerServices(services: Array<{ _id: ObjectId, spanish: string }>) {
     const servicesCollection = databaseInstance.collection('services')
     await Promise.all(services.map(async service => {
-      await servicesCollection.insertOne({ _id: service._id, spanish: service.spanish })
-    }))
+        await servicesCollection.insertOne({ _id: service._id, spanish: service.spanish })
+      })
+    )
   }
 })
