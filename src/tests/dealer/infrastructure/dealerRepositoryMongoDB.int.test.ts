@@ -22,34 +22,38 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     await mongoTests.closeDatabaseConnection()
   })
 
-  it('gets the dealer services', async() => {
-    const givenServices: Array<Service> = [
-      { id: new ObjectId().toString(), description: 'anyService' },
-      { id: new ObjectId().toString(), description: 'anyOtherService' },
-    ]
-    const givenDealerToGet = new Dealer(givenServices)
-    await givenAPersistedDealer(givenDealerToGet)
-    
-    const returnedDealer = await dealersRepo.get()
-
-    expect(returnedDealer).toEqual(givenDealerToGet)
+  describe('when getting the dealer', () => {
+    it('gets the dealer services', async() => {
+      const givenServices: Array<Service> = [
+        { id: new ObjectId().toString(), description: 'anyService' },
+        { id: new ObjectId().toString(), description: 'anyOtherService' },
+      ]
+      const givenDealerToGet = new Dealer(givenServices)
+      await givenAPersistedDealer(givenDealerToGet)
+      
+      const returnedDealer = await dealersRepo.get()
+  
+      expect(returnedDealer).toEqual(givenDealerToGet)
+    })
   })
 
-  it('updates the dealer services', async() => {
-    const existingService = { id: new ObjectId().toString(), description: 'secondService' }
-    const givenDealer = new Dealer([existingService])
-    await givenAPersistedDealer(givenDealer)
-    
-    const servicesToAdd: Array<Service> = [existingService, { description: 'firstService' }, { description: 'thirdService' }]
-    const dealerToUpdate = new Dealer(servicesToAdd)
-    await dealersRepo.update(dealerToUpdate)
-    
-    const updatedDealer = await getPersistedDealer()
-    const addedServices = updatedDealer.getServices()
-    expect(addedServices).toHaveLength(3)
-    expect(addedServices[0]).toEqual(servicesToAdd[0])
-    expect(addedServices[1].description).toBe(servicesToAdd[1].description)
-    expect(addedServices[2].description).toBe(servicesToAdd[2].description)
+  describe('when updating the dealer', () => {
+    it('updates the dealer services', async() => {
+      const existingService = { id: new ObjectId().toString(), description: 'secondService' }
+      const givenDealer = new Dealer([existingService])
+      await givenAPersistedDealer(givenDealer)
+      
+      const servicesToAdd: Array<Service> = [existingService, { description: 'firstService' }, { description: 'thirdService' }]
+      const dealerToUpdate = new Dealer(servicesToAdd)
+      await dealersRepo.update(dealerToUpdate)
+      
+      const updatedDealer = await getPersistedDealer()
+      const addedServices = updatedDealer.getServices()
+      expect(addedServices).toHaveLength(3)
+      expect(addedServices[0]).toEqual(servicesToAdd[0])
+      expect(addedServices[1].description).toBe(servicesToAdd[1].description)
+      expect(addedServices[2].description).toBe(servicesToAdd[2].description)
+    })
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
