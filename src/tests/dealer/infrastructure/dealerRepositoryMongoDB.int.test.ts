@@ -9,7 +9,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   let databaseInstance: Db
   let dealersRepo: DealerRepositoryMongoDB
 
-  beforeAll(async () => {
+  beforeAll(async() => {
     databaseInstance = await mongoTests.createDatabaseConnection()
     dealersRepo = new DealerRepositoryMongoDB(databaseInstance)
   })
@@ -18,7 +18,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     await databaseInstance.collection('services').deleteMany({})
   })
 
-  afterAll(async () => {
+  afterAll(async() => {
     await mongoTests.closeDatabaseConnection()
   })
 
