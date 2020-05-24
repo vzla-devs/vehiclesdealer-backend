@@ -22,7 +22,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     await mongoTests.closeDatabaseConnection()
   })
 
-  it('gets the dealer', async() => {
+  it('gets the dealer services', async() => {
     const givenServices: Array<Service> = [
       { id: new ObjectId().toString(), description: 'anyService' },
       { id: new ObjectId().toString(), description: 'anyOtherService' },
