@@ -13,7 +13,8 @@ export class DealerRepositoryMongoDB implements DealerRepository {
 
   async get() {
     const services = await this.getDealerServices()
-    return new DealerBuilder().withServices(services).build()
+    const description = await this.getDealerDescription()
+    return new DealerBuilder().withServices(services).withDescription(description).build()
   }
 
   async update(dealerToUpdate: Dealer) {
@@ -27,6 +28,12 @@ export class DealerRepositoryMongoDB implements DealerRepository {
       return { id: service._id.toString(), description: service.spanish }
     })
     return services
+  }
+
+  private async getDealerDescription(): Promise<string> {
+    const aboutsCollection = this.databaseInstance.collection('abouts')
+    const persistedDescription = await aboutsCollection.findOne({})
+    return persistedDescription.text
   }
 
   private async updateDealerServices(dealerToUpdate: Dealer): Promise<void> {

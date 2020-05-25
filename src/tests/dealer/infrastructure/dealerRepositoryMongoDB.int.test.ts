@@ -17,6 +17,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
   beforeEach(async() => {
     await databaseInstance.collection('services').deleteMany({})
+    await databaseInstance.collection('abouts').deleteMany({})
   })
 
   afterAll(async() => {
@@ -34,7 +35,17 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       
       const returnedDealer = await dealersRepo.get()
   
-      expect(returnedDealer).toEqual(givenDealerToGet)
+      expect(returnedDealer.getServices()).toEqual(givenServices)
+    })
+
+    it('gets the dealer description', async() => {
+      const givenDescription: string = 'anyDescription'
+      const givenDealerToGet = new DealerBuilder().withDescription(givenDescription).build()
+      await givenAPersistedDealer(givenDealerToGet)
+      
+      const returnedDealer = await dealersRepo.get()
+  
+      expect(returnedDealer.getDescription()).toEqual(givenDescription)
     })
   })
 
@@ -59,9 +70,11 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
     const servicesCollection = databaseInstance.collection('services')
+    const aboutsCollection = databaseInstance.collection('abouts')
     await Promise.all(dealerToPersist.getServices().map(async service => {
       await servicesCollection.insertOne({ _id: new ObjectId(service.id), spanish: service.description })
     }))
+    await aboutsCollection.insertOne({ text: dealerToPersist.getDescription() })
   }
 
   async function getPersistedDealer(): Promise<Dealer> {

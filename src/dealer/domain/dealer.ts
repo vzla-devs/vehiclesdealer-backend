@@ -4,10 +4,13 @@ import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
 export interface DealerModel {
   getServices(): Array<Service>
   addService(serviceDescription: Service): void
+  getDescription(): string
+  addDescription(description: string): void
 }
 
 export class Dealer implements DealerModel {
   private services: Array<Service> = []
+  private description: string = ''
 
   getServices() {
     return this.services
@@ -16,6 +19,14 @@ export class Dealer implements DealerModel {
   addService(serviceToAdd: Service) {
     this.checkThatTheServiceCanBeAdded(serviceToAdd)
     this.services.push(serviceToAdd)
+  }
+
+  getDescription() {
+    return this.description
+  }
+
+  addDescription(description: string) {
+    this.description = description
   }
 
   private checkThatTheServiceCanBeAdded(serviceToAdd: Service): void {
