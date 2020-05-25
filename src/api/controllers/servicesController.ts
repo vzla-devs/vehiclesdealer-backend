@@ -1,6 +1,6 @@
 import express from 'express'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
-import { DealersFactory } from '@/dealer/infrastructure/dealersFactory'
+import { DealersFactory } from '@/dealer/infrastructure/dealerFactory'
 import { AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
 
 const router = express.Router()
