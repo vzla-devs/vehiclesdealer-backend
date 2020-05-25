@@ -2,6 +2,7 @@ import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { Dealer } from '@/dealer/domain/dealer'
 import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
+import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
   private databaseInstance: Db
@@ -12,7 +13,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
 
   async get() {
     const services = await this.getDealerServices()
-    return new Dealer(services)
+    return new DealerBuilder().withServices(services).build()
   }
 
   async update(dealerToUpdate: Dealer) {

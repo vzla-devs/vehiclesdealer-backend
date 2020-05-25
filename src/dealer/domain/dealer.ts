@@ -7,11 +7,7 @@ export interface DealerModel {
 }
 
 export class Dealer implements DealerModel {
-  private services: Array<Service>
-
-  constructor(services: Array<Service>) {
-    this.services = services
-  }
+  private services: Array<Service> = []
 
   getServices() {
     return this.services

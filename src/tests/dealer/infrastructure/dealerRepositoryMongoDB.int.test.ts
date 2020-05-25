@@ -3,6 +3,7 @@ import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
+import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -28,7 +29,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
         { id: new ObjectId().toString(), description: 'anyService' },
         { id: new ObjectId().toString(), description: 'anyOtherService' },
       ]
-      const givenDealerToGet = new Dealer(givenServices)
+      const givenDealerToGet = new DealerBuilder().withServices(givenServices).build()
       await givenAPersistedDealer(givenDealerToGet)
       
       const returnedDealer = await dealersRepo.get()
@@ -40,11 +41,11 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   describe('when updating the dealer', () => {
     it('updates the dealer services', async() => {
       const existingService = { id: new ObjectId().toString(), description: 'secondService' }
-      const givenDealer = new Dealer([existingService])
+      const givenDealer = new DealerBuilder().withServices([existingService]).build()
       await givenAPersistedDealer(givenDealer)
       
       const servicesToAdd: Array<Service> = [existingService, { description: 'firstService' }, { description: 'thirdService' }]
-      const dealerToUpdate = new Dealer(servicesToAdd)
+      const dealerToUpdate = new DealerBuilder().withServices(servicesToAdd).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -69,6 +70,6 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     const services = persistedServices.map(service => {
       return { id: service._id.toString(), description: service.spanish }
     })
-    return new Dealer(services)
+    return new DealerBuilder().withServices(services).build()
   }
 })
