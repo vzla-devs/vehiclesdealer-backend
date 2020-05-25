@@ -18,8 +18,8 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   async update(dealerToUpdate: Dealer) {
-    await this.updateDealerServices(dealerToUpdate.getServices())
-    await this.updateDealerDescription(dealerToUpdate.getDescription())
+    await this.updateDealerServices(dealerToUpdate)
+    await this.updateDealerDescription(dealerToUpdate)
   }
 
   private async getDealerServices(): Promise<Array<Service>> {
@@ -37,16 +37,16 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     return persistedDescription.text
   }
 
-  private async updateDealerServices(services: Array<Service>): Promise<void> {
+  private async updateDealerServices(dealer: Dealer): Promise<void> {
     const servicesCollection = this.databaseInstance.collection('services')
-    const newServices = services.filter(service => !service.id)
+    const newServices = dealer.getServices().filter(service => !service.id)
     await Promise.all(newServices.map(async service => {
       await servicesCollection.insertOne({ spanish: service.description })
     }))
   }
 
-  private async updateDealerDescription(description: string): Promise<void> {
+  private async updateDealerDescription(dealer: Dealer): Promise<void> {
     const aboutsCollection = this.databaseInstance.collection('abouts')
-    await aboutsCollection.updateOne({}, { $set: { text: description } })
+    await aboutsCollection.updateOne({}, { $set: { text: dealer.getDescription() } })
   }
 }
