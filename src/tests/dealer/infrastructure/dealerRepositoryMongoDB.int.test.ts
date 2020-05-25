@@ -45,7 +45,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       
       const returnedDealer = await dealersRepo.get()
   
-      expect(returnedDealer.getDescription()).toEqual(givenDescription)
+      expect(returnedDealer.getDescription()).toBe(givenDescription)
     })
   })
 
@@ -66,6 +66,19 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       expect(addedServices[1].description).toBe(servicesToAdd[1].description)
       expect(addedServices[2].description).toBe(servicesToAdd[2].description)
     })
+
+    it('updates the dealer description', async() => {
+      const existingDescription = 'anyExistingDescription'
+      const givenDealer = new DealerBuilder().withDescription(existingDescription).build()
+      await givenAPersistedDealer(givenDealer)
+      
+      const newDescription = 'anyNewDescription'
+      const dealerToUpdate = new DealerBuilder().withDescription(newDescription).build()
+      await dealersRepo.update(dealerToUpdate)
+      
+      const updatedDealer = await getPersistedDealer()
+      expect(updatedDealer.getDescription()).toBe(newDescription)
+    })
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
@@ -83,6 +96,9 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     const services = persistedServices.map(service => {
       return { id: service._id.toString(), description: service.spanish }
     })
-    return new DealerBuilder().withServices(services).build()
+    const aboutsCollection = databaseInstance.collection('abouts')
+    const persistedDescription = await aboutsCollection.findOne({})
+    const description = persistedDescription.text
+    return new DealerBuilder().withServices(services).withDescription(description).build()
   }
 })

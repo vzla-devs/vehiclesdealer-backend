@@ -19,6 +19,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
 
   async update(dealerToUpdate: Dealer) {
     await this.updateDealerServices(dealerToUpdate)
+    await this.updateDealerDescription(dealerToUpdate.getDescription())
   }
 
   private async getDealerServices(): Promise<Array<Service>> {
@@ -42,5 +43,10 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     await Promise.all(newServices.map(async service => {
       await servicesCollection.insertOne({ spanish: service.description })
     }))
+  }
+
+  private async updateDealerDescription(description: string): Promise<void> {
+    const aboutsCollection = this.databaseInstance.collection('abouts')
+    await aboutsCollection.updateOne({}, { $set: { text: description } })
   }
 }
