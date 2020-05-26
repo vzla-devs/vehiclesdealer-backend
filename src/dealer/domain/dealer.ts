@@ -1,31 +1,24 @@
 import { Service } from '@/dealer/domain/service'
 import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
 
-export interface DealerModel {
-  getServices(): Array<Service>
-  addService(serviceDescription: Service): void
-  getDescription(): string
-  addDescription(description: string): void
-}
-
-export class Dealer implements DealerModel {
+export class Dealer {
   private services: Array<Service> = []
   private description: string = ''
 
-  getServices() {
+  getServices(): Array<Service> {
     return this.services
   }
 
-  addService(serviceToAdd: Service) {
+  addService(serviceToAdd: Service): void {
     this.checkThatTheServiceCanBeAdded(serviceToAdd)
     this.services.push(serviceToAdd)
   }
 
-  getDescription() {
+  getDescription(): string {
     return this.description
   }
 
-  addDescription(description: string) {
+  addDescription(description: string): void {
     this.description = description
   }
 

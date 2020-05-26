@@ -1,6 +1,6 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
-import { Dealer, DealerModel } from '@/dealer/domain/dealer'
+import { Dealer } from '@/dealer/domain/dealer'
 import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
 import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
 import { TestCase } from '@/tests/testCase'
@@ -67,7 +67,7 @@ describe('addDealerServiceAction unit tests', () => {
     })
   })
 
-  function givenAMockedDealerRepoGetWith(dealer: DealerModel) {
+  function givenAMockedDealerRepoGetWith(dealer: Dealer) {
     dealerRepository.get = jest.fn(async() => dealer)
   }
 })
