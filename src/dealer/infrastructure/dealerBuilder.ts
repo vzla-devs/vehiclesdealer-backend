@@ -18,7 +18,7 @@ export class DealerBuilder {
   build(): Dealer {
     const dealer = new Dealer()
     this.services.forEach(service => dealer.addService(service))
-    dealer.addDescription(this.description)
+    dealer.changeDescription(this.description)
     return dealer
   }
 }

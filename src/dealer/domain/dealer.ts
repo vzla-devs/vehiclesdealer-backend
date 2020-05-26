@@ -18,7 +18,7 @@ export class Dealer {
     return this.description
   }
 
-  addDescription(description: string): void {
+  changeDescription(description: string): void {
     this.description = description
   }
 
