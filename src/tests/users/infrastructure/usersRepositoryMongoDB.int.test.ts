@@ -2,7 +2,7 @@ import { Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/users/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/users/domain/user'
 import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
-import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollections'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
 describe('usersRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()

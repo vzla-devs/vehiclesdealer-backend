@@ -4,7 +4,7 @@ import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositor
 import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
 import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
-import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollections'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()

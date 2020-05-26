@@ -3,7 +3,7 @@ import { Dealer } from '@/dealer/domain/dealer'
 import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
 import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
-import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollections'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
   private databaseInstance: Db
