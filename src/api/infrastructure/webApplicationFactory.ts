@@ -62,9 +62,12 @@ function addNotFoundRoutesHandlerToApp(app: express.Application): void {
 function addErrorsHandlerToApp(app: express.Application): void {
   app.use((err, req, res, next) => {
     if (err instanceof DomainError) {
-      res.status(400).send(err.reason)
+      res.status(400).json({
+        error: err.constructor.name,
+        reason: err.reason
+      })
     } else {
-      res.status(500).send(err.stack)
+      res.status(500).json(err)
     }
   })
 }
