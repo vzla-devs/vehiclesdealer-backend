@@ -8,7 +8,6 @@ import features from '@/api/controllers/featuresController'
 import services from '@/api/controllers/servicesController'
 import about from '@/api/controllers/aboutController'
 import contact from '@/api/controllers/contactController'
-import financing from '@/api/controllers/financingController'
 import pictures from '@/api/controllers/picturesController'
 import users from '@/api/controllers/usersController'
 import { DomainError } from '@/shared/domain/domainError'
@@ -48,7 +47,6 @@ function addRoutesToApp(app: express.Application): void {
   app.use('/api/servicios', services)
   app.use('/api/texto', about)
   app.use('/api/contacto', contact)
-  app.use('/api/financiacion', financing)
   app.use('/api/pdf', pictures)
   app.use('/api/usuarios', users)
 }
