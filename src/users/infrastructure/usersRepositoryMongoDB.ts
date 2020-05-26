@@ -5,6 +5,10 @@ import { Db } from 'mongodb'
 class UsersRepositoryMongoDB implements UsersRepository {
   private databaseInstance: Db
 
+  constructor(databaseInstance: Db) {
+    this.databaseInstance = databaseInstance
+  }
+
   async create(userToCreate: User) {
     const usersCollection = this.databaseInstance.collection('users')
     const userData = userToCreate.getCredentials()
@@ -16,10 +20,6 @@ class UsersRepositoryMongoDB implements UsersRepository {
     const returnedUser = await usersCollection.findOne({ username })
     if (!returnedUser) return new NoUser()
     return new User(returnedUser.username, returnedUser.password)
-  }
-
-  constructor(databaseInstance: Db) {
-    this.databaseInstance = databaseInstance
   }
 }
 
