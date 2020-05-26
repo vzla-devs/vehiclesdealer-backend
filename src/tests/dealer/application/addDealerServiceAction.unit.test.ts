@@ -2,7 +2,7 @@ import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
 import { Dealer } from '@/dealer/domain/dealer'
 import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
-import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
+import { CannotAddDealerService, CannotAddDealerServiceReason } from '@/dealer/domain/errors/cannotAddDealerService'
 import { TestCase } from '@/tests/testCase'
 import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
 
@@ -60,7 +60,7 @@ describe('addDealerServiceAction unit tests', () => {
         const serviceToAdd: AddDealerServiceCommand = { description: testCase.serviceDescription }
         const thrownError = await action(serviceToAdd)
 
-        expect(thrownError).toEqual(new DealerError(DealerErrorReason.serviceAlreadyExists))
+        expect(thrownError).toEqual(new CannotAddDealerService(CannotAddDealerServiceReason.serviceAlreadyExists))
         expect(dealerRepository.get).toHaveBeenCalled()
         expect(dealerRepository.update).not.toHaveBeenCalled()
       })

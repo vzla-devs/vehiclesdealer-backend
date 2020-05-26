@@ -1,5 +1,5 @@
 import { Service } from '@/dealer/domain/service'
-import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
+import { CannotAddDealerService, CannotAddDealerServiceReason } from '@/dealer/domain/errors/cannotAddDealerService'
 
 export class Dealer {
   private services: Array<Service> = []
@@ -26,6 +26,8 @@ export class Dealer {
     const servicesWithTheSameDescription = this.services.filter(service => {
       return service.description.toLowerCase() === serviceToAdd.description.toLowerCase()
     })
-    if (servicesWithTheSameDescription.length > 0) throw new DealerError(DealerErrorReason.serviceAlreadyExists)
+    if (servicesWithTheSameDescription.length > 0) {
+      throw new CannotAddDealerService(CannotAddDealerServiceReason.serviceAlreadyExists)
+    }
   }
 }
