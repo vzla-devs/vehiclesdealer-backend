@@ -1,5 +1,5 @@
 import { Db } from 'mongodb'
-import { DealerServiceDto } from '@/dealer/application/dealerServiceDto'
+import { DealerServiceDto } from '@/dealer/application/dtos/dealerServiceDto'
 
 export class GetDealerServicesQueryMongoDB {
   private databaseInstance: Db
