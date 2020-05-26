@@ -2,6 +2,7 @@ import { Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/users/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/users/domain/user'
 import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollection'
 
 describe('usersRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -14,7 +15,7 @@ describe('usersRepositoryMongoDB integration tests', () => {
   })
 
   beforeEach(async() => {
-    await databaseInstance.collection('users').deleteMany({})
+    await databaseInstance.collection(MongoDBCollection.users).deleteMany({})
   })
 
   afterAll(async () => {
@@ -58,7 +59,7 @@ describe('usersRepositoryMongoDB integration tests', () => {
   }
 
   async function givenAPersistedUser(givenUserToGet: User) {
-    const usersCollection = databaseInstance.collection('users')
+    const usersCollection = databaseInstance.collection(MongoDBCollection.users)
     await usersCollection.insertOne(givenUserToGet.getCredentials())
   }
 })

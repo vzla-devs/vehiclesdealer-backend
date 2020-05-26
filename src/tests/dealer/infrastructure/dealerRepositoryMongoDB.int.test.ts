@@ -4,6 +4,7 @@ import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositor
 import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
 import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollection'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -16,8 +17,8 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   beforeEach(async() => {
-    await databaseInstance.collection('services').deleteMany({})
-    await databaseInstance.collection('abouts').deleteMany({})
+    await databaseInstance.collection(MongoDBCollection.services).deleteMany({})
+    await databaseInstance.collection(MongoDBCollection.description).deleteMany({})
   })
 
   afterAll(async() => {
@@ -82,22 +83,22 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
-    const servicesCollection = databaseInstance.collection('services')
-    const aboutsCollection = databaseInstance.collection('abouts')
+    const servicesCollection = databaseInstance.collection(MongoDBCollection.services)
+    const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
     await Promise.all(dealerToPersist.getServices().map(async service => {
       await servicesCollection.insertOne({ _id: new ObjectId(service.id), spanish: service.description })
     }))
-    await aboutsCollection.insertOne({ text: dealerToPersist.getDescription() })
+    await descriptionCollection.insertOne({ text: dealerToPersist.getDescription() })
   }
 
   async function getPersistedDealer(): Promise<Dealer> {
-    const servicesCollection = databaseInstance.collection('services')
+    const servicesCollection = databaseInstance.collection(MongoDBCollection.services)
     const persistedServices = await servicesCollection.find({}).toArray()
     const services = persistedServices.map(service => {
       return { id: service._id.toString(), description: service.spanish }
     })
-    const aboutsCollection = databaseInstance.collection('abouts')
-    const persistedDescription = await aboutsCollection.findOne({})
+    const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
+    const persistedDescription = await descriptionCollection.findOne({})
     const description = persistedDescription.text
     return new ADealer().withServices(services).withDescription(description).build()
   }

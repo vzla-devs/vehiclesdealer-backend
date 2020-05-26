@@ -3,6 +3,7 @@ import { Dealer } from '@/dealer/domain/dealer'
 import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
 import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollection'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
   private databaseInstance: Db
@@ -18,7 +19,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   private async getDealerServices(): Promise<Array<Service>> {
-    const servicesCollection = this.databaseInstance.collection('services')
+    const servicesCollection = this.databaseInstance.collection(MongoDBCollection.services)
     const persistedServices = await servicesCollection.find({}).toArray()
     const services = persistedServices.map(service => {
       return { id: service._id.toString(), description: service.spanish }
@@ -27,8 +28,8 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   private async getDealerDescription(): Promise<string> {
-    const aboutsCollection = this.databaseInstance.collection('abouts')
-    const persistedDescription = await aboutsCollection.findOne({})
+    const descriptionCollection = this.databaseInstance.collection(MongoDBCollection.description)
+    const persistedDescription = await descriptionCollection.findOne({})
     return persistedDescription.text
   }
 
@@ -38,7 +39,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   private async updateDealerServices(dealer: Dealer): Promise<void> {
-    const servicesCollection = this.databaseInstance.collection('services')
+    const servicesCollection = this.databaseInstance.collection(MongoDBCollection.services)
     const newServices = dealer.getServices().filter(service => !service.id)
     await Promise.all(newServices.map(async service => {
       await servicesCollection.insertOne({ spanish: service.description })
@@ -46,7 +47,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   }
 
   private async updateDealerDescription(dealer: Dealer): Promise<void> {
-    const aboutsCollection = this.databaseInstance.collection('abouts')
-    await aboutsCollection.updateOne({}, { $set: { text: dealer.getDescription() } })
+    const descriptionCollection = this.databaseInstance.collection(MongoDBCollection.description)
+    await descriptionCollection.updateOne({}, { $set: { text: dealer.getDescription() } })
   }
 }
