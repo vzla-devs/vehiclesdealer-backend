@@ -3,7 +3,7 @@ import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
-import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
+import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -30,7 +30,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
         { id: new ObjectId().toString(), description: 'anyService' },
         { id: new ObjectId().toString(), description: 'anyOtherService' },
       ]
-      const givenDealerToGet = new DealerBuilder().withServices(givenServices).build()
+      const givenDealerToGet = new ADealer().withServices(givenServices).build()
       await givenAPersistedDealer(givenDealerToGet)
       
       const returnedDealer = await dealersRepo.get()
@@ -40,7 +40,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
     it('gets the dealer description', async() => {
       const givenDescription: string = 'anyDescription'
-      const givenDealerToGet = new DealerBuilder().withDescription(givenDescription).build()
+      const givenDealerToGet = new ADealer().withDescription(givenDescription).build()
       await givenAPersistedDealer(givenDealerToGet)
       
       const returnedDealer = await dealersRepo.get()
@@ -52,11 +52,11 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   describe('when updating the dealer', () => {
     it('updates the dealer services', async() => {
       const existingService = { id: new ObjectId().toString(), description: 'secondService' }
-      const givenDealer = new DealerBuilder().withServices([existingService]).build()
+      const givenDealer = new ADealer().withServices([existingService]).build()
       await givenAPersistedDealer(givenDealer)
       
       const servicesToAdd: Array<Service> = [existingService, { description: 'firstService' }, { description: 'thirdService' }]
-      const dealerToUpdate = new DealerBuilder().withServices(servicesToAdd).build()
+      const dealerToUpdate = new ADealer().withServices(servicesToAdd).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -69,11 +69,11 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
     it('updates the dealer description', async() => {
       const existingDescription = 'anyExistingDescription'
-      const givenDealer = new DealerBuilder().withDescription(existingDescription).build()
+      const givenDealer = new ADealer().withDescription(existingDescription).build()
       await givenAPersistedDealer(givenDealer)
       
       const newDescription = 'anyNewDescription'
-      const dealerToUpdate = new DealerBuilder().withDescription(newDescription).build()
+      const dealerToUpdate = new ADealer().withDescription(newDescription).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -99,6 +99,6 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     const aboutsCollection = databaseInstance.collection('abouts')
     const persistedDescription = await aboutsCollection.findOne({})
     const description = persistedDescription.text
-    return new DealerBuilder().withServices(services).withDescription(description).build()
+    return new ADealer().withServices(services).withDescription(description).build()
   }
 })

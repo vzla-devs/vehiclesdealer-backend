@@ -4,7 +4,7 @@ import { Dealer } from '@/dealer/domain/dealer'
 import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
 import { DealerError, DealerErrorReason } from '@/dealer/domain/dealerError'
 import { TestCase } from '@/tests/testCase'
-import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
+import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
 
 describe('addDealerServiceAction unit tests', () => {
   let dealerRepository: DealerRepository
@@ -19,14 +19,14 @@ describe('addDealerServiceAction unit tests', () => {
   })
 
   it('adds a new dealer service', async() => {
-    const givenDealer = new DealerBuilder().build()
+    const givenDealer = new ADealer().build()
     givenAMockedDealerRepoGetWith(givenDealer)
 
     const serviceToAdd: AddDealerServiceCommand = { description: 'anyServiceDescription' }
     await addServiceAction.execute(serviceToAdd)
 
     expect(dealerRepository.get).toHaveBeenCalled()
-    const expectedDealerToUpdate = new DealerBuilder().withServices([{ description: 'anyServiceDescription' }]).build()
+    const expectedDealerToUpdate = new ADealer().withServices([{ description: 'anyServiceDescription' }]).build()
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealerToUpdate)
   })
 
@@ -53,7 +53,7 @@ describe('addDealerServiceAction unit tests', () => {
     testCases.forEach(testCase => {
       it(`does not add a dealer service that already exists ${testCase.name}`, async() => {
         const alreadyExistingService = { id: 'anyId', description: 'alreadyExistingService' }
-        const givenDealer = new DealerBuilder().withServices([alreadyExistingService]).build()
+        const givenDealer = new ADealer().withServices([alreadyExistingService]).build()
         givenAMockedDealerRepoGetWith(givenDealer)
 
         const action = tryActionAndGetError(addServiceAction)
