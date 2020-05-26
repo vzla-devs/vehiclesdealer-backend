@@ -1,7 +1,7 @@
 import { UsersRepository } from '@/users/domain/usersRepository'
 import { User, NoUser } from '@/users/domain/user'
 import { Db } from 'mongodb'
-import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollection'
+import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDatabaseCollections'
 
 class UsersRepositoryMongoDB implements UsersRepository {
   private databaseInstance: Db
