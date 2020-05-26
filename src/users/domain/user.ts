@@ -1,4 +1,4 @@
-import { UserError, UserErrorReason } from '@/users/domain/errors/userError'
+import { CannotLoginUser, CannotLoginUserReason } from '@/users/domain/errors/cannotLoginUser'
 
 export interface UserModel {
   getCredentials(): { username: string, password: string }
@@ -17,7 +17,7 @@ export class User implements UserModel {
 
   private checkThatTheCredentialsAreValid() {
     if (!this.username || this.username === '' || !this.password || this.password === '') {
-      throw new UserError(UserErrorReason.userHasInvalidCredentials)
+      throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
     }
   }
 
@@ -26,7 +26,9 @@ export class User implements UserModel {
   }
 
   login(password: string) {
-    if (this.password !== password) throw new UserError(UserErrorReason.userHasInvalidCredentials)
+    if (this.password !== password) {
+      throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
+    }
   }
 
   isValid() {
@@ -36,7 +38,7 @@ export class User implements UserModel {
 
 export class NoUser implements UserModel {
   login() {
-    throw new UserError(UserErrorReason.userHasInvalidCredentials)
+    throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
   }
   
   getCredentials() {

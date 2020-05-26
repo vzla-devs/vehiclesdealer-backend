@@ -2,7 +2,7 @@ import { UsersRepository } from '@/users/domain/usersRepository'
 import { LoginUserAction, LoginUserCommand } from '@/users/application/loginUserAction'
 import { UserModel, User, NoUser } from '@/users/domain/user'
 import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
-import { UserError, UserErrorReason } from '@/users/domain/errors/userError'
+import { CannotLoginUser, CannotLoginUserReason } from '@/users/domain/errors/cannotLoginUser'
 
 describe('loginUserAction unit tests', () => {
   let usersRepository: UsersRepository
@@ -36,7 +36,7 @@ describe('loginUserAction unit tests', () => {
     const action = tryActionAndGetError(loginUserAction)
     const thrownError = await action(givenUserToCreateCommand)
 
-    expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
+    expect(thrownError).toEqual(new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 
@@ -48,7 +48,7 @@ describe('loginUserAction unit tests', () => {
     const userToCreate: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
     const thrownError = await action(userToCreate)
 
-    expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
+    expect(thrownError).toEqual(new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 
