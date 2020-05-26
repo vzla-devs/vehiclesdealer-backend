@@ -2,6 +2,7 @@ import { getDatabaseConnection } from '@/shared/infrastructure/persistenceFactor
 import { GetDealerServicesQueryMongoDB } from '@/dealer/application/getDealerServicesQueryMongoDB'
 import { AddDealerServiceAction } from '@/dealer/application/addDealerServiceAction'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
+import { GetDealerDescriptionQueryMongoDB } from '@/dealer/application/getDealerDescriptionQueryMongoDB'
 
 export class DealerFactory {
   static GetDealerServicesQuery(): GetDealerServicesQueryMongoDB {
@@ -14,4 +15,9 @@ export class DealerFactory {
     const dealerRepository = new DealerRepositoryMongoDB(databaseInstance)
     return new AddDealerServiceAction(dealerRepository)
   }
+
+  static GetDealerDescriptionQuery(): GetDealerDescriptionQueryMongoDB {
+    const databaseInstance = getDatabaseConnection().db
+    return new GetDealerDescriptionQueryMongoDB(databaseInstance)
+}
 }

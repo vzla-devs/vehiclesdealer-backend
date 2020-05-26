@@ -1,14 +1,15 @@
 import express from 'express'
-import { getAboutQuery } from '@/about/application/getAboutObsoleteQuery'
 import { editAboutAction } from '@/about/application/editAboutObsoleteAction'
 import { createMediaStorageUploader } from '@/shared/infrastructure/persistenceFactory'
 import { tryThisAndHandleAnyError } from '@/shared/infrastructure/controllerDecorators'
+import { DealerFactory } from '@/dealer/infrastructure/dealerFactory'
 
 const router = express.Router()
 
 router.get('/', tryThisAndHandleAnyError(async(req, res) => {
-    const about = await getAboutQuery.get()
-    res.status(200).send(about)
+    const getDealerDescriptionQuery = DealerFactory.GetDealerDescriptionQuery()
+    const description = await getDealerDescriptionQuery.execute()
+    res.status(200).send(description)
 }))
 
 router.put('/', tryThisAndHandleAnyError(async(req, res) => {
