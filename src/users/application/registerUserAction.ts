@@ -1,6 +1,6 @@
 import { UsersRepository } from '@/users/domain/usersRepository'
 import { User } from '@/users/domain/user'
-import { UserError, UserErrorReason } from '@/users/domain/userError'
+import { CannotRegisterUser, CannotRegisterUserReason } from '../domain/errors/cannotRegisterUser'
 
 export class RegisterUserAction {
   usersRepository: UsersRepository
@@ -17,7 +17,9 @@ export class RegisterUserAction {
 
   private async checkThatTheUserCanBeCreated(username: string): Promise<void> {
     const existingUser = await this.usersRepository.getBy(username)
-    if (existingUser.isValid()) throw new UserError(UserErrorReason.userAlreadyExists)
+    if (existingUser.isValid()) {
+      throw new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists)
+    }
   }
 }
 

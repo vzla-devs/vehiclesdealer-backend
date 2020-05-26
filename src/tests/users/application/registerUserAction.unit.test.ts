@@ -3,7 +3,7 @@ import { RegisterUserAction, RegisterUserCommand } from '@/users/application/reg
 import { UserModel, User, NoUser } from '@/users/domain/user'
 import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
 import { TestCase } from '@/tests/testCase'
-import { UserError, UserErrorReason } from '@/users/domain/userError'
+import { CannotRegisterUser, CannotRegisterUserReason } from '@/users/domain/errors/cannotRegisterUser'
 
 describe('registerUserAction unit tests', () => {
   let usersRepository: UsersRepository
@@ -37,7 +37,7 @@ describe('registerUserAction unit tests', () => {
     const action = tryActionAndGetError(registerUserAction)
     const thrownError = await action(givenUserToRegisterCommand)
 
-    expect(thrownError).toEqual(new UserError(UserErrorReason.userAlreadyExists))
+    expect(thrownError).toEqual(new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
@@ -84,7 +84,7 @@ describe('registerUserAction unit tests', () => {
         const action = tryActionAndGetError(registerUserAction)
         const thrownError = await action(givenUserToRegisterCommand)
     
-        expect(thrownError).toEqual(new UserError(UserErrorReason.userHasInvalidCredentials))
+        expect(thrownError).toEqual(new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials))
         expect(usersRepository.create).not.toHaveBeenCalled()
       })
     })

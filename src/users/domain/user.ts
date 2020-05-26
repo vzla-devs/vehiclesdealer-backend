@@ -1,4 +1,4 @@
-import { UserError, UserErrorReason } from '@/users/domain/userError'
+import { UserError, UserErrorReason } from '@/users/domain/errors/userError'
 
 export interface UserModel {
   getCredentials(): { username: string, password: string }
