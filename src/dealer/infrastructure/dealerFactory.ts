@@ -3,7 +3,7 @@ import { GetDealerServicesQueryMongoDB } from '@/dealer/application/getDealerSer
 import { AddDealerServiceAction } from '@/dealer/application/addDealerServiceAction'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 
-export class DealersFactory {
+export class DealerFactory {
   static GetDealerServicesQuery(): GetDealerServicesQueryMongoDB {
     const databaseInstance = getDatabaseConnection().db
     return new GetDealerServicesQueryMongoDB(databaseInstance)
