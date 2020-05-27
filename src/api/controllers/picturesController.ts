@@ -1,6 +1,6 @@
 import express from 'express'
 import { getPictureQuery } from '@/picture/application/getPictureQuery'
-import { decorateControllerAndCatchAnyError } from '@/api/infrastructure/controllerDecorators'
+import { decorateControllerAndCatchAnyError } from '@/api/controllers/controllerDecorators'
 
 const router = express.Router()
 

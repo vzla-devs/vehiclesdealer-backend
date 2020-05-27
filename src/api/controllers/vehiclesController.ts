@@ -6,7 +6,7 @@ import { addVehicleAction } from '@/vehicle/application/addVehicleAction'
 import { editVehicleAction } from '@/vehicle/application/editVehicleAction'
 import { editVehiclePicturesAction } from '@/vehicle/application/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/vehicle/application/removeVehicleAction'
-import { decorateControllerAndCatchAnyError } from '@/api/infrastructure/controllerDecorators'
+import { decorateControllerAndCatchAnyError } from '@/api/controllers/controllerDecorators'
 
 const router = express.Router()
 

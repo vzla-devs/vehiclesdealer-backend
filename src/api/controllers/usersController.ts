@@ -1,6 +1,6 @@
 import express from 'express'
 import { UsersFactory } from '@/users/infrastructure/usersFactory'
-import { decorateControllerAndCatchAnyError } from '@/api/infrastructure/controllerDecorators'
+import { decorateControllerAndCatchAnyError } from '@/api/controllers/controllerDecorators'
 import { RegisterUserCommand } from '@/users/application/registerUserAction'
 import { LoginUserCommand } from '@/users/application/loginUserAction'
 
