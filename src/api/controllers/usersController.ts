@@ -1,13 +1,13 @@
 import express from 'express'
 import { UsersFactory } from '@/users/infrastructure/usersFactory'
-import { tryAndCatchAnyErrorDecorator } from '@/api/infrastructure/controllerDecorators'
+import { decorateControllerAndCatchAnyError } from '@/api/infrastructure/controllerDecorators'
 import { RegisterUserCommand } from '@/users/application/registerUserAction'
 import { LoginUserCommand } from '@/users/application/loginUserAction'
 
 const router = express.Router()
 
 //TODO: create a unit test for this endpoint
-router.post('/register', tryAndCatchAnyErrorDecorator(async(req, res) => {
+router.post('/register', decorateControllerAndCatchAnyError(async(req, res) => {
   const command: RegisterUserCommand = {
     username: req.body.username,
     password: req.body.password
@@ -18,7 +18,7 @@ router.post('/register', tryAndCatchAnyErrorDecorator(async(req, res) => {
 }))
 
 //TODO: create a unit test for this endpoint
-router.post('/login', tryAndCatchAnyErrorDecorator(async(req, res) => {
+router.post('/login', decorateControllerAndCatchAnyError(async(req, res) => {
   const command: LoginUserCommand = {
     username: req.body.username,
     password: req.body.password
