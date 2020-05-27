@@ -1,5 +1,5 @@
 import express from 'express'
-import { tryAndCatchAnyErrorDecorator } from '@/shared/infrastructure/controllerDecorators'
+import { tryAndCatchAnyErrorDecorator } from '@/api/infrastructure/controllerDecorators'
 import { DealerFactory } from '@/dealer/infrastructure/dealerFactory'
 import { AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
 

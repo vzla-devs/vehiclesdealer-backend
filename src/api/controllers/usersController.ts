@@ -1,6 +1,6 @@
 import express from 'express'
 import { UsersFactory } from '@/users/infrastructure/usersFactory'
-import { tryAndCatchAnyErrorDecorator } from '@/shared/infrastructure/controllerDecorators'
+import { tryAndCatchAnyErrorDecorator } from '@/api/infrastructure/controllerDecorators'
 import { RegisterUserCommand } from '@/users/application/registerUserAction'
 import { LoginUserCommand } from '@/users/application/loginUserAction'
 
