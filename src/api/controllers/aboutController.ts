@@ -13,8 +13,9 @@ router.get('/', decorateControllerAndCatchAnyError(async(req, res) => {
 }))
 
 router.put('/', decorateControllerAndCatchAnyError(async(req, res) => {
-    const command = { text: req.body.text }
-    await editAboutAction.execute(command)
+    const changeDealerDescriptionAction = DealerFactory.ChangeDealerDescriptionAction()
+    const newDescription = req.body.text
+    await changeDealerDescriptionAction.execute(newDescription)
     res.sendStatus(200)
 }))
 

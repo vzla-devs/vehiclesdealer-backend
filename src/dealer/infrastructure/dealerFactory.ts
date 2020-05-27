@@ -3,6 +3,7 @@ import { GetDealerServicesQueryMongoDB } from '@/dealer/application/getDealerSer
 import { AddDealerServiceAction } from '@/dealer/application/addDealerServiceAction'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 import { GetDealerDescriptionQueryMongoDB } from '@/dealer/application/getDealerDescriptionQueryMongoDB'
+import { ChangeDealerDescriptionAction } from '@/dealer/application/changeDealerDescriptionAction'
 
 export class DealerFactory {
   static GetDealerServicesQuery(): GetDealerServicesQueryMongoDB {
@@ -19,5 +20,10 @@ export class DealerFactory {
   static GetDealerDescriptionQuery(): GetDealerDescriptionQueryMongoDB {
     const databaseInstance = getDatabaseConnection().db
     return new GetDealerDescriptionQueryMongoDB(databaseInstance)
-}
+  }
+  static ChangeDealerDescriptionAction(): ChangeDealerDescriptionAction {
+    const databaseInstance = getDatabaseConnection().db
+    const dealerRepository = new DealerRepositoryMongoDB(databaseInstance)
+    return new ChangeDealerDescriptionAction(dealerRepository)
+  }
 }
