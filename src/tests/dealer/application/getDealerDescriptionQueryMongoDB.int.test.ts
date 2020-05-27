@@ -1,7 +1,6 @@
-import { Db, ObjectId } from 'mongodb'
+import { Db } from 'mongodb'
 import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
 import { GetDealerDescriptionQueryMongoDB } from '@/dealer/application/getDealerDescriptionQueryMongoDB'
-import { DealerDescriptionDto } from '@/dealer/application/dtos/dealerDescriptionDto'
 
 describe('getDealerDescriptionQueryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()

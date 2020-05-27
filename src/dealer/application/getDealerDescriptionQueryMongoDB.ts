@@ -1,5 +1,4 @@
 import { Db } from 'mongodb'
-import { DealerDescriptionDto } from '@/dealer/application/dtos/dealerDescriptionDto'
 
 export class GetDealerDescriptionQueryMongoDB {
   private databaseInstance: Db
@@ -13,4 +12,8 @@ export class GetDealerDescriptionQueryMongoDB {
     const persistedDescription = await aboutsCollection.findOne({})
     return { text: persistedDescription.text }
   }
+}
+
+export interface DealerDescriptionDto {
+  text: string
 }
