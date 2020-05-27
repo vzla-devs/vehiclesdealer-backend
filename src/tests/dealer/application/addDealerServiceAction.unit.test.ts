@@ -1,7 +1,7 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
 import { Dealer } from '@/dealer/domain/dealer'
-import { tryActionAndGetAnyErrorDecorator } from '@/tests/actionDecoratorsForTests'
+import { decorateActionAndGetAnyError } from '@/tests/actionDecoratorsForTests'
 import { CannotAddDealerService, CannotAddDealerServiceReason } from '@/dealer/domain/errors/cannotAddDealerService'
 import { TestCase } from '@/tests/testCase'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
@@ -56,7 +56,7 @@ describe('addDealerServiceAction unit tests', () => {
         const givenDealer = new ADealerBuilder().withServices([alreadyExistingService]).build()
         givenAMockedDealerRepoGetWith(givenDealer)
 
-        const action = tryActionAndGetAnyErrorDecorator(addServiceAction)
+        const action = decorateActionAndGetAnyError(addServiceAction)
         const serviceToAdd: AddDealerServiceCommand = { description: testCase.serviceDescription }
         const thrownError = await action(serviceToAdd)
 
