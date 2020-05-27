@@ -1,7 +1,7 @@
-function tryThisDecorator(fn) {
+function tryAndCatchAnyErrorDecorator(fn) {
   return function(req, res, next) {
     fn(req, res, next).catch(next)
   }
 }
 
-export { tryThisDecorator }
+export { tryAndCatchAnyErrorDecorator }

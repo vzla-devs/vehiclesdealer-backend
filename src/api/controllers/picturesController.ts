@@ -1,10 +1,10 @@
 import express from 'express'
 import { getPictureQuery } from '@/picture/application/getPictureQuery'
-import { tryThisDecorator } from '@/shared/infrastructure/controllerDecorators'
+import { tryAndCatchAnyErrorDecorator } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 
-router.get('/:picture', tryThisDecorator((req, res) => {
+router.get('/:picture', tryAndCatchAnyErrorDecorator((req, res) => {
     const pictureToGet = req.params.picture
     const pictureData = getPictureQuery.getAsBase64(pictureToGet)
     res.status(200).send(pictureData)

@@ -6,47 +6,47 @@ import { addVehicleAction } from '@/vehicle/application/addVehicleAction'
 import { editVehicleAction } from '@/vehicle/application/editVehicleAction'
 import { editVehiclePicturesAction } from '@/vehicle/application/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/vehicle/application/removeVehicleAction'
-import { tryThisDecorator } from '@/shared/infrastructure/controllerDecorators'
+import { tryAndCatchAnyErrorDecorator } from '@/shared/infrastructure/controllerDecorators'
 
 const router = express.Router()
 
-router.get('/', tryThisDecorator(async (req, res) => {
+router.get('/', tryAndCatchAnyErrorDecorator(async (req, res) => {
     const filters = getFiltersFromRequest(req)
     const vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
     res.status(200).send(vehicles)
 }))
 
-router.get('/filtros', tryThisDecorator(async (req, res) => {
+router.get('/filtros', tryAndCatchAnyErrorDecorator(async (req, res) => {
     const filters = await getVehicleFiltersQuery.getAll()
     res.status(200).send(filters)
 }))
 
-router.get('/:id', tryThisDecorator(async (req, res) => {
+router.get('/:id', tryAndCatchAnyErrorDecorator(async (req, res) => {
     const vehicleId = req.params.id
     const vehicle = await getVehiclesQuery.getOneById(vehicleId)
     res.status(200).send(vehicle)
 }))
 
-router.post('/', tryThisDecorator(async (req, res) => {
+router.post('/', tryAndCatchAnyErrorDecorator(async (req, res) => {
     const command = req.body
     const newVehicleId = await addVehicleAction.execute(command)
     res.status(201).send({ _id: newVehicleId })
 }))
 
-router.put('/:id/datos', tryThisDecorator((req, res) => {
+router.put('/:id/datos', tryAndCatchAnyErrorDecorator((req, res) => {
     const command = { id: req.params.id, ...req.body }
     editVehicleAction.execute(command)
     res.sendStatus(200)
 }))
 
 const upload = createMediaStorageUploader('public/uploads')
-router.put('/:id/fotos', upload.array('pictures'), tryThisDecorator(async (req, res) => {
+router.put('/:id/fotos', upload.array('pictures'), tryAndCatchAnyErrorDecorator(async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     await editVehiclePicturesAction.execute(command)
     res.sendStatus(200)
 }))
 
-router.delete('/:id', tryThisDecorator(async (req, res) => {
+router.delete('/:id', tryAndCatchAnyErrorDecorator(async (req, res) => {
     await removeVehicleAction.execute(req.params.id)
     res.sendStatus(200)
 }))
