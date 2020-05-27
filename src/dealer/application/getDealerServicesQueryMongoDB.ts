@@ -1,5 +1,4 @@
-import { Db } from 'mongodb'
-import { DealerServiceDto } from '@/dealer/application/dtos/dealerServiceDto'
+import { Db, ObjectId } from 'mongodb'
 
 export class GetDealerServicesQueryMongoDB {
   private databaseInstance: Db
@@ -17,4 +16,9 @@ export class GetDealerServicesQueryMongoDB {
     })
     return services
   }
+}
+
+export interface DealerServiceDto {
+  _id: ObjectId,
+  spanish: string
 }
