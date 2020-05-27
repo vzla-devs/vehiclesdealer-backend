@@ -1,7 +1,7 @@
 import { UsersRepository } from '@/users/domain/usersRepository'
 import { RegisterUserAction, RegisterUserCommand } from '@/users/application/registerUserAction'
 import { UserModel, User, NoUser } from '@/users/domain/user'
-import { tryActionAndGetError } from '@/tests/actionDecoratorsForTests'
+import { tryActionDecorator } from '@/tests/actionDecoratorsForTests'
 import { TestCase } from '@/tests/testCase'
 import { CannotRegisterUser, CannotRegisterUserReason } from '@/users/domain/errors/cannotRegisterUser'
 
@@ -34,7 +34,7 @@ describe('registerUserAction unit tests', () => {
     const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: 'anyPassword' }
     givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyPassword'))
 
-    const action = tryActionAndGetError(registerUserAction)
+    const action = tryActionDecorator(registerUserAction)
     const thrownError = await action(givenUserToRegisterCommand)
 
     expect(thrownError).toEqual(new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists))
@@ -81,7 +81,7 @@ describe('registerUserAction unit tests', () => {
         const givenUserToRegisterCommand: RegisterUserCommand = { username: testCase.username, password: testCase.password }
         givenAMockedUsersRepoGetByWith(new NoUser())
     
-        const action = tryActionAndGetError(registerUserAction)
+        const action = tryActionDecorator(registerUserAction)
         const thrownError = await action(givenUserToRegisterCommand)
     
         expect(thrownError).toEqual(new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials))
