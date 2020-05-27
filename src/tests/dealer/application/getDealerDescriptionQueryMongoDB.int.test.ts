@@ -1,6 +1,6 @@
 import { Db } from 'mongodb'
 import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
-import { GetDealerDescriptionQueryMongoDB } from '@/dealer/application/getDealerDescriptionQueryMongoDB'
+import { GetDealerDescriptionQueryMongoDB, DealerDescriptionDto } from '@/dealer/application/getDealerDescriptionQueryMongoDB'
 
 describe('getDealerDescriptionQueryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -24,7 +24,7 @@ describe('getDealerDescriptionQueryMongoDB integration tests', () => {
     const givenDescription = 'anyDescription'
     await givenAPersistedDealerDescription(givenDescription)
     
-    const returnedDescription = await dealerDescriptionQuery.execute()
+    const returnedDescription: DealerDescriptionDto = await dealerDescriptionQuery.execute()
     
     expect(returnedDescription.text).toEqual(givenDescription)
   })
