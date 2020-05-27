@@ -2,7 +2,7 @@ import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { Dealer } from '@/dealer/domain/dealer'
 import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
-import { ADealer } from '@/dealer/infrastructure/dealerBuilder'
+import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
@@ -15,7 +15,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   async get() {
     const services = await this.getDealerServices()
     const description = await this.getDealerDescription()
-    return new ADealer().withServices(services).withDescription(description).build()
+    return new ADealerBuilder().withServices(services).withDescription(description).build()
   }
 
   private async getDealerServices(): Promise<Array<Service>> {

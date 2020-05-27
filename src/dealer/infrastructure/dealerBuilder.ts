@@ -1,16 +1,16 @@
 import { Service } from '@/dealer/domain/service'
 import { Dealer } from '@/dealer/domain/dealer'
 
-export class ADealer {
+export class ADealerBuilder {
   private services: Array<Service> = []
   private description: string = ''
 
-  withServices(services: Array<Service>): ADealer {
+  withServices(services: Array<Service>): ADealerBuilder {
     this.services = services
     return this
   }
 
-  withDescription(description: string): ADealer {
+  withDescription(description: string): ADealerBuilder {
     this.description = description
     return this
   }
