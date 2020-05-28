@@ -1,4 +1,4 @@
-export function decorateActionAndGetAnyError(action: any): Function {
+export function decorateActionToGetAnyError(action: any): Function {
   return async function (actionArguments: any): Promise<Error> {
     let thrownError
     try {
