@@ -1,5 +1,4 @@
 import express from 'express'
-import { editAboutAction } from '@/about/application/editAboutObsoleteAction'
 import { createMediaStorageUploader } from '@/shared/infrastructure/persistenceFactory'
 import { decorateControllerAndCatchAnyError } from '@/api/controllers/controllerDecorators'
 import { DealerFactory } from '@/dealer/infrastructure/dealerFactory'
@@ -21,8 +20,6 @@ router.put('/', decorateControllerAndCatchAnyError(async(req, res) => {
 
 const upload = createMediaStorageUploader('public/assets', 'home_image')
 router.put('/imagen', upload.single('picture'), decorateControllerAndCatchAnyError(async(req, res) => {
-    const command = { picture: req.file.filename }
-    await editAboutAction.execute(command)
     res.sendStatus(200)
 }))
 
