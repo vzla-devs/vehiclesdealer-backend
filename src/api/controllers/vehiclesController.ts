@@ -6,47 +6,47 @@ import { addVehicleAction } from '@/vehicle/application/addVehicleAction'
 import { editVehicleAction } from '@/vehicle/application/editVehicleAction'
 import { editVehiclePicturesAction } from '@/vehicle/application/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/vehicle/application/removeVehicleAction'
-import { decorateControllerAndCatchAnyError } from '@/api/controllers/controllerDecorators'
+import { decorateControllerToCatchAnyError } from '@/api/controllers/controllerDecorators'
 
 const router = express.Router()
 
-router.get('/', decorateControllerAndCatchAnyError(async (req, res) => {
+router.get('/', decorateControllerToCatchAnyError(async (req, res) => {
     const filters = getFiltersFromRequest(req)
     const vehicles = await getVehiclesQuery.getAllFilteredBy(filters)
     res.status(200).send(vehicles)
 }))
 
-router.get('/filtros', decorateControllerAndCatchAnyError(async (req, res) => {
+router.get('/filtros', decorateControllerToCatchAnyError(async (req, res) => {
     const filters = await getVehicleFiltersQuery.getAll()
     res.status(200).send(filters)
 }))
 
-router.get('/:id', decorateControllerAndCatchAnyError(async (req, res) => {
+router.get('/:id', decorateControllerToCatchAnyError(async (req, res) => {
     const vehicleId = req.params.id
     const vehicle = await getVehiclesQuery.getOneById(vehicleId)
     res.status(200).send(vehicle)
 }))
 
-router.post('/', decorateControllerAndCatchAnyError(async (req, res) => {
+router.post('/', decorateControllerToCatchAnyError(async (req, res) => {
     const command = req.body
     const newVehicleId = await addVehicleAction.execute(command)
     res.status(201).send({ _id: newVehicleId })
 }))
 
-router.put('/:id/datos', decorateControllerAndCatchAnyError((req, res) => {
+router.put('/:id/datos', decorateControllerToCatchAnyError((req, res) => {
     const command = { id: req.params.id, ...req.body }
     editVehicleAction.execute(command)
     res.sendStatus(200)
 }))
 
 const upload = createMediaStorageUploader('public/uploads')
-router.put('/:id/fotos', upload.array('pictures'), decorateControllerAndCatchAnyError(async (req, res) => {
+router.put('/:id/fotos', upload.array('pictures'), decorateControllerToCatchAnyError(async (req, res) => {
     const command = { id: req.params.id, files: req.files }
     await editVehiclePicturesAction.execute(command)
     res.sendStatus(200)
 }))
 
-router.delete('/:id', decorateControllerAndCatchAnyError(async (req, res) => {
+router.delete('/:id', decorateControllerToCatchAnyError(async (req, res) => {
     await removeVehicleAction.execute(req.params.id)
     res.sendStatus(200)
 }))
