@@ -148,6 +148,30 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       const updatedDealer = await getPersistedDealer()
       expect(updatedDealer.getContactInformation()).toEqual(newContactInformation)
     })
+
+    it('updates the contact information for the first time', async() => {
+      const existingContactInformation = new NoContactInformation()
+      const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
+      await givenAPersistedDealer(givenDealer)
+      
+      const newContactInformation: ContactInformation = {
+        phoneNumbers: { main: 234567891, mobile: 565647382 },
+        emails: ['newFirstEmail@whatever.com', 'newSecondEmail@whatever.com'],
+        weekdaysInformation: {
+          monday: 'newMondayInformation',
+          tuesday: 'newTuesdayInformation',
+          wednesday: 'newWednesdayInformation',
+          thursday: 'newThursdayInformation',
+          friday: 'newFridayInformation',
+          saturday: 'newSaturdayInformation',
+        }
+      }
+      const dealerToUpdate = new ADealerBuilder().withContactInformation(newContactInformation).build()
+      await dealersRepo.update(dealerToUpdate)
+      
+      const updatedDealer = await getPersistedDealer()
+      expect(updatedDealer.getContactInformation()).toEqual(newContactInformation)
+    })
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {

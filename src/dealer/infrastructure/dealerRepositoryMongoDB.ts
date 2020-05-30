@@ -100,7 +100,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
           friday: newContactInformation.weekdaysInformation.friday,
           saturday: newContactInformation.weekdaysInformation.saturday,
         }
-      })
+      }, { upsert: true })
     }
   }
 }
