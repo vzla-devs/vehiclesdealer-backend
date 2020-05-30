@@ -114,19 +114,8 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       expect(updatedDealer.getDescription()).toBe(newDescription)
     })
 
-    it('updates the contact information', async() => {
-      const existingContactInformation: ContactInformation = {
-        phoneNumbers: { main: 987654321, mobile: 123456789 },
-        emails: ['firstEmail@whatever.com', 'secondEmail@whatever.com'],
-        weekdaysInformation: {
-          monday: 'anyMonday',
-          tuesday: 'anyTuesday',
-          wednesday: 'anyWednesday',
-          thursday: 'anyThursday',
-          friday: 'anyFriday',
-          saturday: 'anySaturday',
-        }
-      }
+    it('updates the contact information for the first time', async() => {
+      const existingContactInformation = new NoContactInformation()
       const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
       await givenAPersistedDealer(givenDealer)
       
@@ -149,8 +138,19 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       expect(updatedDealer.getContactInformation()).toEqual(newContactInformation)
     })
 
-    it('updates the contact information for the first time', async() => {
-      const existingContactInformation = new NoContactInformation()
+    it('updates the existing contact information', async() => {
+      const existingContactInformation: ContactInformation = {
+        phoneNumbers: { main: 987654321, mobile: 123456789 },
+        emails: ['firstEmail@whatever.com', 'secondEmail@whatever.com'],
+        weekdaysInformation: {
+          monday: 'anyMonday',
+          tuesday: 'anyTuesday',
+          wednesday: 'anyWednesday',
+          thursday: 'anyThursday',
+          friday: 'anyFriday',
+          saturday: 'anySaturday',
+        }
+      }
       const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
       await givenAPersistedDealer(givenDealer)
       
