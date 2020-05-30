@@ -113,6 +113,41 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       const updatedDealer = await getPersistedDealer()
       expect(updatedDealer.getDescription()).toBe(newDescription)
     })
+
+    it('updates the contact information', async() => {
+      const existingContactInformation: ContactInformation = {
+        phoneNumbers: { main: 987654321, mobile: 123456789 },
+        emails: ['firstEmail@whatever.com', 'secondEmail@whatever.com'],
+        weekdaysInformation: {
+          monday: 'anyMonday',
+          tuesday: 'anyTuesday',
+          wednesday: 'anyWednesday',
+          thursday: 'anyThursday',
+          friday: 'anyFriday',
+          saturday: 'anySaturday',
+        }
+      }
+      const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
+      await givenAPersistedDealer(givenDealer)
+      
+      const newContactInformation: ContactInformation = {
+        phoneNumbers: { main: 234567891, mobile: 565647382 },
+        emails: ['newFirstEmail@whatever.com', 'newSecondEmail@whatever.com'],
+        weekdaysInformation: {
+          monday: 'newMondayInformation',
+          tuesday: 'newTuesdayInformation',
+          wednesday: 'newWednesdayInformation',
+          thursday: 'newThursdayInformation',
+          friday: 'newFridayInformation',
+          saturday: 'newSaturdayInformation',
+        }
+      }
+      const dealerToUpdate = new ADealerBuilder().withContactInformation(newContactInformation).build()
+      await dealersRepo.update(dealerToUpdate)
+      
+      const updatedDealer = await getPersistedDealer()
+      expect(updatedDealer.getContactInformation()).toEqual(newContactInformation)
+    })
   })
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
@@ -149,6 +184,31 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
     const persistedDescription = await descriptionCollection.findOne({})
     const description = persistedDescription.text
-    return new ADealerBuilder().withServices(services).withDescription(description).build()
+    const contactCollection = databaseInstance.collection(MongoDBCollection.contact)
+    const persistedContactInformation = await contactCollection.findOne({})
+    const contactInformationExists = persistedContactInformation !== null
+    let contactInformation: ContactInformation = new NoContactInformation()
+    if (contactInformationExists) {
+      contactInformation = {
+        phoneNumbers: {
+          main: persistedContactInformation.mainPhone,
+          mobile: persistedContactInformation.mobilePhone
+        },
+        emails: persistedContactInformation.emails,
+        weekdaysInformation: {
+          monday: persistedContactInformation.monday,
+          tuesday: persistedContactInformation.tuesday,
+          wednesday: persistedContactInformation.wednesday,
+          thursday: persistedContactInformation.thursday,
+          friday: persistedContactInformation.friday,
+          saturday: persistedContactInformation.saturday
+        }
+      }
+    }
+    return new ADealerBuilder()
+      .withServices(services)
+      .withDescription(description)
+      .withContactInformation(contactInformation)
+      .build()
   }
 })
