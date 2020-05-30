@@ -67,8 +67,25 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   async update(dealerToUpdate: Dealer) {
     await this.updateDealerServices(dealerToUpdate)
     await this.updateDealerDescription(dealerToUpdate)
+    await this.updateDealerContactInformation(dealerToUpdate)
+  }
+
+  private async updateDealerServices(dealer: Dealer): Promise<void> {
+    const servicesCollection = this.databaseInstance.collection(MongoDBCollection.services)
+    const newServices = dealer.getServices().filter(service => !service.id)
+    await Promise.all(newServices.map(async service => {
+      await servicesCollection.insertOne({ spanish: service.description })
+    }))
+  }
+
+  private async updateDealerDescription(dealer: Dealer): Promise<void> {
+    const descriptionCollection = this.databaseInstance.collection(MongoDBCollection.description)
+    await descriptionCollection.updateOne({}, { $set: { text: dealer.getDescription() } })
+  }
+
+  private async updateDealerContactInformation(dealer: Dealer): Promise<void> {
     const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
-    const newContactInformation = dealerToUpdate.getContactInformation()
+    const newContactInformation = dealer.getContactInformation()
     const contactInformationExists = !(newContactInformation instanceof NoContactInformation)
     if (contactInformationExists) {
       await contactCollection.updateOne({}, {
@@ -85,18 +102,5 @@ export class DealerRepositoryMongoDB implements DealerRepository {
         }
       })
     }
-  }
-
-  private async updateDealerServices(dealer: Dealer): Promise<void> {
-    const servicesCollection = this.databaseInstance.collection(MongoDBCollection.services)
-    const newServices = dealer.getServices().filter(service => !service.id)
-    await Promise.all(newServices.map(async service => {
-      await servicesCollection.insertOne({ spanish: service.description })
-    }))
-  }
-
-  private async updateDealerDescription(dealer: Dealer): Promise<void> {
-    const descriptionCollection = this.databaseInstance.collection(MongoDBCollection.description)
-    await descriptionCollection.updateOne({}, { $set: { text: dealer.getDescription() } })
   }
 }
