@@ -1,7 +1,7 @@
 export interface ContactInformation {
   phoneNumbers: {
-    main: Number,
-    mobile: Number
+    main: number,
+    mobile: number
   },
   emails: Array<string>,
   weekdaysInformation: {
@@ -16,8 +16,8 @@ export interface ContactInformation {
 
 export class NoContactInformation implements ContactInformation {
   phoneNumbers: {
-    main: Number
-    mobile: Number
+    main: number
+    mobile: number
   }
   emails: Array<string>
   weekdaysInformation: {
@@ -27,18 +27,5 @@ export class NoContactInformation implements ContactInformation {
     thursday: string
     friday: string
     saturday: string
-  }
-
-  constructor() {
-    this.phoneNumbers = { main: 0, mobile: 0 }
-    this.emails = []
-    this.weekdaysInformation = {
-      monday: '',
-      tuesday: '',
-      wednesday: '',
-      thursday: '',
-      friday: '',
-      saturday: ''
-    }
   }
 }
