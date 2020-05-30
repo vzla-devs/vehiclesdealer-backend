@@ -4,7 +4,7 @@ import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
-import { ContactInformation } from '@/dealer/domain/contactInformation'
+import { ContactInformation, NoContactInformation } from '@/dealer/domain/contactInformation'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
   private databaseInstance: Db
@@ -42,22 +42,26 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   private async getContactInformation(): Promise<ContactInformation> {
     const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
     const persistedContactInformation = await contactCollection.findOne({})
-    const contactInformation: ContactInformation = {
-      phoneNumbers: {
-        main: persistedContactInformation.mainPhone,
-        mobile: persistedContactInformation.mobilePhone
-      },
-      emails: persistedContactInformation.emails,
-      weekdaysInformation: {
-        monday: persistedContactInformation.monday,
-        tuesday: persistedContactInformation.tuesday,
-        wednesday: persistedContactInformation.wednesday,
-        thursday: persistedContactInformation.thursday,
-        friday: persistedContactInformation.friday,
-        saturday: persistedContactInformation.saturday
+    if (!persistedContactInformation) {
+      return new NoContactInformation()
+    } else {
+      const contactInformation: ContactInformation = {
+        phoneNumbers: {
+          main: persistedContactInformation.mainPhone,
+          mobile: persistedContactInformation.mobilePhone
+        },
+        emails: persistedContactInformation.emails,
+        weekdaysInformation: {
+          monday: persistedContactInformation.monday,
+          tuesday: persistedContactInformation.tuesday,
+          wednesday: persistedContactInformation.wednesday,
+          thursday: persistedContactInformation.thursday,
+          friday: persistedContactInformation.friday,
+          saturday: persistedContactInformation.saturday
+        }
       }
+      return contactInformation
     }
-    return contactInformation
   }
 
   async update(dealerToUpdate: Dealer) {

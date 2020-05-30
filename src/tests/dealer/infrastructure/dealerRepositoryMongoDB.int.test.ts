@@ -5,7 +5,7 @@ import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
-import { ContactInformation } from '@/dealer/domain/contactInformation'
+import { ContactInformation, NoContactInformation } from '@/dealer/domain/contactInformation'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -71,6 +71,16 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   
       expect(returnedDealer.getContactInformation()).toEqual(givenContactInformation)
     })
+
+    it('gets no contact information when it is not persisted', async() => {
+      const givenDealerToGet = new ADealerBuilder().build()
+      await givenAPersistedDealer(givenDealerToGet)
+
+      const returnedDealer = await dealersRepo.get()
+  
+      const expectedContactInformation = new NoContactInformation()
+      expect(returnedDealer.getContactInformation()).toEqual(expectedContactInformation)
+    })
   })
 
   describe('when updating the dealer', () => {
@@ -112,19 +122,21 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     }))
     const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
     await descriptionCollection.insertOne({ text: dealerToPersist.getDescription() })
-    const contactCollection = databaseInstance.collection(MongoDBCollection.contact)
-    const contactInformationToPersist = dealerToPersist.getContactInformation()
-    await contactCollection.insertOne({
-      mainPhone: contactInformationToPersist.phoneNumbers.main,
-      mobilePhone: contactInformationToPersist.phoneNumbers.mobile,
-      emails: contactInformationToPersist.emails,
-      monday: contactInformationToPersist.weekdaysInformation.monday,
-      tuesday: contactInformationToPersist.weekdaysInformation.tuesday,
-      wednesday: contactInformationToPersist.weekdaysInformation.wednesday,
-      thursday: contactInformationToPersist.weekdaysInformation.thursday,
-      friday: contactInformationToPersist.weekdaysInformation.friday,
-      saturday: contactInformationToPersist.weekdaysInformation.saturday
-    })
+    if (!(dealerToPersist.getContactInformation() instanceof NoContactInformation)) {
+      const contactCollection = databaseInstance.collection(MongoDBCollection.contact)
+      const contactInformationToPersist = dealerToPersist.getContactInformation()
+      await contactCollection.insertOne({
+        mainPhone: contactInformationToPersist.phoneNumbers.main,
+        mobilePhone: contactInformationToPersist.phoneNumbers.mobile,
+        emails: contactInformationToPersist.emails,
+        monday: contactInformationToPersist.weekdaysInformation.monday,
+        tuesday: contactInformationToPersist.weekdaysInformation.tuesday,
+        wednesday: contactInformationToPersist.weekdaysInformation.wednesday,
+        thursday: contactInformationToPersist.weekdaysInformation.thursday,
+        friday: contactInformationToPersist.weekdaysInformation.friday,
+        saturday: contactInformationToPersist.weekdaysInformation.saturday
+      })
+    }
   }
 
   async function getPersistedDealer(): Promise<Dealer> {
