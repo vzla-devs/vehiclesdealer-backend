@@ -186,8 +186,8 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     const description = persistedDescription.text
     const contactCollection = databaseInstance.collection(MongoDBCollection.contact)
     const persistedContactInformation = await contactCollection.findOne({})
-    const contactInformationExists = persistedContactInformation !== null
     let contactInformation: ContactInformation = new NoContactInformation()
+    const contactInformationExists = persistedContactInformation !== null
     if (contactInformationExists) {
       contactInformation = {
         phoneNumbers: {
