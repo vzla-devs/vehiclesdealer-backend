@@ -28,7 +28,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   describe('when getting the dealer', () => {
-    it('gets the dealer services', async() => {
+    it('gets the services', async() => {
       const givenServices: Array<Service> = [
         { id: new ObjectId().toString(), description: 'anyService' },
         { id: new ObjectId().toString(), description: 'anyOtherService' },
@@ -41,7 +41,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       expect(returnedDealer.getServices()).toEqual(givenServices)
     })
 
-    it('gets the dealer description', async() => {
+    it('gets the description', async() => {
       const givenDescription: string = 'anyDescription'
       const givenDealerToGet = new ADealerBuilder().withDescription(givenDescription).build()
       await givenAPersistedDealer(givenDealerToGet)
@@ -51,7 +51,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       expect(returnedDealer.getDescription()).toBe(givenDescription)
     })
 
-    it('gets the dealer contact information', async() => {
+    it('gets the contact information', async() => {
       const givenContactInformation: ContactInformation = {
         phoneNumbers: { main: 987654321, mobile: 123456789 },
         emails: ['firstEmail@whatever.com', 'secondEmail@whatever.com'],
@@ -84,7 +84,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   })
 
   describe('when updating the dealer', () => {
-    it('updates the dealer services', async() => {
+    it('updates the services', async() => {
       const existingService = { id: new ObjectId().toString(), description: 'secondService' }
       const givenDealer = new ADealerBuilder().withServices([existingService]).build()
       await givenAPersistedDealer(givenDealer)
@@ -101,7 +101,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       expect(addedServices[2].description).toBe(servicesToAdd[2].description)
     })
 
-    it('updates the dealer description', async() => {
+    it('updates the description', async() => {
       const existingDescription = 'anyExistingDescription'
       const givenDealer = new ADealerBuilder().withDescription(existingDescription).build()
       await givenAPersistedDealer(givenDealer)
