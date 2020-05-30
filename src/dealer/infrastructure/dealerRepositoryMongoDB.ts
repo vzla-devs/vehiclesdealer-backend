@@ -16,23 +16,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   async get() {
     const services = await this.getDealerServices()
     const description = await this.getDealerDescription()
-    const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
-    const persistedContactInformation = await contactCollection.findOne({})
-    const contactInformation: ContactInformation = {
-      phoneNumbers: {
-        main: persistedContactInformation.mainPhone,
-        mobile: persistedContactInformation.mobilePhone
-      },
-      emails: persistedContactInformation.emails,
-      weekdaysInformation: {
-        monday: persistedContactInformation.monday,
-        tuesday: persistedContactInformation.tuesday,
-        wednesday: persistedContactInformation.wednesday,
-        thursday: persistedContactInformation.thursday,
-        friday: persistedContactInformation.friday,
-        saturday: persistedContactInformation.saturday
-      }
-    }
+    const contactInformation = await this.getContactInformation()
     return new ADealerBuilder()
       .withServices(services)
       .withDescription(description)
@@ -53,6 +37,27 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     const descriptionCollection = this.databaseInstance.collection(MongoDBCollection.description)
     const persistedDescription = await descriptionCollection.findOne({})
     return persistedDescription.text
+  }
+
+  private async getContactInformation(): Promise<ContactInformation> {
+    const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
+    const persistedContactInformation = await contactCollection.findOne({})
+    const contactInformation: ContactInformation = {
+      phoneNumbers: {
+        main: persistedContactInformation.mainPhone,
+        mobile: persistedContactInformation.mobilePhone
+      },
+      emails: persistedContactInformation.emails,
+      weekdaysInformation: {
+        monday: persistedContactInformation.monday,
+        tuesday: persistedContactInformation.tuesday,
+        wednesday: persistedContactInformation.wednesday,
+        thursday: persistedContactInformation.thursday,
+        friday: persistedContactInformation.friday,
+        saturday: persistedContactInformation.saturday
+      }
+    }
+    return contactInformation
   }
 
   async update(dealerToUpdate: Dealer) {
