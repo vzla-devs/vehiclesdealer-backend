@@ -42,9 +42,8 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   private async getContactInformation(): Promise<ContactInformation> {
     const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
     const persistedContactInformation = await contactCollection.findOne({})
-    if (!persistedContactInformation) {
-      return new NoContactInformation()
-    } else {
+    const contactInformationExists = persistedContactInformation !== null
+    if (contactInformationExists) {
       const contactInformation: ContactInformation = {
         phoneNumbers: {
           main: persistedContactInformation.mainPhone,
@@ -62,6 +61,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
       }
       return contactInformation
     }
+    return new NoContactInformation()
   }
 
   async update(dealerToUpdate: Dealer) {

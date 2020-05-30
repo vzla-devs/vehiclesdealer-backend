@@ -122,7 +122,8 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     }))
     const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
     await descriptionCollection.insertOne({ text: dealerToPersist.getDescription() })
-    if (!(dealerToPersist.getContactInformation() instanceof NoContactInformation)) {
+    const contactInformationExists = !(dealerToPersist.getContactInformation() instanceof NoContactInformation)
+    if (contactInformationExists) {
       const contactCollection = databaseInstance.collection(MongoDBCollection.contact)
       const contactInformationToPersist = dealerToPersist.getContactInformation()
       await contactCollection.insertOne({
