@@ -69,19 +69,22 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     await this.updateDealerDescription(dealerToUpdate)
     const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
     const newContactInformation = dealerToUpdate.getContactInformation()
-    await contactCollection.updateOne({}, {
-      $set: {
-        mainPhone: newContactInformation.phoneNumbers.main,
-        mobilePhone: newContactInformation.phoneNumbers.mobile,
-        emails: newContactInformation.emails,
-        monday: newContactInformation.weekdaysInformation.monday,
-        tuesday: newContactInformation.weekdaysInformation.tuesday,
-        wednesday: newContactInformation.weekdaysInformation.wednesday,
-        thursday: newContactInformation.weekdaysInformation.thursday,
-        friday: newContactInformation.weekdaysInformation.friday,
-        saturday: newContactInformation.weekdaysInformation.saturday,
-      }
-    })
+    const contactInformationExists = !(newContactInformation instanceof NoContactInformation)
+    if (contactInformationExists) {
+      await contactCollection.updateOne({}, {
+        $set: {
+          mainPhone: newContactInformation.phoneNumbers.main,
+          mobilePhone: newContactInformation.phoneNumbers.mobile,
+          emails: newContactInformation.emails,
+          monday: newContactInformation.weekdaysInformation.monday,
+          tuesday: newContactInformation.weekdaysInformation.tuesday,
+          wednesday: newContactInformation.weekdaysInformation.wednesday,
+          thursday: newContactInformation.weekdaysInformation.thursday,
+          friday: newContactInformation.weekdaysInformation.friday,
+          saturday: newContactInformation.weekdaysInformation.saturday,
+        }
+      })
+    }
   }
 
   private async updateDealerServices(dealer: Dealer): Promise<void> {
