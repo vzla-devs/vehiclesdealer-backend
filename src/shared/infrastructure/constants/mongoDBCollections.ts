@@ -1,5 +1,6 @@
 export enum MongoDBCollection {
   services = 'services',
   description = 'abouts',
-  users = 'users'
+  users = 'users',
+  contact = 'contacts'
 }

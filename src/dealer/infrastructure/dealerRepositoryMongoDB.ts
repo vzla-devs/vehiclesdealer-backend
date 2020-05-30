@@ -4,6 +4,7 @@ import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
+import { ContactInformation } from '@/dealer/domain/contactInformation'
 
 export class DealerRepositoryMongoDB implements DealerRepository {
   private databaseInstance: Db
@@ -15,7 +16,28 @@ export class DealerRepositoryMongoDB implements DealerRepository {
   async get() {
     const services = await this.getDealerServices()
     const description = await this.getDealerDescription()
-    return new ADealerBuilder().withServices(services).withDescription(description).build()
+    const contactCollection = this.databaseInstance.collection(MongoDBCollection.contact)
+    const persistedContactInformation = await contactCollection.findOne({})
+    const contactInformation: ContactInformation = {
+      phoneNumbers: {
+        main: persistedContactInformation.mainPhone,
+        mobile: persistedContactInformation.mobilePhone
+      },
+      emails: persistedContactInformation.emails,
+      weekdaysInformation: {
+        monday: persistedContactInformation.monday,
+        tuesday: persistedContactInformation.tuesday,
+        wednesday: persistedContactInformation.wednesday,
+        thursday: persistedContactInformation.thursday,
+        friday: persistedContactInformation.friday,
+        saturday: persistedContactInformation.saturday
+      }
+    }
+    return new ADealerBuilder()
+      .withServices(services)
+      .withDescription(description)
+      .withContactInformation(contactInformation)
+      .build()
   }
 
   private async getDealerServices(): Promise<Array<Service>> {

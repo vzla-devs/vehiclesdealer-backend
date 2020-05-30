@@ -5,6 +5,7 @@ import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
+import { ContactInformation } from '@/dealer/domain/contactInformation'
 
 describe('dealerRepositoryMongoDB integration tests', () => {
   const mongoTests = new MongoDatabaseForTests()
@@ -19,6 +20,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   beforeEach(async() => {
     await databaseInstance.collection(MongoDBCollection.services).deleteMany({})
     await databaseInstance.collection(MongoDBCollection.description).deleteMany({})
+    await databaseInstance.collection(MongoDBCollection.contact).deleteMany({})
   })
 
   afterAll(async() => {
@@ -47,6 +49,27 @@ describe('dealerRepositoryMongoDB integration tests', () => {
       const returnedDealer = await dealersRepo.get()
   
       expect(returnedDealer.getDescription()).toBe(givenDescription)
+    })
+
+    it('gets the dealer contact information', async() => {
+      const givenContactInformation: ContactInformation = {
+        phoneNumbers: { main: 987654321, mobile: 123456789 },
+        emails: ['firstEmail@whatever.com', 'secondEmail@whatever.com'],
+        weekdaysInformation: {
+          monday: 'anyMonday',
+          tuesday: 'anyTuesday',
+          wednesday: 'anyWednesday',
+          thursday: 'anyThursday',
+          friday: 'anyFriday',
+          saturday: 'anySaturday',
+        }
+      }
+      const givenDealerToGet = new ADealerBuilder().withContactInformation(givenContactInformation).build()
+      await givenAPersistedDealer(givenDealerToGet)
+
+      const returnedDealer = await dealersRepo.get()
+  
+      expect(returnedDealer.getContactInformation()).toEqual(givenContactInformation)
     })
   })
 
@@ -84,11 +107,24 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
   async function givenAPersistedDealer(dealerToPersist: Dealer) {
     const servicesCollection = databaseInstance.collection(MongoDBCollection.services)
-    const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
     await Promise.all(dealerToPersist.getServices().map(async service => {
       await servicesCollection.insertOne({ _id: new ObjectId(service.id), spanish: service.description })
     }))
+    const descriptionCollection = databaseInstance.collection(MongoDBCollection.description)
     await descriptionCollection.insertOne({ text: dealerToPersist.getDescription() })
+    const contactCollection = databaseInstance.collection(MongoDBCollection.contact)
+    const contactInformationToPersist = dealerToPersist.getContactInformation()
+    await contactCollection.insertOne({
+      mainPhone: contactInformationToPersist.phoneNumbers.main,
+      mobilePhone: contactInformationToPersist.phoneNumbers.mobile,
+      emails: contactInformationToPersist.emails,
+      monday: contactInformationToPersist.weekdaysInformation.monday,
+      tuesday: contactInformationToPersist.weekdaysInformation.tuesday,
+      wednesday: contactInformationToPersist.weekdaysInformation.wednesday,
+      thursday: contactInformationToPersist.weekdaysInformation.thursday,
+      friday: contactInformationToPersist.weekdaysInformation.friday,
+      saturday: contactInformationToPersist.weekdaysInformation.saturday
+    })
   }
 
   async function getPersistedDealer(): Promise<Dealer> {
