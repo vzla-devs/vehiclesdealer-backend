@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import vehicles from '@/api/controllers/vehiclesController'
 import features from '@/api/controllers/featuresController'
 import services from '@/api/controllers/servicesController'
-import about from '@/api/controllers/aboutController'
+import description from '@/api/controllers/descriptionController'
 import contact from '@/api/controllers/contactController'
 import pictures from '@/api/controllers/picturesController'
 import users from '@/api/controllers/usersController'
@@ -45,7 +45,7 @@ function addRoutesToApp(app: express.Application): void {
   app.use('/api/vehiculos', vehicles)
   app.use('/api/caracteristicas', features)
   app.use('/api/servicios', services)
-  app.use('/api/texto', about)
+  app.use('/api/texto', description)
   app.use('/api/contacto', contact)
   app.use('/api/pdf', pictures)
   app.use('/api/usuarios', users)
