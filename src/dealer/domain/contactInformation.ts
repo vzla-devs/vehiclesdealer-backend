@@ -1,31 +1,31 @@
 export interface ContactInformation {
   phoneNumbers: {
-    main: number,
-    mobile: number
+    main: Number,
+    mobile: Number
   },
-  emails: Array<string>,
+  emails: Array<String>,
   weekdaysInformation: {
-    monday: string,
-    tuesday: string,
-    wednesday: string,
-    thursday: string,
-    friday: string,
-    saturday: string,
+    monday: String,
+    tuesday: String,
+    wednesday: String,
+    thursday: String,
+    friday: String,
+    saturday: String,
   }
 }
 
 export class NoContactInformation implements ContactInformation {
   phoneNumbers: {
-    main: number
-    mobile: number
+    main: Number
+    mobile: Number
   }
-  emails: Array<string>
+  emails: Array<String>
   weekdaysInformation: {
-    monday: string
-    tuesday: string
-    wednesday: string
-    thursday: string
-    friday: string
-    saturday: string
+    monday: String
+    tuesday: String
+    wednesday: String
+    thursday: String
+    friday: String
+    saturday: String
   }
 }
