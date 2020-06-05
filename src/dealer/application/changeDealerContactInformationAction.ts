@@ -28,13 +28,13 @@ export class ChangeDealerContactInformationAction {
 }
 
 export interface ChangeDealerContactInformationCommand {
-    mobilePhone: Number
-    mainPhone: Number
-    emails: Array<String>
-    monday: String
-    tuesday: String
-    wednesday: String
-    thursday: String
-    friday: String
-    saturday: String
+    mobilePhone: number
+    mainPhone: number
+    emails: Array<string>
+    monday: string
+    tuesday: string
+    wednesday: string
+    thursday: string
+    friday: string
+    saturday: string
 }
