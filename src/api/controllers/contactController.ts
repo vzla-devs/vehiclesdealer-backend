@@ -1,5 +1,4 @@
 import express from 'express'
-import { getContactQuery } from '@/contact/application/getContactQuery'
 import { decorateControllerToCatchAnyError } from '@/api/controllers/controllerDecorators'
 import { DealerFactory } from '@/dealer/infrastructure/dealerFactory'
 import { ChangeDealerContactInformationCommand } from '@/dealer/application/changeDealerContactInformationAction'
@@ -7,8 +6,9 @@ import { ChangeDealerContactInformationCommand } from '@/dealer/application/chan
 const router = express.Router()
 
 router.get('/', decorateControllerToCatchAnyError(async(req, res) => {
-    const contact = await getContactQuery.get()
-    res.status(200).send(contact)
+    const getDealerContactInformationQuery = DealerFactory.GetDealerContactInformationQuery()
+    const dealerContactInformation = await getDealerContactInformationQuery.execute()
+    res.status(200).send(dealerContactInformation)
 }))
 
 router.put('/', decorateControllerToCatchAnyError(async(req, res) => {
