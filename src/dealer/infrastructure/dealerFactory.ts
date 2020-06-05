@@ -23,16 +23,19 @@ export class DealerFactory {
     const databaseInstance = getDatabaseConnection().db
     return new GetDealerDescriptionQueryMongoDB(databaseInstance)
   }
+
   static ChangeDealerDescriptionAction(): ChangeDealerDescriptionAction {
     const databaseInstance = getDatabaseConnection().db
     const dealerRepository = new DealerRepositoryMongoDB(databaseInstance)
     return new ChangeDealerDescriptionAction(dealerRepository)
   }
+
   static ChangeDealerContactInformationAction(): ChangeDealerContactInformationAction {
     const databaseInstance = getDatabaseConnection().db
     const dealerRepository = new DealerRepositoryMongoDB(databaseInstance)
     return new ChangeDealerContactInformationAction(dealerRepository)
   }
+  
   static GetDealerContactInformationQuery(): GetDealerContactInformationQueryMongoDB {
     const databaseInstance = getDatabaseConnection().db
     return new GetDealerContactInformationQueryMongoDB(databaseInstance)
