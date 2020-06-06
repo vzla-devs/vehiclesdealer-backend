@@ -1,11 +1,11 @@
 import express from 'express'
 import { createMediaStorageUploader } from '@/shared/infrastructure/persistenceFactory'
-import { getVehiclesQuery } from '@/vehicle/application/getVehiclesQuery'
-import { getVehicleFiltersQuery } from '@/vehicle/application/getVehicleFiltersQuery'
-import { addVehicleAction } from '@/vehicle/application/addVehicleAction'
-import { editVehicleAction } from '@/vehicle/application/editVehicleAction'
-import { editVehiclePicturesAction } from '@/vehicle/application/editVehiclePicturesAction'
-import { removeVehicleAction } from '@/vehicle/application/removeVehicleAction'
+import { getVehiclesQuery } from '@/vehicles/application/getVehiclesQuery'
+import { getVehicleFiltersQuery } from '@/vehicles/application/getVehicleFiltersQuery'
+import { addVehicleAction } from '@/vehicles/application/addVehicleAction'
+import { editVehicleAction } from '@/vehicles/application/editVehicleAction'
+import { editVehiclePicturesAction } from '@/vehicles/application/editVehiclePicturesAction'
+import { removeVehicleAction } from '@/vehicles/application/removeVehicleAction'
 import { decorateControllerToCatchAnyError } from '@/api/controllers/controllerDecorators'
 
 const router = express.Router()

@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Vehicle from '@/vehicle/domain/vehicle'
+import Vehicle from '@/vehicles/domain/vehicle'
 
 async function execute (command) {
   const existingVehicle = await Vehicle.findOne({ _id: command.id }).exec()

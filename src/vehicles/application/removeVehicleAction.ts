@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Vehicle from '@/vehicle/domain/vehicle'
+import Vehicle from '@/vehicles/domain/vehicle'
 
 async function execute (id) {
   const vehicleToDelete = await Vehicle.findOne({ _id: id }).exec()

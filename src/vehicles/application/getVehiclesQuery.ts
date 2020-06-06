@@ -1,4 +1,4 @@
-import Vehicle from '@/vehicle/domain/vehicle'
+import Vehicle from '@/vehicles/domain/vehicle'
 
 async function getAllFilteredBy (filters) {
  const vehicles = await Vehicle.find(filters, {
