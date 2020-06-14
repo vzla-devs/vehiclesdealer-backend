@@ -1,5 +1,5 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
-import { ChangeDealerContactInformationAction, ChangeDealerContactInformationCommand } from '@/dealer/application/changeDealerContactInformationAction'
+import { ChangeDealerContactInformationAction, ChangeDealerContactInformationCommand } from '@/dealer/application/actions/changeDealerContactInformationAction'
 import { Dealer } from '@/dealer/domain/dealer'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { ContactInformation } from '@/dealer/domain/contactInformation'

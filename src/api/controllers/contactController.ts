@@ -1,7 +1,7 @@
 import express from 'express'
 import { decorateControllerToCatchAnyError } from '@/api/controllers/controllerDecorators'
 import { DealerFactory } from '@/dealer/infrastructure/dealerFactory'
-import { ChangeDealerContactInformationCommand } from '@/dealer/application/changeDealerContactInformationAction'
+import { ChangeDealerContactInformationCommand } from '@/dealer/application/actions/changeDealerContactInformationAction'
 
 const router = express.Router()
 

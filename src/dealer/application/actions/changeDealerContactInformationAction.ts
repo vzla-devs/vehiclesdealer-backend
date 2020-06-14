@@ -1,5 +1,5 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
-import { ContactInformation } from '../domain/contactInformation'
+import { ContactInformation } from '../../domain/contactInformation'
 
 export class ChangeDealerContactInformationAction {
   dealerRepository: DealerRepository

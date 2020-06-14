@@ -1,6 +1,6 @@
 import { Db } from 'mongodb'
 import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
-import { GetDealerContactInformationQueryMongoDB, DealerContactInformationDto } from '@/dealer/application/getDealerContactInformationQueryMongoDB'
+import { GetDealerContactInformationQueryMongoDB, DealerContactInformationDto } from '@/dealer/application/queries/getDealerContactInformationQueryMongoDB'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
 describe('getDealerContactInformationQueryMongoDB integration tests', () => {

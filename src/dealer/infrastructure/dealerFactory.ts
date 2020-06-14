@@ -1,11 +1,11 @@
 import { getDatabaseConnection } from '@/shared/infrastructure/persistenceFactory'
-import { GetDealerServicesQueryMongoDB } from '@/dealer/application/getDealerServicesQueryMongoDB'
-import { AddDealerServiceAction } from '@/dealer/application/addDealerServiceAction'
+import { GetDealerServicesQueryMongoDB } from '@/dealer/application/queries/getDealerServicesQueryMongoDB'
+import { AddDealerServiceAction } from '@/dealer/application/actions/addDealerServiceAction'
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
-import { GetDealerDescriptionQueryMongoDB } from '@/dealer/application/getDealerDescriptionQueryMongoDB'
-import { ChangeDealerDescriptionAction } from '@/dealer/application/changeDealerDescriptionAction'
-import { ChangeDealerContactInformationAction } from '@/dealer/application/changeDealerContactInformationAction'
-import { GetDealerContactInformationQueryMongoDB } from '../application/getDealerContactInformationQueryMongoDB'
+import { GetDealerDescriptionQueryMongoDB } from '@/dealer/application/queries/getDealerDescriptionQueryMongoDB'
+import { ChangeDealerDescriptionAction } from '@/dealer/application/actions/changeDealerDescriptionAction'
+import { ChangeDealerContactInformationAction } from '@/dealer/application/actions/changeDealerContactInformationAction'
+import { GetDealerContactInformationQueryMongoDB } from '../application/queries/getDealerContactInformationQueryMongoDB'
 
 export class DealerFactory {
   static GetDealerServicesQuery(): GetDealerServicesQueryMongoDB {

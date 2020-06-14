@@ -1,5 +1,5 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
-import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/addDealerServiceAction'
+import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/actions/addDealerServiceAction'
 import { Dealer } from '@/dealer/domain/dealer'
 import { decorateActionToGetAnyError } from '@/tests/actionDecoratorsForTests'
 import { CannotAddDealerService, CannotAddDealerServiceReason } from '@/dealer/domain/errors/cannotAddDealerService'
