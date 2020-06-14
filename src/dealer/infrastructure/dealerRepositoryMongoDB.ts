@@ -24,6 +24,12 @@ export class DealerRepositoryMongoDB implements DealerRepository {
       .build()
   }
 
+  async update(dealerToUpdate: Dealer) {
+    await this.updateDealerServices(dealerToUpdate)
+    await this.updateDealerDescription(dealerToUpdate)
+    await this.updateDealerContactInformation(dealerToUpdate)
+  }
+
   private async getDealerServices(): Promise<Array<Service>> {
     const servicesCollection = this.databaseInstance.collection(MongoDBCollection.services)
     const persistedServices = await servicesCollection.find({}).toArray()
@@ -62,12 +68,6 @@ export class DealerRepositoryMongoDB implements DealerRepository {
       }
     }
     return contactInformation
-  }
-
-  async update(dealerToUpdate: Dealer) {
-    await this.updateDealerServices(dealerToUpdate)
-    await this.updateDealerDescription(dealerToUpdate)
-    await this.updateDealerContactInformation(dealerToUpdate)
   }
 
   private async updateDealerServices(dealer: Dealer): Promise<void> {
