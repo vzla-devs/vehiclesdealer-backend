@@ -8,18 +8,18 @@ export class ChangeDealerContactInformationAction {
     this.dealerRepository = dealerRepository
   }
 
-  async execute(contactInformationToChange: ChangeDealerContactInformationCommand): Promise<void> {
+  async execute(command: ChangeDealerContactInformationCommand): Promise<void> {
     const existingDealer = await this.dealerRepository.get()
     const newContactInformation: ContactInformation = {
-      emails: contactInformationToChange.emails,
-      phoneNumbers: { mobile: contactInformationToChange.mobilePhone, main: contactInformationToChange.mainPhone },
+      emails: command.emails,
+      phoneNumbers: { mobile: command.mobilePhone, main: command.mainPhone },
       weekdaysInformation: {
-        monday: contactInformationToChange.monday,
-        tuesday: contactInformationToChange.tuesday,
-        wednesday: contactInformationToChange.wednesday,
-        thursday: contactInformationToChange.thursday,
-        friday: contactInformationToChange.friday,
-        saturday: contactInformationToChange.saturday,
+        monday: command.monday,
+        tuesday: command.tuesday,
+        wednesday: command.wednesday,
+        thursday: command.thursday,
+        friday: command.friday,
+        saturday: command.saturday,
       }
     }
     existingDealer.changeContactInformation(newContactInformation)
