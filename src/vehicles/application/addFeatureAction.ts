@@ -1,4 +1,4 @@
-import Feature from '@/feature/domain/feature'
+import Feature from '@/vehicles/domain/feature'
 
 async function execute (command) {
   const featureToAdd = new Feature ({
