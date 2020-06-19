@@ -1,5 +1,5 @@
 import { UsersRepository } from '@/users/domain/usersRepository'
-import { User, NoUser } from '@/users/domain/user'
+import { User, NoUser, UserModel } from '@/users/domain/user'
 import { Db } from 'mongodb'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
@@ -10,7 +10,7 @@ class UsersRepositoryMongoDB implements UsersRepository {
     this.databaseInstance = databaseInstance
   }
 
-  async create(userToCreate: User) {
+  async create(userToCreate: UserModel) {
     const usersCollection = this.databaseInstance.collection(MongoDBCollection.users)
     const userData = userToCreate.getCredentials()
     await usersCollection.insertOne(userData)
