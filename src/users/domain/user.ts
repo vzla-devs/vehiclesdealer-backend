@@ -45,10 +45,10 @@ export class NoUser implements UserModel {
   register(username: string, password: string) {
     this.username = username
     this.password = password
-    this.checkThatTheCredentialsAreValid()
+    this.checkThatTheUserCanBeRegistered()
   }
 
-  private checkThatTheCredentialsAreValid() {
+  private checkThatTheUserCanBeRegistered() {
     if (!this.username || this.username === '' || !this.password || this.password === '') {
       throw new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials)
     }
