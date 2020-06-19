@@ -37,7 +37,7 @@ describe('registerUserAction unit tests', () => {
     const action = decorateActionToGetAnyError(registerUserAction)
     const thrownError = await action(givenUserToRegisterCommand)
 
-    expect(thrownError).toEqual(new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists))
+    expect(thrownError).toStrictEqual(new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
