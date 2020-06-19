@@ -19,26 +19,28 @@ describe('registerUserAction unit tests', () => {
 
   it('registers a new user', async() => {
     const givenUsername = 'anyUsername'
-    const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: 'anyPassword' }
+    const givenPassword = 'anyPassword'
+    const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: givenPassword }
     givenAMockedUsersRepoGetByWith(new NoUser())
 
     await registerUserAction.execute(givenUserToRegisterCommand)
 
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
-    const expectedUserToRegister = new User(givenUsername, 'anyPassword')
+    const expectedUserToRegister = new User(givenUsername, givenPassword)
     expect(usersRepository.create).toHaveBeenCalledWith(expectedUserToRegister)
   })
 
   it('does not register a user that already exists', async() => {
     const givenUsername = 'anyExistingUsername'
-    const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: 'anyPassword' }
-    givenAMockedUsersRepoGetByWith(new User(givenUsername, 'anyPassword'))
+    const givenPassword = 'anyPassword'
+    const givenUserToRegisterCommand: RegisterUserCommand = { username: givenUsername, password: givenPassword }
+    givenAMockedUsersRepoGetByWith(new User(givenUsername, givenPassword))
 
     const action = decorateActionToGetAnyError(registerUserAction)
     const thrownError = await action(givenUserToRegisterCommand)
 
-    expect(thrownError).toStrictEqual(new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
+    expect(thrownError).toStrictEqual(new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists))
     expect(usersRepository.create).not.toHaveBeenCalled()
   })
 
@@ -83,7 +85,8 @@ describe('registerUserAction unit tests', () => {
     
         const action = decorateActionToGetAnyError(registerUserAction)
         const thrownError = await action(givenUserToRegisterCommand)
-    
+
+        expect(usersRepository.getBy).toHaveBeenCalledWith(testCase.username)
         expect(thrownError).toStrictEqual(new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials))
         expect(usersRepository.create).not.toHaveBeenCalled()
       })
