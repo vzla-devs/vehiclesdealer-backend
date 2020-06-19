@@ -60,7 +60,7 @@ describe('addDealerServiceAction unit tests', () => {
         const serviceToAdd: AddDealerServiceCommand = { description: testCase.serviceDescription }
         const thrownError = await action(serviceToAdd)
 
-        expect(thrownError).toEqual(new CannotAddDealerService(CannotAddDealerServiceReason.serviceAlreadyExists))
+        expect(thrownError).toStrictEqual(new CannotAddDealerService(CannotAddDealerServiceReason.serviceAlreadyExists))
         expect(dealerRepository.get).toHaveBeenCalled()
         expect(dealerRepository.update).not.toHaveBeenCalled()
       })
