@@ -84,7 +84,7 @@ describe('registerUserAction unit tests', () => {
         const action = decorateActionToGetAnyError(registerUserAction)
         const thrownError = await action(givenUserToRegisterCommand)
     
-        expect(thrownError).toEqual(new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials))
+        expect(thrownError).toStrictEqual(new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials))
         expect(usersRepository.create).not.toHaveBeenCalled()
       })
     })

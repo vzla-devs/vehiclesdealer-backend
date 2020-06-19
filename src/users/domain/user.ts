@@ -3,8 +3,8 @@ import { CannotRegisterUserReason, CannotRegisterUser } from '@/users/domain/err
 
 export interface UserModel {
   getCredentials(): { username: string, password: string }
-  login(password: string): void
   register(username: string, password: string): void
+  login(password: string): void
 }
 export class User implements UserModel {
   private username: string
@@ -50,7 +50,7 @@ export class NoUser implements UserModel {
 
   private checkThatTheCredentialsAreValid() {
     if (!this.username || this.username === '' || !this.password || this.password === '') {
-      throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
+      throw new CannotRegisterUser(CannotRegisterUserReason.userHasInvalidCredentials)
     }
   }
 }
