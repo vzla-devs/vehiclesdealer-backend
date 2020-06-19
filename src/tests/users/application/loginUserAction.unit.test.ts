@@ -36,7 +36,7 @@ describe('loginUserAction unit tests', () => {
     const action = decorateActionToGetAnyError(loginUserAction)
     const thrownError = await action(givenUserToCreateCommand)
 
-    expect(thrownError).toEqual(new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials))
+    expect(thrownError).toStrictEqual(new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 
@@ -48,7 +48,7 @@ describe('loginUserAction unit tests', () => {
     const userToCreate: LoginUserCommand = { username: givenUsername, password: 'anyPassword' }
     const thrownError = await action(userToCreate)
 
-    expect(thrownError).toEqual(new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials))
+    expect(thrownError).toStrictEqual(new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials))
     expect(usersRepository.getBy).toHaveBeenCalledWith(givenUsername)
   })
 
