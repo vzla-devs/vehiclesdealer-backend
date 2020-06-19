@@ -19,24 +19,20 @@ export class User implements UserModel {
     return { username: this.username, password: this.password }
   }
 
+  register() {
+    throw new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists)
+  }
+
   login(password: string) {
     if (this.password !== password) {
       throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
     }
-  }
-
-  register() {
-    throw new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists)
   }
 }
 
 export class NoUser implements UserModel {
   private username: string
   private password: string
-
-  login() {
-    throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
-  }
   
   getCredentials() {
     return { username: this.username, password: this.password }
@@ -46,6 +42,10 @@ export class NoUser implements UserModel {
     this.username = username
     this.password = password
     this.checkThatTheUserCanBeRegistered()
+  }
+
+  login() {
+    throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
   }
 
   private checkThatTheUserCanBeRegistered() {
