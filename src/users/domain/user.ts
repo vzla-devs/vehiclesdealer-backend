@@ -1,9 +1,10 @@
 import { CannotLoginUser, CannotLoginUserReason } from '@/users/domain/errors/cannotLoginUser'
+import { CannotRegisterUserReason, CannotRegisterUser } from '@/users/domain/errors/cannotRegisterUser'
 
 export interface UserModel {
   getCredentials(): { username: string, password: string }
   login(password: string): void
-  isValid(): boolean
+  register(username: string, password: string): void
 }
 export class User implements UserModel {
   private username: string
@@ -12,13 +13,6 @@ export class User implements UserModel {
   constructor(username: string, password: string) {
     this.username = username
     this.password = password
-    this.checkThatTheCredentialsAreValid()
-  }
-
-  private checkThatTheCredentialsAreValid() {
-    if (!this.username || this.username === '' || !this.password || this.password === '') {
-      throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
-    }
   }
 
   getCredentials() {
@@ -31,21 +25,32 @@ export class User implements UserModel {
     }
   }
 
-  isValid() {
-    return true
+  register() {
+    throw new CannotRegisterUser(CannotRegisterUserReason.userAlreadyExists)
   }
 }
 
 export class NoUser implements UserModel {
+  private username: string
+  private password: string
+
   login() {
     throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
   }
   
   getCredentials() {
-    return { username: '', password: '' }
+    return { username: this.username, password: this.password }
   }
 
-  isValid() {
-    return false
+  register(username: string, password: string) {
+    this.username = username
+    this.password = password
+    this.checkThatTheCredentialsAreValid()
+  }
+
+  private checkThatTheCredentialsAreValid() {
+    if (!this.username || this.username === '' || !this.password || this.password === '') {
+      throw new CannotLoginUser(CannotLoginUserReason.userHasInvalidCredentials)
+    }
   }
 }
