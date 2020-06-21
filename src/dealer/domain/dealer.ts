@@ -1,11 +1,13 @@
 import { Service } from '@/dealer/domain/service'
 import { CannotAddDealerService, CannotAddDealerServiceReason } from '@/dealer/domain/errors/cannotAddDealerService'
 import { ContactInformation, NoContactInformation } from '@/dealer/domain/contactInformation'
+import { Vehicle } from '@/dealer/domain/vehicle'
 
 export class Dealer {
   private services: Array<Service> = []
   private description: string = ''
   private contactInformation: ContactInformation = new NoContactInformation()
+  private vehicles: Array<Vehicle> = []
 
   getServices(): Array<Service> {
     return this.services
@@ -30,6 +32,10 @@ export class Dealer {
 
   changeContactInformation(contactInformation: ContactInformation): void {
     this.contactInformation = contactInformation
+  }
+
+  addVehicle(vehicle: Vehicle): void {
+    this.vehicles.push(vehicle)
   }
 
   private checkThatTheServiceCanBeAdded(serviceToAdd: Service): void {
