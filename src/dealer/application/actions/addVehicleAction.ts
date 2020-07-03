@@ -24,7 +24,6 @@ export interface AddVehicleCommand {
   color: string,
   kilometers: string,
   price: string,
-  pictures: Array<string>,
   featured: string,
   features: Array<string>,
   services: Array<string>,

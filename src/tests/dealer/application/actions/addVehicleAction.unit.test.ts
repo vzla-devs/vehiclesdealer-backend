@@ -39,7 +39,6 @@ describe('addVehicleAction unit tests', () => {
       featured: 'anyFeaturedInformation',
       kilometers: '10000',
       price: '98344',
-      pictures: ['firstPictureUrl', 'secondPictureUrl'],
       features: ['firstEquipment', 'secondEquipment'],
       services: ['thirdServiceId', 'secondServiceId']
     }
@@ -61,13 +60,12 @@ describe('addVehicleAction unit tests', () => {
     const expectedPrice = 98334
     const expectedKilometers = 10000
     const expectedFeaturedInformation = 'anyFeaturedInformation'
-    const expectedPictures = ['firstPictureUrl', 'secondPictureUrl']
     const expectedEquipments = ['firstEquipment', 'secondEquipment']
     const expectedServices: Array<Service> = [
       { id: 'thirdServiceId', description: 'thirdServiceDescription' },
       { id: 'secondServiceId', description: 'secondServiceDescription' }
     ]
-    const expectedVehicle = new Car(expectedDefinition, expectedPrice, expectedKilometers, expectedPictures, expectedEquipments, expectedServices, expectedFeaturedInformation)
+    const expectedVehicle = new Car(expectedDefinition, expectedPrice, expectedKilometers, expectedEquipments, expectedServices, expectedFeaturedInformation)
     const expectedDealer = new ADealerBuilder().withServices(services).withVehicles([expectedVehicle]).build()
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealer)
   })
