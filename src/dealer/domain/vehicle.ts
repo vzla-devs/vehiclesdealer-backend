@@ -23,5 +23,5 @@ export enum VehicleFuelType {
   gas = 'gas',
   gasoline = 'gasolina',
   gasoil = 'gasoil',
-  hybrid = 'h√≠brido'
+  hybrid = 'hi≠brido'
 }
