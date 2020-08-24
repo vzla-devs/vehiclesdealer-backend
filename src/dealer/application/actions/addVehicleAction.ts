@@ -1,4 +1,6 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
+import { Car } from '@/dealer/domain/car'
+import { VehicleDefinition, VehicleTransmission } from '@/dealer/domain/vehicle'
 
 export class AddVehicleAction {
   
@@ -9,6 +11,18 @@ export class AddVehicleAction {
   }
 
   async execute(command: AddVehicleCommand): Promise<void> {
+    const dealer = await this.dealerRepository.get()
+    const carDefinition: VehicleDefinition = {
+      brand: command.make,
+      model: command.model,
+      color: command.color,
+      description: command.description,
+      emissions: command.emissions,
+      horsepower: parseInt(command.horsepower),
+      transmission: command.transmission === 'manual' ? VehicleTransmission.manual : VehicleTransmission.automatic,
+      fuelType: command.fuel_type
+    }
+    const carToAdd = new Car(carDefinition)
   }
 }
 
