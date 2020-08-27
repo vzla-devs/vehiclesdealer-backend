@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   push:
@@ -6,39 +6,39 @@ on:
 
 jobs:
   build:
-    name: Building project and running tests
+    name: Running tests and building project and 
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checking-out repository
+    - name: Checking out repository
       uses: actions/checkout@v2
-    
+
     - name: Using Node.js
       uses: actions/setup-node@v1
-    
+
     - name: Installing dependencies
       run: npm ci
-    
-    - name: Building project
-      run: npm run build-production
-    
+
     - name: Running tests
       run: npm run test
-    
+
+    - name: Building project
+      run: npm run build-production
+
     - name: Uploading build artifact
       uses: actions/upload-artifact@v2
       with:
         path: /home/runner/work/vehiclesdealer-backend/vehiclesdealer-backend/dist/main.js
-  
+
   deploy:
     needs: [build]
     name: Deploying to La Herradura
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Downloading build artifact
       uses: actions/download-artifact@v2
-    
+
     - name: Copying files to remote server
       uses: appleboy/scp-action@v0.0.10
       with:
@@ -49,7 +49,7 @@ jobs:
         password: ykBsL4Bccw4Hivoj
         overwrite: true
         strip_components: 1
-        
+
     - name: Restarting API
       uses: appleboy/ssh-action@master
       with:
@@ -60,7 +60,7 @@ jobs:
           forever stopall
           cd /root/api
           forever start main.js
-  
+
   cleanup: 
     needs: [deploy]
     name: Cleaning up
