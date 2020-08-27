@@ -6,7 +6,7 @@ import { Service } from '@/dealer/domain/service'
 import { Car } from '@/dealer/domain/car'
 import { VehicleDefinition, VehicleFuelType, VehicleTransmission } from '@/dealer/domain/vehicle'
 
-describe('addVehicleAction unit tests', () => {
+describe.skip('addVehicleAction unit tests', () => {
   let dealerRepository: DealerRepository
   let addVehicleAction: AddVehicleAction
 
