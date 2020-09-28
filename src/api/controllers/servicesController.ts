@@ -1,22 +1,21 @@
 import express from 'express'
+import { getServicesQuery } from '@/vehicles/application/getServicesQuery'
+import { addServiceAction } from '@/vehicles/application/addServiceAction'
 import { decorateControllerToCatchAnyError } from '@/api/controllers/controllerDecorators'
-import { DealerFactory } from '@/dealer/infrastructure/dealerFactory'
 import { AddDealerServiceCommand } from '@/dealer/application/actions/addDealerServiceAction'
 
 const router = express.Router()
 
 //TODO: create a unit test for this endpoint
 router.get('/', decorateControllerToCatchAnyError(async(req, res) => {
-    const dealerServicesQuery = DealerFactory.GetDealerServicesQuery()
-    const services = await dealerServicesQuery.execute()
+    const services = await getServicesQuery.getAll()
     res.status(200).send(services)
 }))
 
 //TODO: create a unit test for this endpoint
 router.post('/', decorateControllerToCatchAnyError(async(req, res) => {
     const command: AddDealerServiceCommand = { description: req.body.service }
-    const addDealerServicesAction = DealerFactory.AddDealerServiceAction()
-    await addDealerServicesAction.execute(command)
+    await addServiceAction.execute(command)
     res.sendStatus(200)
 }))
 
