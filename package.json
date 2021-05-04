@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/vdevs/vehiclesdealer-backend.git"
+    "url": "git+https://github.com/vzla-devs/vehiclesdealer-backend.git"
   },
   "author": "gabriel.nzn@gmail.com",
   "license": "MIT",
