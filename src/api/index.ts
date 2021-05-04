@@ -14,7 +14,7 @@ function runAppOnceTheDatabaseIsConnected (): void {
   databaseConnection.once('open', () => {
     const app = createWebApplication()
     const port = 8000
-    server = app.listen(port, () => console.log('Running...'))
+    server = app.listen(port, () => console.log(`Running at port: ${port}`))
   }) 
 }
 
