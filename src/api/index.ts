@@ -11,7 +11,7 @@ logDatabaseErrors()
 let server
 
 function runAppOnceTheDatabaseIsConnected (): void {
-  return databaseConnection.once('open', () => {
+  databaseConnection.once('open', () => {
     const app = createWebApplication()
     const port = 8000
     server = app.listen(port, () => console.log('Running...'))
