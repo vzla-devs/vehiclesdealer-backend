@@ -2,7 +2,6 @@ import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import express from 'express'
 import cors from 'cors'
-import bodyParser from 'body-parser'
 import vehicles from '@/api/controllers/vehiclesController'
 import features from '@/api/controllers/featuresController'
 import services from '@/api/controllers/servicesController'
@@ -34,11 +33,11 @@ function addCrossOriginResourceSharingToApp(app: express.Application): void {
 }
 
 function addJSONParserToApp(app: express.Application): void {
-  app.use(bodyParser.json({ limit: '50mb' }))
+  app.use(express.json({ limit: '50mb' }))
 }
 
 function addURLEncodedParserToApp(app: express.Application): void {
-  app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
+  app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 }
 
 function addRoutesToApp(app: express.Application): void {
