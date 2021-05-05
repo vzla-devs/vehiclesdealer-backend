@@ -1,5 +1,5 @@
 import { Db, ObjectId } from 'mongodb'
-import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
+import { MongoDatabaseForTests } from '@/shared/testHelpers/mongoDatabaseForTests'
 import { GetDealerServicesQueryMongoDB, DealerServiceDto } from '@/dealer/application/queries/getDealerServicesQueryMongoDB'
 
 describe('getDealerServicesQueryMongoDB integration tests', () => {

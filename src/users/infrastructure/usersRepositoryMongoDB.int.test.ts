@@ -1,7 +1,7 @@
 import { Db } from 'mongodb'
 import { UsersRepositoryMongoDB } from '@/users/infrastructure/usersRepositoryMongoDB'
 import { User, NoUser } from '@/users/domain/user'
-import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
+import { MongoDatabaseForTests } from '@/shared/testHelpers/mongoDatabaseForTests'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
 describe('usersRepositoryMongoDB integration tests', () => {

@@ -1,9 +1,9 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { AddDealerServiceAction, AddDealerServiceCommand } from '@/dealer/application/actions/addDealerServiceAction'
 import { Dealer } from '@/dealer/domain/dealer'
-import { decorateActionToGetAnyError } from '@/tests/actionDecoratorsForTests'
+import { decorateActionToGetAnyError } from '@/shared/testHelpers/actionDecoratorsForTests'
 import { CannotAddDealerService, CannotAddDealerServiceReason } from '@/dealer/domain/errors/cannotAddDealerService'
-import { TestCase } from '@/tests/testCase'
+import { TestCase } from '@/shared/testHelpers/testCase'
 import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 
 describe('addDealerServiceAction unit tests', () => {

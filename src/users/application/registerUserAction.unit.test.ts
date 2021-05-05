@@ -1,8 +1,8 @@
 import { UsersRepository } from '@/users/domain/usersRepository'
 import { RegisterUserAction, RegisterUserCommand } from '@/users/application/registerUserAction'
 import { UserModel, User, NoUser } from '@/users/domain/user'
-import { decorateActionToGetAnyError } from '@/tests/actionDecoratorsForTests'
-import { TestCase } from '@/tests/testCase'
+import { decorateActionToGetAnyError } from '@/shared/testHelpers/actionDecoratorsForTests'
+import { TestCase } from '@/shared/testHelpers/testCase'
 import { CannotRegisterUser, CannotRegisterUserReason } from '@/users/domain/errors/cannotRegisterUser'
 
 describe('registerUserAction unit tests', () => {

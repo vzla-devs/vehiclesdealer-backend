@@ -1,5 +1,5 @@
 import { Db } from 'mongodb'
-import { MongoDatabaseForTests } from '@/tests/mongoDatabaseForTests'
+import { MongoDatabaseForTests } from '@/shared/testHelpers/mongoDatabaseForTests'
 import { GetDealerContactInformationQueryMongoDB, DealerContactInformationDto } from '@/dealer/application/queries/getDealerContactInformationQueryMongoDB'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 
