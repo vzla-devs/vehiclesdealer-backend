@@ -1,7 +1,7 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { ChangeDealerDescriptionAction } from '@/dealer/application/actions/changeDealerDescriptionAction'
 import { Dealer } from '@/dealer/domain/dealer'
-import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
+import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 
 describe('changeDealerDescriptionAction unit tests', () => {
   let dealerRepository: DealerRepository
@@ -16,14 +16,14 @@ describe('changeDealerDescriptionAction unit tests', () => {
   })
 
   it('changes a dealer description', async() => {
-    const givenDealer = new ADealerBuilder().withDescription('').build()
+    const givenDealer = new DealerBuilder().withDescription('').build()
     givenAMockedDealerRepoGetWith(givenDealer)
 
     const newDescription = 'anyNewDescription'
     await changeDescriptionAction.execute(newDescription)
 
     expect(dealerRepository.get).toHaveBeenCalled()
-    const expectedDealerToUpdate = new ADealerBuilder().withDescription(newDescription).build()
+    const expectedDealerToUpdate = new DealerBuilder().withDescription(newDescription).build()
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealerToUpdate)
   })
 

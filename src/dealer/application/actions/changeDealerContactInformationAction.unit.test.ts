@@ -1,7 +1,7 @@
 import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { ChangeDealerContactInformationAction, ChangeDealerContactInformationCommand } from '@/dealer/application/actions/changeDealerContactInformationAction'
 import { Dealer } from '@/dealer/domain/dealer'
-import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
+import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { ContactInformation } from '@/dealer/domain/contactInformation'
 
 describe('changeDealerDescriptionAction unit tests', () => {
@@ -29,7 +29,7 @@ describe('changeDealerDescriptionAction unit tests', () => {
         saturday: 'anySaturday',
       }
     }
-    const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
+    const givenDealer = new DealerBuilder().withContactInformation(existingContactInformation).build()
     givenAMockedDealerRepoGetWith(givenDealer)
 
     const newContactInformation: ChangeDealerContactInformationCommand = {
@@ -58,7 +58,7 @@ describe('changeDealerDescriptionAction unit tests', () => {
         saturday: newContactInformation.saturday,
       }
     }
-    const expectedDealerToUpdate = new ADealerBuilder().withContactInformation(expectedNewContactInformation).build()
+    const expectedDealerToUpdate = new DealerBuilder().withContactInformation(expectedNewContactInformation).build()
     expect(dealerRepository.update).toHaveBeenCalledWith(expectedDealerToUpdate)
   })
 

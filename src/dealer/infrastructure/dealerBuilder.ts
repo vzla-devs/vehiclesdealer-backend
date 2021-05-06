@@ -2,22 +2,22 @@ import { Service } from '@/dealer/domain/service'
 import { Dealer } from '@/dealer/domain/dealer'
 import { ContactInformation, NoContactInformation } from '@/dealer/domain/contactInformation'
 
-export class ADealerBuilder {
+export class DealerBuilder {
   private services: Array<Service> = []
   private description: string = ''
   private contactInformation: ContactInformation = new NoContactInformation()
 
-  withServices(services: Array<Service>): ADealerBuilder {
+  withServices(services: Array<Service>): DealerBuilder {
     this.services = services
     return this
   }
 
-  withDescription(description: string): ADealerBuilder {
+  withDescription(description: string): DealerBuilder {
     this.description = description
     return this
   }
 
-  withContactInformation(contactInformation: ContactInformation): ADealerBuilder {
+  withContactInformation(contactInformation: ContactInformation): DealerBuilder {
     this.contactInformation = contactInformation
     return this
   }

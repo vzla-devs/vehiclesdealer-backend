@@ -3,7 +3,7 @@ import { MongoDatabaseForTests } from '@/shared/testHelpers/mongoDatabaseForTest
 import { DealerRepositoryMongoDB } from '@/dealer/infrastructure/dealerRepositoryMongoDB'
 import { Dealer } from '@/dealer/domain/dealer'
 import { Service } from '@/dealer/domain/service'
-import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
+import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 import { ContactInformation, NoContactInformation } from '@/dealer/domain/contactInformation'
 
@@ -33,7 +33,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
         { id: new ObjectId().toString(), description: 'anyService' },
         { id: new ObjectId().toString(), description: 'anyOtherService' },
       ]
-      const givenDealerToGet = new ADealerBuilder().withServices(givenServices).build()
+      const givenDealerToGet = new DealerBuilder().withServices(givenServices).build()
       await givenAPersistedDealer(givenDealerToGet)
       
       const returnedDealer = await dealersRepo.get()
@@ -43,7 +43,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
     it('gets the description', async() => {
       const givenDescription: string = 'anyDescription'
-      const givenDealerToGet = new ADealerBuilder().withDescription(givenDescription).build()
+      const givenDealerToGet = new DealerBuilder().withDescription(givenDescription).build()
       await givenAPersistedDealer(givenDealerToGet)
       
       const returnedDealer = await dealersRepo.get()
@@ -64,7 +64,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
           saturday: 'anySaturday',
         }
       }
-      const givenDealerToGet = new ADealerBuilder().withContactInformation(givenContactInformation).build()
+      const givenDealerToGet = new DealerBuilder().withContactInformation(givenContactInformation).build()
       await givenAPersistedDealer(givenDealerToGet)
 
       const returnedDealer = await dealersRepo.get()
@@ -73,7 +73,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
     })
 
     it('gets no contact information when it is not persisted', async() => {
-      const givenDealerToGet = new ADealerBuilder().build()
+      const givenDealerToGet = new DealerBuilder().build()
       await givenAPersistedDealer(givenDealerToGet)
 
       const returnedDealer = await dealersRepo.get()
@@ -86,11 +86,11 @@ describe('dealerRepositoryMongoDB integration tests', () => {
   describe('when updating the dealer', () => {
     it('updates the services', async() => {
       const existingService = { id: new ObjectId().toString(), description: 'secondService' }
-      const givenDealer = new ADealerBuilder().withServices([existingService]).build()
+      const givenDealer = new DealerBuilder().withServices([existingService]).build()
       await givenAPersistedDealer(givenDealer)
       
       const servicesToAdd: Array<Service> = [existingService, { description: 'firstService' }, { description: 'thirdService' }]
-      const dealerToUpdate = new ADealerBuilder().withServices(servicesToAdd).build()
+      const dealerToUpdate = new DealerBuilder().withServices(servicesToAdd).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -103,11 +103,11 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
     it('updates the description', async() => {
       const existingDescription = 'anyExistingDescription'
-      const givenDealer = new ADealerBuilder().withDescription(existingDescription).build()
+      const givenDealer = new DealerBuilder().withDescription(existingDescription).build()
       await givenAPersistedDealer(givenDealer)
       
       const newDescription = 'anyNewDescription'
-      const dealerToUpdate = new ADealerBuilder().withDescription(newDescription).build()
+      const dealerToUpdate = new DealerBuilder().withDescription(newDescription).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -116,7 +116,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
 
     it('updates the contact information for the first time', async() => {
       const existingContactInformation = new NoContactInformation()
-      const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
+      const givenDealer = new DealerBuilder().withContactInformation(existingContactInformation).build()
       await givenAPersistedDealer(givenDealer)
       
       const newContactInformation: ContactInformation = {
@@ -131,7 +131,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
           saturday: 'newSaturdayInformation',
         }
       }
-      const dealerToUpdate = new ADealerBuilder().withContactInformation(newContactInformation).build()
+      const dealerToUpdate = new DealerBuilder().withContactInformation(newContactInformation).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -151,7 +151,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
           saturday: 'anySaturday',
         }
       }
-      const givenDealer = new ADealerBuilder().withContactInformation(existingContactInformation).build()
+      const givenDealer = new DealerBuilder().withContactInformation(existingContactInformation).build()
       await givenAPersistedDealer(givenDealer)
       
       const newContactInformation: ContactInformation = {
@@ -166,7 +166,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
           saturday: 'newSaturdayInformation',
         }
       }
-      const dealerToUpdate = new ADealerBuilder().withContactInformation(newContactInformation).build()
+      const dealerToUpdate = new DealerBuilder().withContactInformation(newContactInformation).build()
       await dealersRepo.update(dealerToUpdate)
       
       const updatedDealer = await getPersistedDealer()
@@ -229,7 +229,7 @@ describe('dealerRepositoryMongoDB integration tests', () => {
         }
       }
     }
-    return new ADealerBuilder()
+    return new DealerBuilder()
       .withServices(services)
       .withDescription(description)
       .withContactInformation(contactInformation)

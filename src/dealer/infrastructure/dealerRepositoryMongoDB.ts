@@ -2,7 +2,7 @@ import { DealerRepository } from '@/dealer/domain/dealerRepository'
 import { Dealer } from '@/dealer/domain/dealer'
 import { Db } from 'mongodb'
 import { Service } from '@/dealer/domain/service'
-import { ADealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
+import { DealerBuilder } from '@/dealer/infrastructure/dealerBuilder'
 import { MongoDBCollection } from '@/shared/infrastructure/constants/mongoDBCollections'
 import { ContactInformation, NoContactInformation } from '@/dealer/domain/contactInformation'
 
@@ -17,7 +17,7 @@ export class DealerRepositoryMongoDB implements DealerRepository {
     const services = await this.getDealerServices()
     const description = await this.getDealerDescription()
     const contactInformation = await this.getContactInformation()
-    return new ADealerBuilder()
+    return new DealerBuilder()
       .withServices(services)
       .withDescription(description)
       .withContactInformation(contactInformation)
