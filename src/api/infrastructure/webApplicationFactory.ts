@@ -46,7 +46,7 @@ function addRoutesToApp(app: express.Application): void {
   app.use('/api/servicios', services)
   app.use('/api/texto', description)
   app.use('/api/contacto', contact)
-  app.use('/api/pdf', pictures)
+  app.use('/api/imagenes', pictures)
   app.use('/api/usuarios', users)
 }
 
