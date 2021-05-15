@@ -23,7 +23,7 @@ jobs:
       run: npm run test
 
     - name: Building project
-      run: npm run build-production
+      run: npm run build:production
 
     - name: Uploading build artifact
       uses: actions/upload-artifact@v2
