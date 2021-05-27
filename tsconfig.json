@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     "downlevelIteration": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "types": [
       "jest",
