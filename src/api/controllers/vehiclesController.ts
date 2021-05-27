@@ -21,6 +21,42 @@ router.get('/filtros', decorateControllerToCatchAnyError(async (req, res) => {
     res.status(200).send(filters)
 }))
 
+router.get('/marcas', decorateControllerToCatchAnyError(async (req, res) => {
+    const brands = [
+        'abarth',
+        'alfa romeo',
+        'audi',
+        'bmw',
+        'chevrolet',
+        'citroën',
+        'dacia',
+        'fiat',
+        'ford',
+        'honda',
+        'hyundai',
+        'jeep',
+        'kia',
+        'lexus',
+        'mazda',
+        'mercedes-benz',
+        'mini',
+        'mitsubishi',
+        'nissan',
+        'opel',
+        'peugeot',
+        'renault',
+        'seat',
+        'skoda',
+        'smart',
+        'subaru',
+        'suzuki',
+        'toyota',
+        'volkswagen',
+        'volvo'
+    ]
+    res.status(200).send(brands)
+}))
+
 router.get('/:id', decorateControllerToCatchAnyError(async (req, res) => {
     const vehicleId = req.params.id
     const vehicle = await getVehiclesQuery.getOneById(vehicleId)
@@ -50,6 +86,7 @@ router.delete('/:id', decorateControllerToCatchAnyError(async (req, res) => {
     await removeVehicleAction.execute(req.params.id)
     res.sendStatus(200)
 }))
+
 
 function getFiltersFromRequest (request) {
     let filters: any = {}
