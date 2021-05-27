@@ -2,6 +2,7 @@ import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import vehicles from '@/api/controllers/vehiclesController'
 import features from '@/api/controllers/featuresController'
 import services from '@/api/controllers/servicesController'
@@ -15,6 +16,7 @@ function createWebApplication(): express.Application {
   const app = express()
   addStaticRouteToApp(app, 'uploads')
   addStaticRouteToApp(app, 'assets')
+  addHelmetProtectionToApp(app)
   addCrossOriginResourceSharingToApp(app)
   addJSONParserToApp(app)
   addURLEncodedParserToApp(app)
@@ -26,6 +28,10 @@ function createWebApplication(): express.Application {
 
 function addStaticRouteToApp(app: express.Application, staticRoute: string): void {
   app.use('/api/static', express.static(`public/${staticRoute}`))
+}
+
+function addHelmetProtectionToApp(app: express.Application): void {
+  app.use(helmet())
 }
 
 function addCrossOriginResourceSharingToApp(app: express.Application): void {
