@@ -26,8 +26,7 @@ let VehicleSchema = new Schema({
     },
     color: {
         type: String,
-        lowercase: true,
-        required: [true, 'Color requerido']
+        lowercase: true
     },
     year: {
         type: Number,
@@ -37,8 +36,7 @@ let VehicleSchema = new Schema({
     kilometers: {
         type: Number,
         min: [0, 'El kilometraje no puede ser negativo'],
-        default: 0,
-        required: [true, 'Kilometraje requerido']
+        default: 0
     },
     fuel_type: {
         type: String,
@@ -49,14 +47,12 @@ let VehicleSchema = new Schema({
             'gasoil',
             'híbrido'
         ],
-        lowercase: true,
-        required: [true, 'Tipo de combustible requerido']
+        lowercase: true
     },
     horsepower: {
         type: Number,
         min: [0, 'La potencia no puede ser negativa'],
-        default: 0,
-        required: [true, 'Potencia requerida']
+        default: 0
     },
     transmission: {
         type: String,
@@ -64,8 +60,7 @@ let VehicleSchema = new Schema({
             'automático',
             'manual'
         ],
-        lowercase: true,
-        required: [true, 'Transmisión requerida']
+        lowercase: true
     },
     price: {
         type: Number,
@@ -104,8 +99,7 @@ let VehicleSchema = new Schema({
     emissions: {
         type: Number,
         min: [0, 'Las emisiones no pueden ser negativas'],
-        default: 0,
-        required: [true, 'Emisiones requeridas']
+        default: 0
     }
 },
 {
