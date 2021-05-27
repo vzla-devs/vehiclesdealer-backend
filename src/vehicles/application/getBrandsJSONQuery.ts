@@ -5,11 +5,11 @@ export class GetBrandsJSONQuery {
         this.brands = brands
     }
 
-    execute(): string[] {
-        return this.brands.brands
+    execute(): brandsDto {
+        return this.brands
     }
 }
 
-interface brandsDto {
+export interface brandsDto {
     brands: string[]
 }

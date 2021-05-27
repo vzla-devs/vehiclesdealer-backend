@@ -1,4 +1,4 @@
-import { GetBrandsJSONQuery } from '@/vehicles/application/getBrandsJSONQuery'
+import { GetBrandsJSONQuery, brandsDto } from '@/vehicles/application/getBrandsJSONQuery'
 
 describe('getBrandsJSONQuery integration tests', () => {
   it('gets all the brands', async() => {
@@ -11,13 +11,15 @@ describe('getBrandsJSONQuery integration tests', () => {
     }
     const getBrandsQuery = new GetBrandsJSONQuery(givenBrands)
     
-    const returnedBrands: string[] = await getBrandsQuery.execute()
+    const returnedBrands: brandsDto = await getBrandsQuery.execute()
     
-    const expectedBrands = [
+    const expectedBrands: brandsDto = {
+        brands: [
         'firstOne',
         'thirdOne',
         'secondOne'
-    ]
+        ]
+    }
     expect(returnedBrands).toEqual(expectedBrands)
   })
 })
