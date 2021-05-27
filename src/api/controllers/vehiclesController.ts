@@ -6,6 +6,7 @@ import { addVehicleAction } from '@/vehicles/application/addVehicleAction'
 import { editVehicleAction } from '@/vehicles/application/editVehicleAction'
 import { editVehiclePicturesAction } from '@/vehicles/application/editVehiclePicturesAction'
 import { removeVehicleAction } from '@/vehicles/application/removeVehicleAction'
+import { VehiclesFactory } from '@/vehicles/infrastructure/vehiclesFactory'
 import { decorateControllerToCatchAnyError } from '@/api/controllers/controllerDecorators'
 
 const router = express.Router()
@@ -22,39 +23,9 @@ router.get('/filtros', decorateControllerToCatchAnyError(async (req, res) => {
 }))
 
 router.get('/marcas', decorateControllerToCatchAnyError(async (req, res) => {
-    const brands = [
-        'abarth',
-        'alfa romeo',
-        'audi',
-        'bmw',
-        'chevrolet',
-        'citroën',
-        'dacia',
-        'fiat',
-        'ford',
-        'honda',
-        'hyundai',
-        'jeep',
-        'kia',
-        'lexus',
-        'mazda',
-        'mercedes-benz',
-        'mini',
-        'mitsubishi',
-        'nissan',
-        'opel',
-        'peugeot',
-        'renault',
-        'seat',
-        'skoda',
-        'smart',
-        'subaru',
-        'suzuki',
-        'toyota',
-        'volkswagen',
-        'volvo'
-    ]
-    res.status(200).send(brands)
+    const getBrandsQuery = VehiclesFactory.GetBrandsQuery()
+    const returnedBrands = await getBrandsQuery.execute()
+    res.status(200).send(returnedBrands)
 }))
 
 router.get('/:id', decorateControllerToCatchAnyError(async (req, res) => {
